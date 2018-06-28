@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,35 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Centos-SuSE关闭防火墙" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/28/Centos-SuSE关闭防火墙/" class="article-date">
+  <time datetime="2018-06-28T08:11:33.556Z" itemprop="datePublished">2018-06-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="查看防火墙状态"><a href="#查看防火墙状态" class="headerlink" title="查看防火墙状态"></a>查看防火墙状态</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.servie</span><br><span class="line">// 查看防火墙状态</span><br></pre></td></tr></table></figure>
+<h6 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br><span class="line">// 关闭防火墙</span><br><span class="line"></span><br><span class="line">// suse系统</span><br><span class="line">systemctl stop SuSEfirewall2</span><br></pre></td></tr></table></figure>
+<h6 id="禁用防火墙开启启动"><a href="#禁用防火墙开启启动" class="headerlink" title="禁用防火墙开启启动"></a>禁用防火墙开启启动</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable firewalld.service</span><br><span class="line">// 禁止firewall开机启动 </span><br><span class="line"></span><br><span class="line">//suse系统</span><br><span class="line">systemctl disable SuSEfirewall2</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/28/Centos-SuSE关闭防火墙/" data-id="cjiy9tsk00000q8ubxjct45bs" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-ElementUi rules表单验证(pattern正则表达式)" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -83,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/28/ElementUi rules表单验证(pattern正则表达式)/" data-id="cjiy909lx0000cwubngm3oox2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/28/ElementUi rules表单验证(pattern正则表达式)/" data-id="cjiy909lx0000cwubngm3oox2" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -128,7 +157,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/09/hello-world/" data-id="cjdfpff3800005cubhbialj7g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/09/hello-world/" data-id="cjdfpff3800005cubhbialj7g" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -154,7 +183,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -164,9 +193,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/06/28/Centos-SuSE关闭防火墙/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2018/06/28/ElementUi rules表单验证(pattern正则表达式)/">(no title)</a>
