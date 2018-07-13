@@ -108,24 +108,24 @@
 
 
 
-  <meta name="description" content="ApacheApache Web服务器通常比称之为“Apache”或者“httpd”，Apache是目前最流行的Web应用服务器，拥有超过一亿的网站用户，占据互联网应用服务器63%的份额，以及全球最繁忙网站中有66%采用Apache的（比方说，维基百科网站服务器就是使用Apache）。pache Web服务器是一个用C语言实现的HTTP Web服务器，支持各种特性和模块从而来扩展核心功能。 Apa">
+  <meta name="description" content="urllib.urlopen()的使用12# urllib模块的urlopen()方法原型def urlopen(url, data=None, proxies=None, context=None): urlopen()打开一个给定 URL 字符串表示的 Web 连接，并返回文件类型的对象。例如,返回的对象是res，那么“句柄”会支持一些读取内容的方法，如 res.read()、res.read">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tomcat vs Apache：您钟情于哪一款">
-<meta property="og:url" content="http://yoursite.com/2018/07/04/Tomcat vs Apache：您钟情于哪一款/index.html">
+<meta property="og:title" content="urllib、urllib2的使用及区别">
+<meta property="og:url" content="http://yoursite.com/2018/07/13/urllib、urllib2的使用及区别/index.html">
 <meta property="og:site_name" content="一亩三分地">
-<meta property="og:description" content="ApacheApache Web服务器通常比称之为“Apache”或者“httpd”，Apache是目前最流行的Web应用服务器，拥有超过一亿的网站用户，占据互联网应用服务器63%的份额，以及全球最繁忙网站中有66%采用Apache的（比方说，维基百科网站服务器就是使用Apache）。pache Web服务器是一个用C语言实现的HTTP Web服务器，支持各种特性和模块从而来扩展核心功能。 Apa">
+<meta property="og:description" content="urllib.urlopen()的使用12# urllib模块的urlopen()方法原型def urlopen(url, data=None, proxies=None, context=None): urlopen()打开一个给定 URL 字符串表示的 Web 连接，并返回文件类型的对象。例如,返回的对象是res，那么“句柄”会支持一些读取内容的方法，如 res.read()、res.read">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-04T03:21:01.103Z">
+<meta property="og:updated_time" content="2018-07-13T09:24:25.029Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tomcat vs Apache：您钟情于哪一款">
-<meta name="twitter:description" content="ApacheApache Web服务器通常比称之为“Apache”或者“httpd”，Apache是目前最流行的Web应用服务器，拥有超过一亿的网站用户，占据互联网应用服务器63%的份额，以及全球最繁忙网站中有66%采用Apache的（比方说，维基百科网站服务器就是使用Apache）。pache Web服务器是一个用C语言实现的HTTP Web服务器，支持各种特性和模块从而来扩展核心功能。 Apa">
+<meta name="twitter:title" content="urllib、urllib2的使用及区别">
+<meta name="twitter:description" content="urllib.urlopen()的使用12# urllib模块的urlopen()方法原型def urlopen(url, data=None, proxies=None, context=None): urlopen()打开一个给定 URL 字符串表示的 Web 连接，并返回文件类型的对象。例如,返回的对象是res，那么“句柄”会支持一些读取内容的方法，如 res.read()、res.read">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/04/Tomcat vs Apache：您钟情于哪一款/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/13/urllib、urllib2的使用及区别/"/>
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>Tomcat vs Apache：您钟情于哪一款 | 一亩三分地</title>
+  <title>urllib、urllib2的使用及区别 | 一亩三分地</title>
   
 
 
@@ -280,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/04/Tomcat vs Apache：您钟情于哪一款/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/13/urllib、urllib2的使用及区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hamburg">
@@ -297,7 +297,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Tomcat vs Apache：您钟情于哪一款
+          <h1 class="post-title" itemprop="name headline">urllib、urllib2的使用及区别
               
             
           </h1>
@@ -322,7 +322,7 @@
                 
               
 
-              <time title="创建时间：2018-07-04 11:13:52 / 修改时间：11:21:01" itemprop="dateCreated datePublished" datetime="2018-07-04T11:13:52+08:00">2018-07-04</time>
+              <time title="创建时间：2018-07-13 17:24:24 / 修改时间：17:24:25" itemprop="dateCreated datePublished" datetime="2018-07-13T17:24:24+08:00">2018-07-13</time>
             
 
             
@@ -360,20 +360,15 @@
       
 
       
-        <h4 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h4><p>Apache Web服务器通常比称之为“Apache”或者“httpd”，Apache是目前最流行的Web应用服务器，拥有超过一亿的网站用户，占据互联网应用服务器63%的份额，以及全球最繁忙网站中有66%采用Apache的（比方说，维基百科网站服务器就是使用Apache）。<br>pache Web服务器是一个用C语言实现的HTTP Web服务器，支持各种特性和模块从而来扩展核心功能。</p>
-<h5 id="Apache的优越特性："><a href="#Apache的优越特性：" class="headerlink" title="Apache的优越特性："></a>Apache的优越特性：</h5><ul>
-<li>访问静态页面比Tomcat要快</li>
-<li>Apache有更多的配置选项</li>
-<li>支持CGI 脚本，Server API模块，Perl，PHP等<h5 id="Apache的缺点："><a href="#Apache的缺点：" class="headerlink" title="Apache的缺点："></a>Apache的缺点：</h5></li>
-<li>不支持Java Servlets或JavaServer Pages(JSP)</li>
-</ul>
-<h4 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h4><p>Apache Tomcat又被称之为“Tomcat”是一款开源的Web服务器，Jakarta项目中的一个核心项目，1999年被开发而成，支持Servlet和JSP，由Apache软件基金会提供支持与维护。<br>Tomcat是靠Java实现的，<strong>支持Java Servlets和JavaServer Pages(JSP)</strong>，由Oracle公司指定的，因JSPs而著称。<br>Tomcat部分是Apache服务器的扩展，但它是独立运行的，所以当Apache Tomcat运行tomcat时，它实际上是作为一个与Apache独立的进程单独运行的。</p>
-<h5 id="Tomcat的优越特性："><a href="#Tomcat的优越特性：" class="headerlink" title="Tomcat的优越特性："></a>Tomcat的优越特性：</h5><ul>
-<li>提供Java Servlet和JSP支持动态服务器网页</li>
-<li>一个轻量级应用服务器</li>
-<li>可在不同的模式中运行，以提高其性能</li>
-</ul>
-<p><a href="https://blog.csdn.net/ithomer/article/details/7403579" target="_blank" rel="noopener">参考资料：Tomcat vs Apache</a></p>
+        <h5 id="urllib-urlopen-的使用"><a href="#urllib-urlopen-的使用" class="headerlink" title="urllib.urlopen()的使用"></a>urllib.urlopen()的使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># urllib模块的urlopen()方法原型</span><br><span class="line">def urlopen(url, data=None, proxies=None, context=None):</span><br></pre></td></tr></table></figure>
+<p>urlopen()打开一个给定 URL 字符串表示的 Web 连接，并返回文件类型的对象。<br>例如,返回的对象是res，那么“句柄”会支持一些读取内容的方法，如 res.read()、<br>res.readline()、 res.readlines()、 res.close()和 res.fileno()。<br>其中data需要使用urllib.urlencode(dict)进行编码处理，帮我们将key:value这样的键值对转换成”key=value”这样的字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 实例：</span><br><span class="line">student = &#123;&apos;name&apos;:&apos;LiLei&apos;,&apos;age&apos;:18,&apos;school&apos;: &apos;TsingHua&apos;&#125;</span><br><span class="line">encode_student = urllib.urlencode(student)</span><br><span class="line">print(encode_student)</span><br><span class="line"></span><br><span class="line">age=18&amp;name=LiLei&amp;school=TsingHua // url编码后</span><br></pre></td></tr></table></figure>
+<h5 id="更复杂的应用场景，使用urllib2-urlopen"><a href="#更复杂的应用场景，使用urllib2-urlopen" class="headerlink" title="更复杂的应用场景，使用urllib2.urlopen()"></a>更复杂的应用场景，使用urllib2.urlopen()</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># urllib2模块的urlopen()方法原型</span><br><span class="line"></span><br><span class="line">def urlopen(url, data=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,</span><br><span class="line">            cafile=None, capath=None, cadefault=False, context=None):</span><br><span class="line">            </span><br><span class="line"># urllib2.Request类原型</span><br><span class="line">class Request:</span><br><span class="line"></span><br><span class="line">    def __init__(self, url, data=None, headers=&#123;&#125;,</span><br><span class="line">                 origin_req_host=None, unverifiable=False):</span><br></pre></td></tr></table></figure>
+<p>通过Request类实例化request对象，并设置请求头，认证等复杂应用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 实例，设置请求头等，add_header()方法</span><br><span class="line">def post_request(url, data):</span><br><span class="line">    req = urllib2.Request(url + &apos;?&apos; + urllib.urlencode(data))</span><br><span class="line">    req.add_header(&apos;User-Agent&apos;,&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36&apos;)</span><br><span class="line">    response = urllib2.urlopen(req)</span><br><span class="line">    return response.read()</span><br></pre></td></tr></table></figure></p>
+<h5 id="简单应用场景，三者等价"><a href="#简单应用场景，三者等价" class="headerlink" title="简单应用场景，三者等价"></a>简单应用场景，三者等价</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">job_info = &#123;</span><br><span class="line">        &quot;jenkins_job_name&quot;: &quot;v1_indata_framework&quot;,</span><br><span class="line">        &quot;jenkins_job_number&quot;: 1</span><br><span class="line">    &#125;</span><br><span class="line">post_data = &#123;&apos;data&apos;: json.dumps(job_info)&#125;</span><br><span class="line">data = urllib.urlencode(post_data)</span><br><span class="line">print(data)</span><br><span class="line">req2 = urllib2.urlopen(url, data=data)</span><br><span class="line">req3 = urllib.urlopen(url, data=data)</span><br><span class="line">print (req2.read())</span><br><span class="line">print (req3.read())</span><br><span class="line">req = urllib2.Request(url, data=data)</span><br><span class="line">response = urllib2.urlopen(req)</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data=%7B%22jenkins_job_name%22%3A+%22v1_indata_framework%22%2C+%22jenkins_job_number%22%3A+1%7D</span><br><span class="line">&#123;&quot;building&quot;: false, &quot;type&quot;: true, &quot;result&quot;: &quot;SUCCESS&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&quot;building&quot;: false, &quot;type&quot;: true, &quot;result&quot;: &quot;SUCCESS&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&quot;building&quot;: false, &quot;type&quot;: true, &quot;result&quot;: &quot;SUCCESS&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><p>如果读者使用的是 2.x 版本，这里强烈建议在 2.6 和 3.0 版本中使用 urllib2.urlopen()。因<br>为从 2.6 版本开始， urllib 中弃用了 urlopen 函数，而 3.0 版本中移除了该函数。在阅读前面那<br>个核心模块侧边栏时，已经提到这两个模块中的功能在 Python 3 中都合并进了 urllib.request<br>中。这表示 2.x 版本中的 urlib2.urlopen()（已经没有 urllib.urlopen()了）在 3.x 版本中需要使用<br>的 urllib.request.urlopen()函数。</p>
+<p><a href="https://blog.csdn.net/GeekLeee/article/details/52776724" target="_blank" rel="noopener">参考资料：urllib和urllib2的区别和使用</a></p>
 
       
     </div>
@@ -401,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/29/Hexo使用问题记录/" rel="next" title="Hexo使用问题记录[文章标题显示no title、设置主页language]">
-                <i class="fa fa-chevron-left"></i> Hexo使用问题记录[文章标题显示no title、设置主页language]
+              <a href="/2018/07/05/搭建本地yum源(CentOS)/" rel="next" title="搭建本地yum源(CentOS)">
+                <i class="fa fa-chevron-left"></i> 搭建本地yum源(CentOS)
               </a>
             
           </div>
@@ -410,10 +405,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/05/搭建本地yum源(CentOS)/" rel="prev" title="搭建本地yum源(CentOS)">
-                搭建本地yum源(CentOS) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -527,7 +518,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Apache"><span class="nav-number">1.</span> <span class="nav-text">Apache</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Apache的优越特性："><span class="nav-number">1.1.</span> <span class="nav-text">Apache的优越特性：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Apache的缺点："><span class="nav-number">1.2.</span> <span class="nav-text">Apache的缺点：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tomcat"><span class="nav-number">2.</span> <span class="nav-text">Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Tomcat的优越特性："><span class="nav-number">2.1.</span> <span class="nav-text">Tomcat的优越特性：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#urllib-urlopen-的使用"><span class="nav-number">1.</span> <span class="nav-text">urllib.urlopen()的使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更复杂的应用场景，使用urllib2-urlopen"><span class="nav-number">2.</span> <span class="nav-text">更复杂的应用场景，使用urllib2.urlopen()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#简单应用场景，三者等价"><span class="nav-number">3.</span> <span class="nav-text">简单应用场景，三者等价</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意："><span class="nav-number">4.</span> <span class="nav-text">注意：</span></a></li></ol></div>
             
 
           </div>
