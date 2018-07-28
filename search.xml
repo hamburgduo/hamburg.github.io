@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[测试图片]]></title>
+    <url>%2F2018%2F07%2F27%2F%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87%2F</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[jupyter的安装及使用]]></title>
+    <url>%2F2018%2F07%2F14%2Fjupyter%E7%9A%84%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[安装1pip install jupyter 生成配置文件1jupyter notebook --generate-config 设置登录密码123jupyter notebook password# 输出结果Wrote hashed password to /root/.jupyter/jupyter_notebook_config.json 后台启动服务1234nohup jupyter notebook --no-browser --allow-root --ip=0.0.0.0 &amp;# nohup command &amp; 设置后台运行# --no-browser 启动不打开浏览器# --ip 指定ip地址，可以为任意ip 使用浏览器地址栏输入server_ip:8888 访问，出现登录界面，输入设置的密码，即可使用。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[urllib、urllib2的使用及区别]]></title>
+    <url>%2F2018%2F07%2F13%2Furllib%E3%80%81urllib2%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[urllib.urlopen()的使用12# urllib模块的urlopen()方法原型def urlopen(url, data=None, proxies=None, context=None): urlopen()打开一个给定 URL 字符串表示的 Web 连接，并返回文件类型的对象。例如,返回的对象是res，那么“句柄”会支持一些读取内容的方法，如 res.read()、res.readline()、 res.readlines()、 res.close()和 res.fileno()。其中data需要使用urllib.urlencode(dict)进行编码处理，帮我们将key:value这样的键值对转换成”key=value”这样的字符串。 123456// 实例：student = &#123;'name':'LiLei','age':18,'school': 'TsingHua'&#125;encode_student = urllib.urlencode(student)print(encode_student)age=18&amp;name=LiLei&amp;school=TsingHua // url编码后 更复杂的应用场景，使用urllib2.urlopen()12345678910# urllib2模块的urlopen()方法原型def urlopen(url, data=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT, cafile=None, capath=None, cadefault=False, context=None): # urllib2.Request类原型class Request: def __init__(self, url, data=None, headers=&#123;&#125;, origin_req_host=None, unverifiable=False): 通过Request类实例化request对象，并设置请求头，认证等复杂应用123456# 实例，设置请求头等，add_header()方法def post_request(url, data): req = urllib2.Request(url + '?' + urllib.urlencode(data)) req.add_header('User-Agent','Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36') response = urllib2.urlopen(req) return response.read() 简单应用场景，三者等价12345678910111213job_info = &#123; "jenkins_job_name": "v1_indata_framework", "jenkins_job_number": 1 &#125;post_data = &#123;'data': json.dumps(job_info)&#125;data = urllib.urlencode(post_data)print(data)req2 = urllib2.urlopen(url, data=data)req3 = urllib.urlopen(url, data=data)print (req2.read())print (req3.read())req = urllib2.Request(url, data=data)response = urllib2.urlopen(req) 运行结果：123456data=%7B%22jenkins_job_name%22%3A+%22v1_indata_framework%22%2C+%22jenkins_job_number%22%3A+1%7D&#123;"building": false, "type": true, "result": "SUCCESS"&#125;&#123;"building": false, "type": true, "result": "SUCCESS"&#125;&#123;"building": false, "type": true, "result": "SUCCESS"&#125; 注意：如果读者使用的是 2.x 版本，这里强烈建议在 2.6 和 3.0 版本中使用 urllib2.urlopen()。因为从 2.6 版本开始， urllib 中弃用了 urlopen 函数，而 3.0 版本中移除了该函数。在阅读前面那个核心模块侧边栏时，已经提到这两个模块中的功能在 Python 3 中都合并进了 urllib.request中。这表示 2.x 版本中的 urlib2.urlopen()（已经没有 urllib.urlopen()了）在 3.x 版本中需要使用的 urllib.request.urlopen()函数。 参考资料：urllib和urllib2的区别和使用]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[搭建本地yum源(CentOS)]]></title>
+    <url>%2F2018%2F07%2F05%2F%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0yum%E6%BA%90(CentOS)%2F</url>
+    <content type="text"><![CDATA[yum介绍YUM主要用于自动升级、安装\移除rpm软件包，它能自动查找并解决rpm包之间的依赖关系，要成功的使用YUM工具更新系统和软件，需要有一个包含各种rpm软件包的repository（软件仓库），提供软件仓库的服务器习惯上成为“源”服务器。 网络上有大量的源服务器，但是，由于受到网络连接速度、带宽的限制，导致软件安装耗时过长甚至失败。特别是当有大量服务器大量软件包需要升级时，更新的缓慢程序令人难以忍受。 相比较而言，本地YUM源服务器最大优点在局域网的快速网络连接和稳定性。有了局域网中的YUM源服务器，即便在Internet连接中断的情况下，也不会影响其他YUM客户端的软件升级和安装。 搭建本地yum源 安装web服务器(httpd) 1234567yum -y install httpd // 安装httpd服务systemctl enable httpd.servicesystemctl start httpd.service //启动http服务vi /etc/httpd/conf/httpd.conf //修改配置文件Listen 88 //本例修改为88DocumentRoot "/var/www/html" //默认的文件根目录，软件包存放在该目录下 安装createrepo yum-utils工具 1yum -y install yum-utils createrepo 同步网络源至本地 1234567891011# 下载repo文件wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.6.2.0/ambari.repo -O /etc/yum.repos.d/ambari.repowget -nv http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.6.5.0/hdp.repo -O /etc/yum.repos.d/hdp.repo# 同步网络源上的rpm包，至/var/www/html目录 cd /var/www/html reposync -r ambari-2.6.2.0reposync -r HDP-2.6.5.0reposync -r HDP-UTILS-1.1.0.22# 或者将下载好的rmp包，拷贝至/var/www/html下对应的子目录下 使用createrepo命令创建repodata 123456cd /var/www/html/ambari-2.6.2.0createrepo ./ # 创建repodatacd /var/www/html/HDP-2.6.5.0createrepo ./cd /var/www/html/HDP-UTILS-1.1.0.22createrepo ./ 使用局域网内的本地yum源 1234567891011121314151617cd /rootmkdri reposvi ambari.repo[Ambari-2.6.2.0]baseurl = http://10.110.13.238:88/ambari/ambari-2.6.2.0 #httpd服务所在的局域网内的主机gpgcheck = 0enalbed = 1name = Ambari-2.6.2.0vi hdp.repovi hdp-utils.repo# 其他的源做相同的操作# 在局域网内的其他主机使用本地源，以10.110.13.33主机为例cd /etc/yum.repo.dmkdir yum.bakmv *.repo yum.bak #备份原有的repo文件，也可删除scp -r 10.110.13.238:/root/repos/* ./ #远程拷贝新建的repo文件至33主机的/etc/yum.repo.d目录 利用系统的iso镜像制作本地源12345cd ~ # iso镜像已拷贝到该目录mkdir isomount -o loop /root/CentOS-7-x86_64-Minimal-1511.iso /root/isocp iso/* /var/www/html/cenos7umout /root/iso #卸载镜像 参考资料：CentOS搭建本地yum源（http方式）]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Tomcat vs Apache：您钟情于哪一款]]></title>
+    <url>%2F2018%2F07%2F04%2FTomcat%20vs%20Apache%EF%BC%9A%E6%82%A8%E9%92%9F%E6%83%85%E4%BA%8E%E5%93%AA%E4%B8%80%E6%AC%BE%2F</url>
+    <content type="text"><![CDATA[ApacheApache Web服务器通常比称之为“Apache”或者“httpd”，Apache是目前最流行的Web应用服务器，拥有超过一亿的网站用户，占据互联网应用服务器63%的份额，以及全球最繁忙网站中有66%采用Apache的（比方说，维基百科网站服务器就是使用Apache）。pache Web服务器是一个用C语言实现的HTTP Web服务器，支持各种特性和模块从而来扩展核心功能。 Apache的优越特性： 访问静态页面比Tomcat要快 Apache有更多的配置选项 支持CGI 脚本，Server API模块，Perl，PHP等Apache的缺点： 不支持Java Servlets或JavaServer Pages(JSP) TomcatApache Tomcat又被称之为“Tomcat”是一款开源的Web服务器，Jakarta项目中的一个核心项目，1999年被开发而成，支持Servlet和JSP，由Apache软件基金会提供支持与维护。Tomcat是靠Java实现的，支持Java Servlets和JavaServer Pages(JSP)，由Oracle公司指定的，因JSPs而著称。Tomcat部分是Apache服务器的扩展，但它是独立运行的，所以当Apache Tomcat运行tomcat时，它实际上是作为一个与Apache独立的进程单独运行的。 Tomcat的优越特性： 提供Java Servlet和JSP支持动态服务器网页 一个轻量级应用服务器 可在不同的模式中运行，以提高其性能 参考资料：Tomcat vs Apache]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo使用问题记录[文章标题显示no title、设置主页language]]]></title>
+    <url>%2F2018%2F06%2F29%2FHexo%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[发布文章，文章标题显示为no title发布流程：将利用其它工具编辑好的(post.md)文件,直接复制到blog/sources/_posts目录下hexo g -d # 生成并部署 原因分析及解决：编辑好的(post.md)文件不符合要求，文档开头添加title字段123---title: this is the title. # 每个markdown文件起始行添加title字段，格式--- 添加title字段后，重新发布，文章标题可正常显示。 博客首页设置为简体中文网上搜索，需要修改 _config.yml配置文件中的language字段[language： zh-Hans] 设置语言总是失败及解决办法：区分开站点配置文件(==blog目录下==)及主题配置文件(==blog/themes/hexo-theme-next目录下==)都是_config.yml且都含有language字段正确的配置方式为：修改站点配置文件的language字段，而非主题配置文件关键点：language字段的值设置为 language： zh-CN (blog/themes/hexo-theme-next/languages/==zh-CN.yml==)该目录下无zh-Hans配置文件 常用命令总结123456# 组合命令hexo g -d # 生成并部署hexo clean # 清除缓存hexo generate # 保存修改，生成文件hexo deploy # 发布到 githubhexo s --debug # 启动本地服务调试 参考资料:Next官网参考资料:个人博客，从入坑开始]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Centos-SuSE关闭防火墙]]></title>
+    <url>%2F2018%2F06%2F28%2FCentos-SuSE%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99%2F</url>
+    <content type="text"><![CDATA[查看防火墙状态12systemctl status firewalld.servie// 查看防火墙状态 关闭防火墙12345systemctl stop firewalld.service// 关闭防火墙// suse系统systemctl stop SuSEfirewall2 禁用防火墙开启启动12345systemctl disable firewalld.service// 禁止firewall开机启动 //suse系统systemctl disable SuSEfirewall2]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[ElementUi rules表单验证(pattern正则表达式)]]></title>
+    <url>%2F2018%2F06%2F28%2FElementUi%20rules%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81(pattern%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)%2F</url>
+    <content type="text"><![CDATA[表单验证123456789virtual_ipaddress: [ &#123;required: true, message: '请输入管理节点虚拟IP', trigger: 'blur'&#125;, &#123;min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'&#125;, # 正则表达式，校验IP地址 &#123; pattern: /^(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])$/, message: '请输入正确格式的IP地址' &#125;] 参考资料：rules表单验证 表单验证之data为多层obj数据1234567891011121314151617181920212223242526272829303132333435// 检验baseConfigForm-&gt;base_config-&gt;ambari_clustername为例baseConfigForm: &#123; base_config: &#123; ambari_clustername: '', keycloak_realm_name: '', keycloak_realm_admin: '', &#125;, config_plan: '', selected_hosts: []&#125;// template中的编写// 深层的数据&lt;el-form :model="baseConfigForm" :rules="rules"&gt; &lt;el-form-item prop="base_config.ambari_clustername"&gt; &lt;el-input :model="baseConfigForm.base_config.ambari_clustername"&gt; &lt;/el-input&gt; &lt;/el-form-item&gt;// 常规的单层数据 &lt;el-form-item prop="config_plan"&gt; &lt;el-input :model="baseConfigForm.config_plan"&gt; &lt;/el-input&gt; &lt;/el-form-item&gt;&lt;/el-form&gt;// rules的编写：rulse:&#123; config_plan: [ &#123;required: true, message: '请选择配置方案', trigger: 'change'&#125; ], 'base_config.keycloak_realm_name': [ &#123;required: true, message: '请输入KeyCloak域名', trigger: 'blur'&#125;, &#123;validator: validateRealm, trigger: 'blur'&#125; ]&#125; 注意事项： 标签中的prop属性必须与item中的model中的数据一一对应,校验才生效！ 参考资料：表单验证model绑定的是一个对象下的某个子对象属性]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Vue.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F02%2F09%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
+</search>
