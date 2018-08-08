@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[测试图片]]></title>
-    <url>%2F2018%2F07%2F27%2F%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87%2F</url>
-    <content type="text"><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[jupyter的安装及使用]]></title>
     <url>%2F2018%2F07%2F14%2Fjupyter%E7%9A%84%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%2F</url>
     <content type="text"><![CDATA[安装1pip install jupyter 生成配置文件1jupyter notebook --generate-config 设置登录密码123jupyter notebook password# 输出结果Wrote hashed password to /root/.jupyter/jupyter_notebook_config.json 后台启动服务1234nohup jupyter notebook --no-browser --allow-root --ip=0.0.0.0 &amp;# nohup command &amp; 设置后台运行# --no-browser 启动不打开浏览器# --ip 指定ip地址，可以为任意ip 使用浏览器地址栏输入server_ip:8888 访问，出现登录界面，输入设置的密码，即可使用。]]></content>
