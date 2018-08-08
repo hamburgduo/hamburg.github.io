@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[vue-resource几种使用场景记录]]></title>
+    <url>%2F2018%2F08%2F08%2Fvue-resource%E5%87%A0%E7%A7%8D%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[post提交的数据格式为(form-data/x-www-form-urlencoded) post(url, [body], [options])options = {emulateJSON: true}以 application/x-www-form-urlencoded 内容类型发送请求报文 1234567891011121314let formData = &#123; username: 'admin', password: 'admin'&#125;;this.$http.post('/login', formData, &#123;emulateJSON: true&#125;).then( (response) =&gt; &#123; // 请求成功 &#125;, (response) =&gt; &#123; // 请求失败 &#125;) post设置请求头(headers) post(url, [body], [options])body为空占位，headers属于第三个参数[options]12345678910let token = 'Basic YWRtaW46YWRtaW4='this.$http.post('/auth',&#123;&#125;,&#123;headers: &#123;Authorization: token&#125;&#125;).then( (response) =&gt; &#123; // 请求成功 &#125;, (response) =&gt; &#123; // 请求失败 &#125;) 参考资料：How to set headers? post提交json数据(最常规)12345678910111213let post_data = &#123; group:'test', name:'foundation'&#125;this.$http.post('/platform_hostsgroup'), post_data).then( (response) =&gt; &#123; // 请求成功 &#125;, (response) =&gt; &#123; // 请求失败 &#125;) delete方法提交json数据使用方式：this.$http.delete(url, {body: data})12345678910let host_ip = '172.16.10.100'this.$http.delete('/host', &#123;body: &#123;ip: host_ip&#125;&#125;).then( (response) =&gt; &#123; // 请求成功 &#125;, (response) =&gt; &#123; // 请求失败 &#125;) 参考资料：vue http请求 delete传值问题]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Vue.js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[jupyter的安装及使用]]></title>
     <url>%2F2018%2F07%2F14%2Fjupyter%E7%9A%84%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%2F</url>
     <content type="text"><![CDATA[安装1pip install jupyter 生成配置文件1jupyter notebook --generate-config 设置登录密码123jupyter notebook password# 输出结果Wrote hashed password to /root/.jupyter/jupyter_notebook_config.json 后台启动服务1234nohup jupyter notebook --no-browser --allow-root --ip=0.0.0.0 &amp;# nohup command &amp; 设置后台运行# --no-browser 启动不打开浏览器# --ip 指定ip地址，可以为任意ip 使用浏览器地址栏输入server_ip:8888 访问，出现登录界面，输入设置的密码，即可使用。]]></content>
