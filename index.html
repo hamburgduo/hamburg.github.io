@@ -138,6 +138,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-nmap使用记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/09/nmap使用记录/">nmap使用记录</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/09/nmap使用记录/" class="archive-article-date">
+  	<time datetime="2018-08-09T12:48:04.829Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型</p>
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> nmap <span class="comment"># centos redhat</span></span><br></pre></td></tr></table></figure>
+<h5 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span>.*</span><br><span class="line">nmap -T4 -sn <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
+<p>以上三条命令的运行效果一样，得到相同的结果，即扫描13网段的256个ip主机的活跃状态<br><img src="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/9/9b283ff26f2eeb3dac70b21b91d60b01.jpg" alt="image"><br>参数说明：<br>nmap –help<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-sn:<span class="built_in"> Ping </span>Scan - <span class="builtin-name">disable</span><span class="built_in"> port </span>scan #ping 扫描，禁用端口扫描</span><br><span class="line">-T&lt;0-5&gt;: <span class="builtin-name">Set</span> timing template (higher is faster) # -T4 代表快速扫描</span><br><span class="line">* # 是通配符</span><br><span class="line">0/24 # 代表子网掩码(255.255.255.0)</span><br></pre></td></tr></table></figure></p>
+<p> <a href="https://blog.csdn.net/hzhsan/article/details/44100215" target="_blank" rel="noopener">关于子网掩码的问题请戳我</a><br> 而之前一直使用-sP参数，nmap –help 与man nmap都未发现-sP参数。网上搜索一番：<br> | -sT         | TCP  connect()扫描，这是最基本的TCP扫描方式。这种扫描很容易被检测到，在目标主机的日志中会记录大批的连接请求以及错误信息。 |<br>| ———– | ———————————————————— |<br>| -sS         | TCP同步扫描(TCP  SYN)，因为不必全部打开一个TCP连接，所以这项技术通常称为半开扫描(half-open)。这项技术最大的好处是，很少有系统能够把这记入系统日志。不过，你需要root权限来定制SYN数据包。 |<br>| -sF,-sX,-sN | 秘密FIN数据包扫描、圣诞树(Xmas  Tree)、空(Null)扫描模式。这些扫描方式的理论依据是：关闭的端口需要对你的探测包回应RST包，而打开的端口必需忽略有问题的包(参考RFC  793第64页)。 |<br>| -sP         | ping扫描，用ping方式检查网络上哪些主机正在运行。当主机阻塞ICMP  echo请求包是ping扫描是无效的。nmap在任何情况下都会进行ping扫描，只有目标主机处于运行状态，才会进行后续的扫描。 |<br>| -sU         | 如果你想知道在某台主机上提供哪些UDP(用户数据报协议,RFC768)服务，可以使用此选项。 |<br>| -sA         | ACK扫描，这项高级的扫描方法通常可以用来穿过防火墙。          |<br>| -sW         | 滑动窗口扫描，非常类似于ACK的扫描。                          |<br>| -sR         | RPC扫描，和其它不同的端口扫描方法结合使用。                  |<br>| -b          | FTP反弹攻击(bounce  attack)，连接到防火墙后面的一台FTP服务器做代理，接着进行端口扫描。 |<br><a href="http://linux.51yip.com/search/nmap" target="_blank" rel="noopener">nmap 使用参考</a><br>继续查看官网发现一句英文的解释：<br>In previous releases of Nmap, -sn was known as -sP.即旧版中为-sP<br><a href="https://nmap.org/book/man-host-discovery.html" target="_blank" rel="noopener">官网英文doc参考</a></p>
+<h5 id="常见的使用方式"><a href="#常见的使用方式" class="headerlink" title="常见的使用方式"></a>常见的使用方式</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap <span class="number">192.168</span><span class="number">.0</span><span class="number">.101</span><span class="number">-110</span> # ip范围</span><br><span class="line">nmap <span class="number">192.168</span><span class="number">.0</span><span class="number">.101</span>,<span class="number">102</span>,<span class="number">103</span> # 逗号扫描多个主机</span><br></pre></td></tr></table></figure>
+<p><a href="http://blog.jobbole.com/54595/" target="_blank" rel="noopener">更多使用:详见</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/09/nmap使用记录/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-vue-resource几种使用场景记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -923,6 +1003,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
             
             <div class="clearfix"></div>
