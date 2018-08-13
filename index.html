@@ -239,10 +239,30 @@
 </tbody>
 </table>
 <h5 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rw-r--r--</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Not Executable</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> chmod +x test_do.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rwxr-xr-x</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Executable</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %a test_do.sh </span></span><br><span class="line">755</span><br></pre></td></tr></table></figure>
-<h5 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h5><hr>
-<p>对于&amp;&amp;：当前面执行条件正确时，执行&amp;&amp;之后的，错误就停住了。<br>对于||：当前面的执行条件错误时，执行||之后的，正确就停住了。<br>因此根据&amp;&amp;、||的特性可以对条件作出一个模式“条件 &amp;&amp; 执行1|| 执行2”。<br>当条件为真时执行1；当为假时“条件&amp;&amp;执行1”绝对为假，因此执行2。</p>
-<p>stat 这个命令可以实现数字形式输出文件的权限<br> |参数|参数含义|<br> |—-|——–|<br> |- c|  –format=FORMAT|<br> | %a| access rights in octal （8进制数显示文件权限）|<br> | %A| access rights in human readable form（可阅读方式显示文件权限）|</p>
-<hr>
+<h5 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h5><p>对于&amp;&amp;：当前面执行条件正确时，执行&amp;&amp;之后的，错误就停住了。<br>对于||：当前面的执行条件错误时，执行||之后的，正确就停住了。<br>因此根据&amp;&amp;、||的特性可以对条件作出一个模式“条件 &amp;&amp; 执行1|| 执行2”。<br>当条件为真时执行1；当为假时“条件&amp;&amp;执行1”绝对为假，因此执行2。</p>
+<p>stat 这个命令可以实现数字形式输出文件的权限</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>- c</td>
+<td>–format=FORMAT</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>access rights in octal （8进制数显示文件权限）</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>access rights in human readable form（可阅读方式显示文件权限）</td>
+</tr>
+</tbody>
+</table>
 <h5 id="3-关于两个整数之间的判定，例如-test-n1-eq-n2"><a href="#3-关于两个整数之间的判定，例如-test-n1-eq-n2" class="headerlink" title="3. 关于两个整数之间的判定，例如 test n1 -eq n2"></a>3. 关于两个整数之间的判定，例如 test n1 -eq n2</h5><table>
 <thead>
 <tr>
