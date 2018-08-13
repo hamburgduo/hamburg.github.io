@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>nmap使用记录 | 一亩三分地</title>
+  <title>shell编程--判断条件 | 一亩三分地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型 安装1yum -y install nmap # centos redhat 主机发现123nmap -T4 -sP 10.110.13.0/24nmap -T4 -sP 10.110.13.*nmap -T4 -s">
+  <meta name="description" content="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否   测试的标志 代表意义     -e 该『档名』是否存在？(常用)   -f 该『档名』是否存在且为文件(file)？(常用)   -d 该『档名』是否存在且为目录(directory)？(常用)   -b 该『档名』是否存在且为一个 block device 装置？   -c 该『档名』是否存在且为一个 c">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nmap使用记录">
-<meta property="og:url" content="http://yoursite.com/2018/08/09/nmap使用记录/index.html">
+<meta property="og:title" content="shell编程--判断条件">
+<meta property="og:url" content="http://yoursite.com/2018/08/13/shell编程--判断条件/index.html">
 <meta property="og:site_name" content="一亩三分地">
-<meta property="og:description" content="Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型 安装1yum -y install nmap # centos redhat 主机发现123nmap -T4 -sP 10.110.13.0/24nmap -T4 -sP 10.110.13.*nmap -T4 -s">
+<meta property="og:description" content="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否   测试的标志 代表意义     -e 该『档名』是否存在？(常用)   -f 该『档名』是否存在且为文件(file)？(常用)   -d 该『档名』是否存在且为目录(directory)？(常用)   -b 该『档名』是否存在且为一个 block device 装置？   -c 该『档名』是否存在且为一个 c">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/9/9b283ff26f2eeb3dac70b21b91d60b01.jpg">
-<meta property="og:updated_time" content="2018-08-09T13:08:28.477Z">
+<meta property="og:updated_time" content="2018-08-13T13:25:20.305Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nmap使用记录">
-<meta name="twitter:description" content="Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型 安装1yum -y install nmap # centos redhat 主机发现123nmap -T4 -sP 10.110.13.0/24nmap -T4 -sP 10.110.13.*nmap -T4 -s">
-<meta name="twitter:image" content="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/9/9b283ff26f2eeb3dac70b21b91d60b01.jpg">
+<meta name="twitter:title" content="shell编程--判断条件">
+<meta name="twitter:description" content="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否   测试的标志 代表意义     -e 该『档名』是否存在？(常用)   -f 该『档名』是否存在且为文件(file)？(常用)   -d 该『档名』是否存在且为目录(directory)？(常用)   -b 该『档名』是否存在且为一个 block device 装置？   -c 该『档名』是否存在且为一个 c">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -143,76 +141,146 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-nmap使用记录" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-shell编程--判断条件" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      nmap使用记录
+      shell编程--判断条件
     </h1>
   
 
         
-        <a href="/2018/08/09/nmap使用记录/" class="archive-article-date">
-  	<time datetime="2018-08-09T12:48:04.829Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
+        <a href="/2018/08/13/shell编程--判断条件/" class="archive-article-date">
+  	<time datetime="2018-08-13T13:25:19.698Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型</p>
-<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> nmap <span class="comment"># centos redhat</span></span><br></pre></td></tr></table></figure>
-<h5 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span>.*</span><br><span class="line">nmap -T4 -sn <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
-<p>以上三条命令的运行效果一样，得到相同的结果，即扫描13网段的256个ip主机的活跃状态<br><img src="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/9/9b283ff26f2eeb3dac70b21b91d60b01.jpg" alt="image"><br>参数说明：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nmap --help </span><br><span class="line">-sn:<span class="built_in"> Ping </span>Scan - <span class="builtin-name">disable</span><span class="built_in"> port </span>scan #ping 扫描，禁用端口扫描</span><br><span class="line">-T&lt;0-5&gt;: <span class="builtin-name">Set</span> timing template (higher is faster) # -T4 代表快速扫描</span><br><span class="line">* # 是通配符</span><br><span class="line">0/24 # 代表子网掩码(255.255.255.0)</span><br></pre></td></tr></table></figure></p>
-<p> <a href="https://blog.csdn.net/hzhsan/article/details/44100215" target="_blank" rel="noopener">关于子网掩码的问题请戳我</a><br> 而之前一直使用-sP参数，nmap –help 与man nmap都未发现-sP参数。网上搜索一番：</p>
-<table>
+        <h5 id="1-关于某个档名的『文件类型』判断，如-test-e-filename-表示存在否"><a href="#1-关于某个档名的『文件类型』判断，如-test-e-filename-表示存在否" class="headerlink" title="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否"></a>1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否</h5><table>
 <thead>
 <tr>
-<th>-sT</th>
-<th>TCP  connect()扫描，这是最基本的TCP扫描方式。这种扫描很容易被检测到，在目标主机的日志中会记录大批的连接请求以及错误信息。</th>
+<th>测试的标志</th>
+<th>代表意义</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>-sS</td>
-<td>TCP同步扫描(TCP  SYN)，因为不必全部打开一个TCP连接，所以这项技术通常称为半开扫描(half-open)。这项技术最大的好处是，很少有系统能够把这记入系统日志。不过，你需要root权限来定制SYN数据包。</td>
+<td>-e</td>
+<td>该『档名』是否存在？(常用)</td>
 </tr>
 <tr>
-<td>-sF,-sX,-sN</td>
-<td>秘密FIN数据包扫描、圣诞树(Xmas  Tree)、空(Null)扫描模式。这些扫描方式的理论依据是：关闭的端口需要对你的探测包回应RST包，而打开的端口必需忽略有问题的包(参考RFC  793第64页)。</td>
+<td>-f</td>
+<td>该『档名』是否存在且为文件(file)？(常用)</td>
 </tr>
 <tr>
-<td>-sP</td>
-<td>ping扫描，用ping方式检查网络上哪些主机正在运行。当主机阻塞ICMP  echo请求包是ping扫描是无效的。nmap在任何情况下都会进行ping扫描，只有目标主机处于运行状态，才会进行后续的扫描。</td>
-</tr>
-<tr>
-<td>-sU</td>
-<td>如果你想知道在某台主机上提供哪些UDP(用户数据报协议,RFC768)服务，可以使用此选项。</td>
-</tr>
-<tr>
-<td>-sA</td>
-<td>ACK扫描，这项高级的扫描方法通常可以用来穿过防火墙。</td>
-</tr>
-<tr>
-<td>-sW</td>
-<td>滑动窗口扫描，非常类似于ACK的扫描。</td>
-</tr>
-<tr>
-<td>-sR</td>
-<td>RPC扫描，和其它不同的端口扫描方法结合使用。</td>
+<td>-d</td>
+<td>该『档名』是否存在且为目录(directory)？(常用)</td>
 </tr>
 <tr>
 <td>-b</td>
-<td>FTP反弹攻击(bounce  attack)，连接到防火墙后面的一台FTP服务器做代理，接着进行端口扫描。</td>
+<td>该『档名』是否存在且为一个 block device 装置？</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>该『档名』是否存在且为一个 character device 装置？</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>该『档名』是否存在且为一个 Socket 文件？</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>该『档名』是否存在且为一个 FIFO (pipe) 文件？</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>该『档名』是否存在且为一个连结档？</td>
 </tr>
 </tbody>
 </table>
-<p><a href="http://linux.51yip.com/search/nmap" target="_blank" rel="noopener">nmap 使用参考</a><br>继续查看官网发现一句英文的解释：<br>In previous releases of Nmap, -sn was known as -sP.即旧版中为-sP<br><a href="https://nmap.org/book/man-host-discovery.html" target="_blank" rel="noopener">官网英文doc参考</a></p>
-<h5 id="常见的使用方式"><a href="#常见的使用方式" class="headerlink" title="常见的使用方式"></a>常见的使用方式</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap <span class="number">192.168</span><span class="number">.0</span><span class="number">.101</span><span class="number">-110</span> # ip范围</span><br><span class="line">nmap <span class="number">192.168</span><span class="number">.0</span><span class="number">.101</span>,<span class="number">102</span>,<span class="number">103</span> # 逗号扫描多个主机</span><br></pre></td></tr></table></figure>
-<p><a href="http://blog.jobbole.com/54595/" target="_blank" rel="noopener">更多使用:详见</a></p>
+<h5 id="2-关于文件的权限测试，如-test-r-filename-表示可读否-但-root-权限常有例外"><a href="#2-关于文件的权限测试，如-test-r-filename-表示可读否-但-root-权限常有例外" class="headerlink" title="2. 关于文件的权限测试，如 test -r filename 表示可读否 (但 root 权限常有例外)"></a>2. 关于文件的权限测试，如 test -r filename 表示可读否 (但 root 权限常有例外)</h5><table>
+<thead>
+<tr>
+<th>测试的标志</th>
+<th>代表的意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-r</td>
+<td>侦测该档名是否存在且具有『可读』的权限？</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>侦测该档名是否存在且具有『可写』的权限？</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>侦测该档名是否存在且具有『可运行』的权限？</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>侦测该档名是否存在且具有『SUID』的属性？</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>侦测该档名是否存在且具有『SGID』的属性？</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>侦测该档名是否存在且具有『Sticky bit』的属性？</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>侦测该档名是否存在且为『非空白文件』？</td>
+</tr>
+</tbody>
+</table>
+<h5 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rw-r--r--</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Not Executable</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> chmod +x test_do.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rwxr-xr-x</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Executable</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %a test_do.sh </span></span><br><span class="line">755</span><br></pre></td></tr></table></figure>
+<h5 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h5><hr>
+<p>对于&amp;&amp;：当前面执行条件正确时，执行&amp;&amp;之后的，错误就停住了。<br>对于||：当前面的执行条件错误时，执行||之后的，正确就停住了。<br>因此根据&amp;&amp;、||的特性可以对条件作出一个模式“条件 &amp;&amp; 执行1|| 执行2”。<br>当条件为真时执行1；当为假时“条件&amp;&amp;执行1”绝对为假，因此执行2。</p>
+<p>stat 这个命令可以实现数字形式输出文件的权限<br> |参数|参数含义|<br> |—-|——–|<br> |- c|  –format=FORMAT|<br> | %a| access rights in octal （8进制数显示文件权限）|<br> | %A| access rights in human readable form（可阅读方式显示文件权限）|</p>
+<hr>
+<h5 id="3-关于两个整数之间的判定，例如-test-n1-eq-n2"><a href="#3-关于两个整数之间的判定，例如-test-n1-eq-n2" class="headerlink" title="3. 关于两个整数之间的判定，例如 test n1 -eq n2"></a>3. 关于两个整数之间的判定，例如 test n1 -eq n2</h5><table>
+<thead>
+<tr>
+<th>测试的标志</th>
+<th>代表的意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-eq</td>
+<td>两数值相等 (equal)</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td>两数值不等 (not equal)</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>n1 大于 n2 (greater than)</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>n1 小于 n2 (less than)</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>n1 大于等于 n2 (greater than or equal)</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>n1 小于等于 n2 (less than or equal)</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://cn.linux.vbird.org/linux_basic/0340bashshell-scripts.php#test" target="_blank" rel="noopener">鸟哥Linux私房菜： 第十三章、3.1 test</a><br><a href="https://www.cnblogs.com/kaituorensheng/archive/2013/03/25/2981487.html" target="_blank" rel="noopener">shell编程——判断条件</a></p>
 
       
 
@@ -313,7 +381,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/08/09/nmap使用记录/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/08/13/shell编程--判断条件/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -327,18 +395,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/13/shell编程--判断条件/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          shell编程--判断条件
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/08/08/vue-resource几种使用场景记录/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">vue-resource几种使用场景记录</div>
+    <a href="/2018/08/09/nmap使用记录/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">nmap使用记录</div>
       <i class="icon-circle-right"></i>
     </a>
   
