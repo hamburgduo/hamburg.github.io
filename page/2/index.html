@@ -138,6 +138,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ElementUi rules表单验证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/28/ElementUi rules表单验证/">ElementUi rules表单验证</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/28/ElementUi rules表单验证/" class="archive-article-date">
+  	<time datetime="2018-06-28T07:45:29.257Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="表单验证之pattern正则表达式"><a href="#表单验证之pattern正则表达式" class="headerlink" title="表单验证之pattern正则表达式"></a>表单验证之pattern正则表达式</h5><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">virtual_ipaddress: [</span><br><span class="line">  &#123;required: true, message: '请输入管理节点虚拟IP', trigger: 'blur'&#125;,</span><br><span class="line">  &#123;min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'&#125;,</span><br><span class="line">  # 正则表达式，校验IP地址</span><br><span class="line">  &#123;</span><br><span class="line">    pattern: /^(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="tag">\<span class="name">.</span></span>(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="tag">\<span class="name">.</span></span>(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="tag">\<span class="name">.</span></span>(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="formula">$/,</span></span><br><span class="line"><span class="formula">    message: '请输入正确格式的IP地址'</span></span><br><span class="line"><span class="formula">  &#125;</span></span><br><span class="line"><span class="formula">]</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://segmentfault.com/a/1190000012551362#articleHeader0" target="_blank" rel="noopener">参考资料：rules表单验证</a></p>
+<h5 id="表单验证之data为多层obj数据"><a href="#表单验证之data为多层obj数据" class="headerlink" title="表单验证之data为多层obj数据"></a>表单验证之data为多层obj数据</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">// 检验baseConfigForm-&gt;base_config-&gt;ambari_clustername为例</span><br><span class="line">baseConfigForm: &#123;</span><br><span class="line">  base_confi<span class="variable">g:</span> &#123;</span><br><span class="line">    ambari_clustername: <span class="string">''</span>,</span><br><span class="line">    keycloak_realm_name: <span class="string">''</span>,</span><br><span class="line">    keycloak_realm_admin: <span class="string">''</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  config_plan: <span class="string">''</span>,</span><br><span class="line">  selected_host<span class="variable">s:</span> []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// template中的编写</span><br><span class="line">// 深层的数据</span><br><span class="line">&lt;<span class="keyword">el</span>-form :model=<span class="string">"baseConfigForm"</span> :rules=<span class="string">"rules"</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">el</span>-form-item prop=<span class="string">"base_config.ambari_clustername"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">el</span>-<span class="built_in">input</span> :model=<span class="string">"baseConfigForm.base_config.ambari_clustername"</span>&gt;</span><br><span class="line">    &lt;/<span class="keyword">el</span>-<span class="built_in">input</span>&gt;</span><br><span class="line">  &lt;/<span class="keyword">el</span>-form-item&gt;</span><br><span class="line">// 常规的单层数据</span><br><span class="line">  &lt;<span class="keyword">el</span>-form-item prop=<span class="string">"config_plan"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">el</span>-<span class="built_in">input</span> :model=<span class="string">"baseConfigForm.config_plan"</span>&gt;</span><br><span class="line">    &lt;/<span class="keyword">el</span>-<span class="built_in">input</span>&gt;</span><br><span class="line">  &lt;/<span class="keyword">el</span>-form-item&gt;</span><br><span class="line">&lt;/<span class="keyword">el</span>-form&gt;</span><br><span class="line"></span><br><span class="line">// rules的编写：</span><br><span class="line">rulse:&#123;</span><br><span class="line">  config_plan: [</span><br><span class="line">    &#123;required: true, message: <span class="string">'请选择配置方案'</span>, trigger: <span class="string">'change'</span>&#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="string">'base_config.keycloak_realm_name'</span>: [</span><br><span class="line">    &#123;required: true, message: <span class="string">'请输入KeyCloak域名'</span>, trigger: <span class="string">'blur'</span>&#125;,</span><br><span class="line">    &#123;validator: validateRealm, trigger: <span class="string">'blur'</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>注意事项：</em></p>
+<p><el-form-item>标签中的prop属性必须与item中的model中的数据一一对应,校验才生效！</el-form-item></p>
+<p><a href="https://github.com/ElemeFE/element/issues/1655" target="_blank" rel="noopener">参考资料：表单验证model绑定的是一个对象下的某个子对象属性</a></p>
+<h5 id="表单验证之type-array下拉多选，多CheckBox"><a href="#表单验证之type-array下拉多选，多CheckBox" class="headerlink" title="表单验证之type:array下拉多选，多CheckBox"></a>表单验证之type:array下拉多选，多CheckBox</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// template 多选</span><br><span class="line">&lt;<span class="keyword">el</span>-form-item :label=<span class="string">"$t('platformList.host')"</span> :label-width=<span class="string">"formLabelWidth"</span> prop=<span class="string">"selected_hosts"</span>&gt;</span><br><span class="line">          &lt;<span class="keyword">el</span>-select v-model=<span class="string">"newPlatformInfo.selected_hosts"</span> size=<span class="string">"large"</span> multiple</span><br><span class="line">                     :placeholder=<span class="string">"$t('platformList.host_placeholder')"</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">el</span>-option</span><br><span class="line">              v-<span class="keyword">for</span>=<span class="string">"item in availableHosts"</span></span><br><span class="line">              :key=<span class="string">"item"</span></span><br><span class="line">              :label=<span class="string">"item"</span></span><br><span class="line">              :value=<span class="string">"item"</span>&gt;</span><br><span class="line">            &lt;/<span class="keyword">el</span>-option&gt;</span><br><span class="line">          &lt;/<span class="keyword">el</span>-select&gt;</span><br><span class="line">&lt;/<span class="keyword">el</span>-form-item&gt;</span><br><span class="line">// rules编写</span><br><span class="line">rule<span class="variable">s:</span>&#123;</span><br><span class="line">   selected_host<span class="variable">s:</span> [</span><br><span class="line">          &#123;required: true, message: <span class="string">'请选择主机'</span>, trigger: <span class="string">'change'</span>&#125;,</span><br><span class="line">          &#123; <span class="built_in">type</span>: <span class="string">'array'</span>, <span class="built_in">max</span>: <span class="number">3</span>, message: <span class="string">'基础环境最多需要 3 台主机'</span>, trigger: <span class="string">'change'</span> &#125;</span><br><span class="line">        ], </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>效果图：</strong><br><img src="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/14/84c101024a1ea2e836a469eb9ad223bb.jpg" alt="image"></p>
+<p><a href="https://www.iviewui.com/components/form" target="_blank" rel="noopener">参考资料：iView Form 表单</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/28/ElementUi rules表单验证/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
