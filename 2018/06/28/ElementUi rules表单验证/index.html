@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="一亩三分地">
 <meta property="og:description" content="表单验证之pattern正则表达式123456789virtual_ipaddress: [  &amp;#123;required: true, message: &apos;请输入管理节点虚拟IP&apos;, trigger: &apos;blur&apos;&amp;#125;,  &amp;#123;min: 3, max: 16, message: &apos;长度在 3 到 16 个字符&apos;, trigger: &apos;blur&apos;&amp;#125;,  # 正则表达式，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/14/84c101024a1ea2e836a469eb9ad223bb.jpg">
-<meta property="og:updated_time" content="2018-08-14T06:48:44.591Z">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/9973997d8101df26265bda2bc975a21e.jpg">
+<meta property="og:updated_time" content="2018-08-29T11:21:42.067Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElementUi rules表单验证">
 <meta name="twitter:description" content="表单验证之pattern正则表达式123456789virtual_ipaddress: [  &amp;#123;required: true, message: &apos;请输入管理节点虚拟IP&apos;, trigger: &apos;blur&apos;&amp;#125;,  &amp;#123;min: 3, max: 16, message: &apos;长度在 3 到 16 个字符&apos;, trigger: &apos;blur&apos;&amp;#125;,  # 正则表达式，">
-<meta name="twitter:image" content="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/14/84c101024a1ea2e836a469eb9ad223bb.jpg">
+<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/9973997d8101df26265bda2bc975a21e.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -50,7 +50,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="http://pcglmnwev.bkt.clouddn.com/head.jpg" class="js-avatar">
+			<img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/add4aede739406939017a0997fb26420.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Hamburg</a></h1>
@@ -102,7 +102,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="http://pcglmnwev.bkt.clouddn.com/head.jpg" class="js-avatar">
+				<img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/add4aede739406939017a0997fb26420.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Hamburg</h1>
@@ -170,7 +170,8 @@
 <p><el-form-item>标签中的prop属性必须与item中的model中的数据一一对应,校验才生效！</el-form-item></p>
 <p><a href="https://github.com/ElemeFE/element/issues/1655" target="_blank" rel="noopener">参考资料：表单验证model绑定的是一个对象下的某个子对象属性</a></p>
 <h5 id="表单验证之type-array下拉多选，多CheckBox"><a href="#表单验证之type-array下拉多选，多CheckBox" class="headerlink" title="表单验证之type:array下拉多选，多CheckBox"></a>表单验证之type:array下拉多选，多CheckBox</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// template 多选</span><br><span class="line">&lt;<span class="keyword">el</span>-form-item :label=<span class="string">"$t('platformList.host')"</span> :label-width=<span class="string">"formLabelWidth"</span> prop=<span class="string">"selected_hosts"</span>&gt;</span><br><span class="line">          &lt;<span class="keyword">el</span>-select v-model=<span class="string">"newPlatformInfo.selected_hosts"</span> size=<span class="string">"large"</span> multiple</span><br><span class="line">                     :placeholder=<span class="string">"$t('platformList.host_placeholder')"</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">el</span>-option</span><br><span class="line">              v-<span class="keyword">for</span>=<span class="string">"item in availableHosts"</span></span><br><span class="line">              :key=<span class="string">"item"</span></span><br><span class="line">              :label=<span class="string">"item"</span></span><br><span class="line">              :value=<span class="string">"item"</span>&gt;</span><br><span class="line">            &lt;/<span class="keyword">el</span>-option&gt;</span><br><span class="line">          &lt;/<span class="keyword">el</span>-select&gt;</span><br><span class="line">&lt;/<span class="keyword">el</span>-form-item&gt;</span><br><span class="line">// rules编写</span><br><span class="line">rule<span class="variable">s:</span>&#123;</span><br><span class="line">   selected_host<span class="variable">s:</span> [</span><br><span class="line">          &#123;required: true, message: <span class="string">'请选择主机'</span>, trigger: <span class="string">'change'</span>&#125;,</span><br><span class="line">          &#123; <span class="built_in">type</span>: <span class="string">'array'</span>, <span class="built_in">max</span>: <span class="number">3</span>, message: <span class="string">'基础环境最多需要 3 台主机'</span>, trigger: <span class="string">'change'</span> &#125;</span><br><span class="line">        ], </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>效果图：</strong><br><img src="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/14/84c101024a1ea2e836a469eb9ad223bb.jpg" alt="image"></p>
+<p><strong>效果图：</strong></p>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/9973997d8101df26265bda2bc975a21e.jpg" alt="image"></p>
 <p><a href="https://www.iviewui.com/components/form" target="_blank" rel="noopener">参考资料：iView Form 表单</a></p>
 
       
@@ -189,13 +190,13 @@
                   <div class="reward-box">
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="http://pcglmnwev.bkt.clouddn.com/alipay.jpg">
+                      <img class="reward-img" src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/8fd05f9cb87b23b5a1147beef043cca2.jpg">
                       <span class="reward-type">支付宝</span>
                     </div>
                     
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="http://pcglmnwev.bkt.clouddn.com/wechat.jpg">
+                      <img class="reward-img" src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/ffae88b991959d6c8ff83ec2bb2dacbe.jpg">
                       <span class="reward-type">微信</span>
                     </div>
                     
