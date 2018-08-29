@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="一亩三分地">
 <meta property="og:description" content="Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型 安装1yum -y install nmap # centos redhat 主机发现123nmap -T4 -sP 10.110.13.0/24nmap -T4 -sP 10.110.13.*nmap -T4 -s">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/9/9b283ff26f2eeb3dac70b21b91d60b01.jpg">
-<meta property="og:updated_time" content="2018-08-09T13:08:28.477Z">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/91e29a7d4e9f7e08d3d75cfe3846f12c.jpg">
+<meta property="og:updated_time" content="2018-08-29T11:17:57.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nmap使用记录">
 <meta name="twitter:description" content="Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型 安装1yum -y install nmap # centos redhat 主机发现123nmap -T4 -sP 10.110.13.0/24nmap -T4 -sP 10.110.13.*nmap -T4 -s">
-<meta name="twitter:image" content="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/9/9b283ff26f2eeb3dac70b21b91d60b01.jpg">
+<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/91e29a7d4e9f7e08d3d75cfe3846f12c.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -166,7 +166,7 @@
         <p>Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型</p>
 <h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> nmap <span class="comment"># centos redhat</span></span><br></pre></td></tr></table></figure>
 <h5 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span>.*</span><br><span class="line">nmap -T4 -sn <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
-<p>以上三条命令的运行效果一样，得到相同的结果，即扫描13网段的256个ip主机的活跃状态<br><img src="http://pcglmnwev.bkt.clouddn.com/jpg/2018/8/9/9b283ff26f2eeb3dac70b21b91d60b01.jpg" alt="image"><br>参数说明：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nmap --help </span><br><span class="line">-sn:<span class="built_in"> Ping </span>Scan - <span class="builtin-name">disable</span><span class="built_in"> port </span>scan #ping 扫描，禁用端口扫描</span><br><span class="line">-T&lt;0-5&gt;: <span class="builtin-name">Set</span> timing template (higher is faster) # -T4 代表快速扫描</span><br><span class="line">* # 是通配符</span><br><span class="line">0/24 # 代表子网掩码(255.255.255.0)</span><br></pre></td></tr></table></figure></p>
+<p>以上三条命令的运行效果一样，得到相同的结果，即扫描13网段的256个ip主机的活跃状态<br><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/91e29a7d4e9f7e08d3d75cfe3846f12c.jpg" alt="image"><br>参数说明：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nmap --help </span><br><span class="line">-sn:<span class="built_in"> Ping </span>Scan - <span class="builtin-name">disable</span><span class="built_in"> port </span>scan #ping 扫描，禁用端口扫描</span><br><span class="line">-T&lt;0-5&gt;: <span class="builtin-name">Set</span> timing template (higher is faster) # -T4 代表快速扫描</span><br><span class="line">* # 是通配符</span><br><span class="line">0/24 # 代表子网掩码(255.255.255.0)</span><br></pre></td></tr></table></figure></p>
 <p> <a href="https://blog.csdn.net/hzhsan/article/details/44100215" target="_blank" rel="noopener">关于子网掩码的问题请戳我</a><br> 而之前一直使用-sP参数，nmap –help 与man nmap都未发现-sP参数。网上搜索一番：</p>
 <table>
 <thead>
@@ -211,7 +211,7 @@
 </tbody>
 </table>
 <p><a href="http://linux.51yip.com/search/nmap" target="_blank" rel="noopener">nmap 使用参考</a><br>继续查看官网发现一句英文的解释：<br>In previous releases of Nmap, -sn was known as -sP.即旧版中为-sP<br><a href="https://nmap.org/book/man-host-discovery.html" target="_blank" rel="noopener">官网英文doc参考</a></p>
-<h5 id="常见的使用方式"><a href="#常见的使用方式" class="headerlink" title="常见的使用方式"></a>常见的使用方式</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap <span class="number">192.168</span><span class="number">.0</span><span class="number">.101</span><span class="number">-110</span> # ip范围</span><br><span class="line">nmap <span class="number">192.168</span><span class="number">.0</span><span class="number">.101</span>,<span class="number">102</span>,<span class="number">103</span> # 逗号扫描多个主机</span><br></pre></td></tr></table></figure>
+<h5 id="常见的使用方式"><a href="#常见的使用方式" class="headerlink" title="常见的使用方式"></a>常见的使用方式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.0.101-110 # ip范围</span><br><span class="line">nmap 192.168.0.101,102,103 # 逗号扫描多个主机</span><br></pre></td></tr></table></figure>
 <p><a href="http://blog.jobbole.com/54595/" target="_blank" rel="noopener">更多使用:详见</a></p>
 
       
