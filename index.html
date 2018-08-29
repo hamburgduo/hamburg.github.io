@@ -138,6 +138,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python魔法变量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/29/python魔法变量/">\*args与\*\*kwargs魔法变量</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/29/python魔法变量/" class="archive-article-date">
+  	<time datetime="2018-08-29T09:04:33.300Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>当函数中参数的数量<strong>可变</strong>时，通常使用魔法变量；<br><em>args 与 \</em>*kwargs 只是习惯写法，你完全可以用 <em>params 与 \</em>*params或者其他任意参数名；<br>当声明一个 <em>args 参数时，此处开始所有的 <strong>位置参数</strong> 被收集成一个名为 args的元组（tuple）中；<br>当声明一个 \</em>*kwargs 参数时， 此处开始所有的 <strong>关键字参数</strong> 被收集为名为 kwargs的字典（dict）中。</p>
+<h5 id="使用顺序："><a href="#使用顺序：" class="headerlink" title="使用顺序："></a>使用顺序：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.命名参数 2.非关键字可变长参数列表 3.关键字可变长参数；</span></span><br><span class="line"><span class="comment"># 关键字可变长参数排最后</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">some_func</span><span class="params">(fargs, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h5 id="函数定义时，代码示例："><a href="#函数定义时，代码示例：" class="headerlink" title="函数定义时，代码示例："></a>函数定义时，代码示例：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">total</span><span class="params">(a=<span class="number">5</span>, *numbers, **phonebook)</span>:</span></span><br><span class="line">    print(<span class="string">'a'</span>, a)</span><br><span class="line">    <span class="comment">#遍历元组中的所有项目</span></span><br><span class="line">    <span class="keyword">for</span> single_item <span class="keyword">in</span> numbers:</span><br><span class="line">        print(<span class="string">'single_item'</span>, single_item)</span><br><span class="line">    <span class="comment">#遍历字典中的所有项目</span></span><br><span class="line">    <span class="keyword">for</span> first_part, second_part <span class="keyword">in</span> phonebook.items():</span><br><span class="line">        print(first_part,second_part)</span><br><span class="line">    </span><br><span class="line">res = total(<span class="number">10</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,Jack=<span class="number">1123</span>,John=<span class="number">2231</span>,Inge=<span class="number">1560</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'a'</span>, <span class="number">10</span>)</span><br><span class="line">(<span class="string">'single_item'</span>, <span class="number">1</span>)</span><br><span class="line">(<span class="string">'single_item'</span>, <span class="number">2</span>)</span><br><span class="line">(<span class="string">'single_item'</span>, <span class="number">3</span>)</span><br><span class="line">(<span class="string">'Inge'</span>, <span class="number">1560</span>)</span><br><span class="line">(<span class="string">'John'</span>, <span class="number">2231</span>)</span><br><span class="line">(<span class="string">'Jack'</span>, <span class="number">1123</span>)</span><br><span class="line"><span class="keyword">None</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="函数调用时，代码示例："><a href="#函数调用时，代码示例：" class="headerlink" title="函数调用时，代码示例："></a>函数调用时，代码示例：</h5><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def print_three_things(<span class="keyword">a</span>, b, c):</span><br><span class="line">    print <span class="string">'a = &#123;0&#125;, b = &#123;1&#125;, c = &#123;2&#125;'</span>.<span class="built_in">format</span>(<span class="keyword">a</span>,b,c)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">a</span> = [<span class="string">'Tom'</span>, <span class="string">'Jack'</span>, <span class="string">'Lucy'</span>]</span><br><span class="line"></span><br><span class="line">print_three_things(*<span class="keyword">a</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span> = Tom, <span class="selector-tag">b</span> = Jack, c = Lucy</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def format_output():</span><br><span class="line">    tom = &#123;</span><br><span class="line">      <span class="string">"gender"</span>:<span class="string">"male"</span>,</span><br><span class="line">        <span class="string">"age"</span>:<span class="number">21</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'gender:&#123;gender&#125;,age:&#123;age&#125;'</span>.<span class="built_in">format</span>(**tom))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'gender: &#123;gender&#125;'</span>.<span class="built_in">format</span>(**tom))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'age: &#123;age&#125;'</span>.<span class="built_in">format</span>(**tom))</span><br><span class="line">   </span><br><span class="line">format_output()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">gender:</span>male,<span class="string">age:</span><span class="number">21</span></span><br><span class="line"><span class="string">gender:</span> male</span><br><span class="line"><span class="string">age:</span> <span class="number">21</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="http://book.pythontips.com/en/latest/args_and_kwargs.html" target="_blank" rel="noopener">参考： <em>args and *</em>kwargs</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/29/python魔法变量/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-数据流重定向" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1061,75 +1152,6 @@
 
 
   
-    <article id="post-Hexo使用问题记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/29/Hexo使用问题记录/">Hexo使用问题记录[文章标题显示no title、设置主页language]</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/29/Hexo使用问题记录/" class="archive-article-date">
-  	<time datetime="2018-06-29T01:51:39.052Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="发布文章，文章标题显示为no-title"><a href="#发布文章，文章标题显示为no-title" class="headerlink" title="发布文章，文章标题显示为no title"></a>发布文章，文章标题显示为no title</h5><h6 id="发布流程："><a href="#发布流程：" class="headerlink" title="发布流程："></a>发布流程：</h6><p>将利用其它工具编辑好的(post.md)文件,直接复制到blog/sources/_posts目录下<br>hexo g -d # 生成并部署</p>
-<h6 id="原因分析及解决："><a href="#原因分析及解决：" class="headerlink" title="原因分析及解决："></a>原因分析及解决：</h6><p>编辑好的(post.md)文件不符合要求，文档开头添加title字段<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">this</span> <span class="string">is</span> <span class="string">the</span> <span class="string">title.</span> <span class="comment"># 每个markdown文件起始行添加title字段，格式</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></p>
-<p>添加title字段后，重新发布，文章标题可正常显示。</p>
-<h5 id="博客首页设置为简体中文"><a href="#博客首页设置为简体中文" class="headerlink" title="博客首页设置为简体中文"></a>博客首页设置为简体中文</h5><p>网上搜索，需要修改 _config.yml配置文件中的language字段<br>[language： zh-Hans]</p>
-<h6 id="设置语言总是失败及解决办法："><a href="#设置语言总是失败及解决办法：" class="headerlink" title="设置语言总是失败及解决办法："></a>设置语言总是失败及解决办法：</h6><p>区分开<strong>站点配置文件</strong>(==blog目录下==)及<strong>主题配置文件</strong>(==blog/themes/hexo-theme-next目录下==)都是_config.yml且都含有language字段<br><strong>正确的配置方式为</strong>：修改<strong>站点配置文件</strong>的language字段，而非<em>主题配置文件</em><br><strong>关键点</strong>：language字段的值设置为 <strong>language： zh-CN</strong> (blog/themes/hexo-theme-next/languages/==zh-CN.yml==)该目录下无zh-Hans配置文件</p>
-<h5 id="常用命令总结"><a href="#常用命令总结" class="headerlink" title="常用命令总结"></a>常用命令总结</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 组合命令</span></span><br><span class="line">hexo g -d <span class="comment"># 生成并部署</span></span><br><span class="line">hexo clean <span class="comment"># 清除缓存</span></span><br><span class="line">hexo generate <span class="comment"># 保存修改，生成文件</span></span><br><span class="line">hexo <span class="keyword">deploy</span>  <span class="comment"># 发布到 github</span></span><br><span class="line">hexo s <span class="params">--debug</span> <span class="comment"># 启动本地服务调试</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">参考资料:Next官网</a><br><a href="https://tianbozhang.coding.me/personal-blog-start.html" target="_blank" rel="noopener">参考资料:个人博客，从入坑开始</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/29/Hexo使用问题记录/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1228,6 +1250,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
