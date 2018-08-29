@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>shell编程--判断条件 | 一亩三分地</title>
+  <title>(*args)与(**kwargs)魔法变量 | 一亩三分地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否   测试的标志 代表意义     -e 该『档名』是否存在？(常用)   -f 该『档名』是否存在且为文件(file)？(常用)   -d 该『档名』是否存在且为目录(directory)？(常用)   -b 该『档名』是否存在且为一个 block device 装置？   -c 该『档名』是否存在且为一个 c">
-<meta name="keywords" content="Linux">
+  <meta name="description" content="当函数中参数的数量可变时，通常使用魔法变量；args 与 \*kwargs 只是习惯写法，你完全可以用 params 与 \*params或者其他任意参数名；当声明一个 args 参数时，此处开始所有的 位置参数 被收集成一个名为 args的元组（tuple）中；当声明一个 \*kwargs 参数时， 此处开始所有的 关键字参数 被收集为名为 kwargs的字典（dict）中。 使用顺序：1234">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell编程--判断条件">
-<meta property="og:url" content="http://yoursite.com/2018/08/13/shell编程--判断条件/index.html">
+<meta property="og:title" content="(*args)与(**kwargs)魔法变量">
+<meta property="og:url" content="http://yoursite.com/2018/08/29/python魔法变量/index.html">
 <meta property="og:site_name" content="一亩三分地">
-<meta property="og:description" content="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否   测试的标志 代表意义     -e 该『档名』是否存在？(常用)   -f 该『档名』是否存在且为文件(file)？(常用)   -d 该『档名』是否存在且为目录(directory)？(常用)   -b 该『档名』是否存在且为一个 block device 装置？   -c 该『档名』是否存在且为一个 c">
+<meta property="og:description" content="当函数中参数的数量可变时，通常使用魔法变量；args 与 \*kwargs 只是习惯写法，你完全可以用 params 与 \*params或者其他任意参数名；当声明一个 args 参数时，此处开始所有的 位置参数 被收集成一个名为 args的元组（tuple）中；当声明一个 \*kwargs 参数时， 此处开始所有的 关键字参数 被收集为名为 kwargs的字典（dict）中。 使用顺序：1234">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-13T13:34:05.891Z">
+<meta property="og:updated_time" content="2018-08-29T11:02:27.272Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell编程--判断条件">
-<meta name="twitter:description" content="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否   测试的标志 代表意义     -e 该『档名』是否存在？(常用)   -f 该『档名』是否存在且为文件(file)？(常用)   -d 该『档名』是否存在且为目录(directory)？(常用)   -b 该『档名』是否存在且为一个 block device 装置？   -c 该『档名』是否存在且为一个 c">
+<meta name="twitter:title" content="(*args)与(**kwargs)魔法变量">
+<meta name="twitter:description" content="当函数中参数的数量可变时，通常使用魔法变量；args 与 \*kwargs 只是习惯写法，你完全可以用 params 与 \*params或者其他任意参数名；当声明一个 args 参数时，此处开始所有的 位置参数 被收集成一个名为 args的元组（tuple）中；当声明一个 \*kwargs 参数时， 此处开始所有的 关键字参数 被收集为名为 kwargs的字典（dict）中。 使用顺序：1234">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -141,166 +141,44 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-shell编程--判断条件" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-python魔法变量" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      shell编程--判断条件
+      (*args)与(**kwargs)魔法变量
     </h1>
   
 
         
-        <a href="/2018/08/13/shell编程--判断条件/" class="archive-article-date">
-  	<time datetime="2018-08-13T13:25:19.698Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-13</time>
+        <a href="/2018/08/29/python魔法变量/" class="archive-article-date">
+  	<time datetime="2018-08-29T09:04:33.300Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="1-关于某个档名的『文件类型』判断，如-test-e-filename-表示存在否"><a href="#1-关于某个档名的『文件类型』判断，如-test-e-filename-表示存在否" class="headerlink" title="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否"></a>1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否</h5><table>
-<thead>
-<tr>
-<th>测试的标志</th>
-<th>代表意义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-e</td>
-<td>该『档名』是否存在？(常用)</td>
-</tr>
-<tr>
-<td>-f</td>
-<td>该『档名』是否存在且为文件(file)？(常用)</td>
-</tr>
-<tr>
-<td>-d</td>
-<td>该『档名』是否存在且为目录(directory)？(常用)</td>
-</tr>
-<tr>
-<td>-b</td>
-<td>该『档名』是否存在且为一个 block device 装置？</td>
-</tr>
-<tr>
-<td>-c</td>
-<td>该『档名』是否存在且为一个 character device 装置？</td>
-</tr>
-<tr>
-<td>-S</td>
-<td>该『档名』是否存在且为一个 Socket 文件？</td>
-</tr>
-<tr>
-<td>-p</td>
-<td>该『档名』是否存在且为一个 FIFO (pipe) 文件？</td>
-</tr>
-<tr>
-<td>-L</td>
-<td>该『档名』是否存在且为一个连结档？</td>
-</tr>
-</tbody>
-</table>
-<h5 id="2-关于文件的权限测试，如-test-r-filename-表示可读否-但-root-权限常有例外"><a href="#2-关于文件的权限测试，如-test-r-filename-表示可读否-但-root-权限常有例外" class="headerlink" title="2. 关于文件的权限测试，如 test -r filename 表示可读否 (但 root 权限常有例外)"></a>2. 关于文件的权限测试，如 test -r filename 表示可读否 (但 root 权限常有例外)</h5><table>
-<thead>
-<tr>
-<th>测试的标志</th>
-<th>代表的意义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-r</td>
-<td>侦测该档名是否存在且具有『可读』的权限？</td>
-</tr>
-<tr>
-<td>-w</td>
-<td>侦测该档名是否存在且具有『可写』的权限？</td>
-</tr>
-<tr>
-<td>-x</td>
-<td>侦测该档名是否存在且具有『可运行』的权限？</td>
-</tr>
-<tr>
-<td>-u</td>
-<td>侦测该档名是否存在且具有『SUID』的属性？</td>
-</tr>
-<tr>
-<td>-g</td>
-<td>侦测该档名是否存在且具有『SGID』的属性？</td>
-</tr>
-<tr>
-<td>-k</td>
-<td>侦测该档名是否存在且具有『Sticky bit』的属性？</td>
-</tr>
-<tr>
-<td>-s</td>
-<td>侦测该档名是否存在且为『非空白文件』？</td>
-</tr>
-</tbody>
-</table>
-<h5 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rw-r--r--</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Not Executable</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> chmod +x test_do.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rwxr-xr-x</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Executable</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %a test_do.sh </span></span><br><span class="line">755</span><br></pre></td></tr></table></figure>
-<h5 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h5><p>对于&amp;&amp;：当前面执行条件正确时，执行&amp;&amp;之后的，错误就停住了。<br>对于||：当前面的执行条件错误时，执行||之后的，正确就停住了。<br>因此根据&amp;&amp;、||的特性可以对条件作出一个模式“条件 &amp;&amp; 执行1|| 执行2”。<br>当条件为真时执行1；当为假时“条件&amp;&amp;执行1”绝对为假，因此执行2。</p>
-<p>stat 这个命令可以实现数字形式输出文件的权限</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>参数含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>- c</td>
-<td>–format=FORMAT</td>
-</tr>
-<tr>
-<td>%a</td>
-<td>access rights in octal （8进制数显示文件权限）</td>
-</tr>
-<tr>
-<td>%A</td>
-<td>access rights in human readable form（可阅读方式显示文件权限）</td>
-</tr>
-</tbody>
-</table>
-<h5 id="3-关于两个整数之间的判定，例如-test-n1-eq-n2"><a href="#3-关于两个整数之间的判定，例如-test-n1-eq-n2" class="headerlink" title="3. 关于两个整数之间的判定，例如 test n1 -eq n2"></a>3. 关于两个整数之间的判定，例如 test n1 -eq n2</h5><table>
-<thead>
-<tr>
-<th>测试的标志</th>
-<th>代表的意义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-eq</td>
-<td>两数值相等 (equal)</td>
-</tr>
-<tr>
-<td>-ne</td>
-<td>两数值不等 (not equal)</td>
-</tr>
-<tr>
-<td>-gt</td>
-<td>n1 大于 n2 (greater than)</td>
-</tr>
-<tr>
-<td>-lt</td>
-<td>n1 小于 n2 (less than)</td>
-</tr>
-<tr>
-<td>-ge</td>
-<td>n1 大于等于 n2 (greater than or equal)</td>
-</tr>
-<tr>
-<td>-le</td>
-<td>n1 小于等于 n2 (less than or equal)</td>
-</tr>
-</tbody>
-</table>
-<p><a href="http://cn.linux.vbird.org/linux_basic/0340bashshell-scripts.php#test" target="_blank" rel="noopener">鸟哥Linux私房菜： 第十三章、3.1 test</a><br><a href="https://www.cnblogs.com/kaituorensheng/archive/2013/03/25/2981487.html" target="_blank" rel="noopener">shell编程——判断条件</a></p>
+        <p>当函数中参数的数量<strong>可变</strong>时，通常使用魔法变量；<br><em>args 与 \</em>*kwargs 只是习惯写法，你完全可以用 <em>params 与 \</em>*params或者其他任意参数名；<br>当声明一个 <em>args 参数时，此处开始所有的 <strong>位置参数</strong> 被收集成一个名为 args的元组（tuple）中；<br>当声明一个 \</em>*kwargs 参数时， 此处开始所有的 <strong>关键字参数</strong> 被收集为名为 kwargs的字典（dict）中。</p>
+<h5 id="使用顺序："><a href="#使用顺序：" class="headerlink" title="使用顺序："></a>使用顺序：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.命名参数 2.非关键字可变长参数列表 3.关键字可变长参数；</span></span><br><span class="line"><span class="comment"># 关键字可变长参数排最后</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">some_func</span><span class="params">(fargs, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h5 id="函数定义时，代码示例："><a href="#函数定义时，代码示例：" class="headerlink" title="函数定义时，代码示例："></a>函数定义时，代码示例：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">total</span><span class="params">(a=<span class="number">5</span>, *numbers, **phonebook)</span>:</span></span><br><span class="line">    print(<span class="string">'a'</span>, a)</span><br><span class="line">    <span class="comment">#遍历元组中的所有项目</span></span><br><span class="line">    <span class="keyword">for</span> single_item <span class="keyword">in</span> numbers:</span><br><span class="line">        print(<span class="string">'single_item'</span>, single_item)</span><br><span class="line">    <span class="comment">#遍历字典中的所有项目</span></span><br><span class="line">    <span class="keyword">for</span> first_part, second_part <span class="keyword">in</span> phonebook.items():</span><br><span class="line">        print(first_part,second_part)</span><br><span class="line">    </span><br><span class="line">res = total(<span class="number">10</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,Jack=<span class="number">1123</span>,John=<span class="number">2231</span>,Inge=<span class="number">1560</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'a'</span>, <span class="number">10</span>)</span><br><span class="line">(<span class="string">'single_item'</span>, <span class="number">1</span>)</span><br><span class="line">(<span class="string">'single_item'</span>, <span class="number">2</span>)</span><br><span class="line">(<span class="string">'single_item'</span>, <span class="number">3</span>)</span><br><span class="line">(<span class="string">'Inge'</span>, <span class="number">1560</span>)</span><br><span class="line">(<span class="string">'John'</span>, <span class="number">2231</span>)</span><br><span class="line">(<span class="string">'Jack'</span>, <span class="number">1123</span>)</span><br><span class="line"><span class="keyword">None</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="函数调用时，代码示例："><a href="#函数调用时，代码示例：" class="headerlink" title="函数调用时，代码示例："></a>函数调用时，代码示例：</h5><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def print_three_things(<span class="keyword">a</span>, b, c):</span><br><span class="line">    print <span class="string">'a = &#123;0&#125;, b = &#123;1&#125;, c = &#123;2&#125;'</span>.<span class="built_in">format</span>(<span class="keyword">a</span>,b,c)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">a</span> = [<span class="string">'Tom'</span>, <span class="string">'Jack'</span>, <span class="string">'Lucy'</span>]</span><br><span class="line"></span><br><span class="line">print_three_things(*<span class="keyword">a</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span> = Tom, <span class="selector-tag">b</span> = Jack, c = Lucy</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def format_output():</span><br><span class="line">    tom = &#123;</span><br><span class="line">      <span class="string">"gender"</span>:<span class="string">"male"</span>,</span><br><span class="line">        <span class="string">"age"</span>:<span class="number">21</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'gender:&#123;gender&#125;,age:&#123;age&#125;'</span>.<span class="built_in">format</span>(**tom))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'gender: &#123;gender&#125;'</span>.<span class="built_in">format</span>(**tom))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'age: &#123;age&#125;'</span>.<span class="built_in">format</span>(**tom))</span><br><span class="line">   </span><br><span class="line">format_output()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">gender:</span>male,<span class="string">age:</span><span class="number">21</span></span><br><span class="line"><span class="string">gender:</span> male</span><br><span class="line"><span class="string">age:</span> <span class="number">21</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="http://book.pythontips.com/en/latest/args_and_kwargs.html" target="_blank" rel="noopener">参考： <em>args and *</em>kwargs</a></p>
 
       
 
@@ -345,7 +223,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -401,7 +279,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/08/13/shell编程--判断条件/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/08/29/python魔法变量/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -415,18 +293,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/18/sed流编辑器的使用 /" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          sed 流编辑器的使用（stream editor）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/08/09/nmap使用记录/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">nmap使用记录</div>
+    <a href="/2018/08/27/数据流重定向/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据流重定向使用记录</div>
       <i class="icon-circle-right"></i>
     </a>
   
