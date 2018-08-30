@@ -138,6 +138,189 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-shell脚本--常用小命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/30/shell脚本--常用小命令/">shell脚本--常用的小命令记录</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/30/shell脚本--常用小命令/" class="archive-article-date">
+  	<time datetime="2018-08-30T11:56:26.171Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="read-从键盘读取变量值"><a href="#read-从键盘读取变量值" class="headerlink" title="read 从键盘读取变量值"></a>read 从键盘读取变量值</h5><p>read [option] variable</p>
+<ul>
+<li>选项<br>-p： 加提示字符(prompt)<br>-t： 输入值等待的时间(s)<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 注意参数、变量之间的空格</span></span><br><span class="line">[root@33 ~]# read -p 'Enter your name:' -t 10 first_name last_name</span><br><span class="line">Enter your name:Tom Li</span><br><span class="line">[root@33 ~]# echo $first_name $last_name</span><br><span class="line">Tom Li</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="echo-取用变量或者输出指定字符串"><a href="#echo-取用变量或者输出指定字符串" class="headerlink" title="echo 取用变量或者输出指定字符串"></a>echo 取用变量或者输出指定字符串</h5><p>echo [option] var</p>
+<ul>
+<li>选项<br>-e：激活转义字符<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@33 ~]# echo -e '\n\n\t'</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">[root@33 ~]# echo  '\n\n\t'</span><br><span class="line">\n\n\t</span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出变量需要变量名前加美元符号$</span></span><br><span class="line">[root@33 ~]# echo $JAVA_HOME</span><br><span class="line">/usr/local/jdk</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="echo加管道命令-自动回复yes-或者直接yes"><a href="#echo加管道命令-自动回复yes-或者直接yes" class="headerlink" title="echo加管道命令|自动回复yes 或者直接yes"></a>echo加管道命令|自动回复yes 或者直接yes</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@33 ~]# ls</span><br><span class="line">test.txt  test.txt.bak</span><br><span class="line"><span class="meta">#</span><span class="bash"> 存在test.txt.bak，执行cp会提示是否覆盖</span></span><br><span class="line">[root@33 ~]# cp test.txt test.txt.bak</span><br><span class="line">cp: overwrite ‘test.txt.bak’?   # 此处等待用户输入yes/no</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> yes 或者 yes 自动回复</span></span><br><span class="line">[root@33 ~]# echo yes | cp test.txt test.txt.bak </span><br><span class="line">cp: overwrite ‘test.txt.bak’? [root@33 ~]# </span><br><span class="line">[root@33 ~]# yes | cp test.txt test.txt.bak </span><br><span class="line">cp: overwrite ‘test.txt.bak’? [root@33 ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="一条命令中的子命令——-或"><a href="#一条命令中的子命令——-或" class="headerlink" title="一条命令中的子命令——`` 或 $()"></a>一条命令中的子命令——`` 或 $()</h5><ul>
+<li>在一串命令中，还需要藉由其他的命令提供的信息，可以使用反单引号『<code>命令</code>』或 『$(命令)』。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@33 ~]# version=`cat /etc/redhat-release`</span><br><span class="line">[root@33 ~]# echo $version </span><br><span class="line">CentOS Linux release 7.2.1511 (Core)</span><br><span class="line">[root@33 ~]# currpath=$(pwd)</span><br><span class="line">[root@33 ~]# echo $currpath</span><br><span class="line">/root</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/30/shell脚本--常用小命令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-vue-router全局守卫使用记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/30/vue-router全局守卫使用记录/">vue-router全局守卫使用记录</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/30/vue-router全局守卫使用记录/" class="archive-article-date">
+  	<time datetime="2018-08-30T09:15:45.167Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="router-beforeEach-全局前置守卫的注册"><a href="#router-beforeEach-全局前置守卫的注册" class="headerlink" title="router.beforeEach 全局前置守卫的注册"></a>router.beforeEach 全局前置守卫的注册</h5><ul>
+<li>独立的permission.js文件</li>
+<li>在main.js中import ‘path/permission.js’,实现全局前置守卫<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import router from &quot;../router&quot;;</span><br><span class="line"></span><br><span class="line">let self = Vue.prototype;</span><br><span class="line">router.beforeEach((to, from, next) =&gt; &#123;</span><br><span class="line">  if (to.path === &quot;/login&quot;) &#123;</span><br><span class="line">    self.DR.isLogin = true;</span><br><span class="line">    next()</span><br><span class="line">  &#125; else if (self.cookie.get(&apos;username&apos;)) &#123;</span><br><span class="line">    Vue.http.post(self.api(&apos;login&apos;)).then(</span><br><span class="line">      (response) =&gt; &#123;</span><br><span class="line">        const res = JSON.parse(response.bodyText);</span><br><span class="line">        if (res.state === 0) &#123;</span><br><span class="line">          next()</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          self.DR.isLogin = true;</span><br><span class="line">          next(&apos;/login&apos;);</span><br><span class="line">          // 强制再刷新一次，目的是隐藏头部导航菜单</span><br><span class="line">          window.location.reload();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      (response) =&gt; &#123;</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    next(&apos;/login&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="关于next-防范"><a href="#关于next-防范" class="headerlink" title="关于next()防范"></a>关于next()防范</h5><ul>
+<li>官方定义：一定要调用该方法来 resolve 这个钩子。</li>
+<li>确保要调用 next 方法，否则钩子就不会被 resolved。</li>
+<li><strong>个人理解：</strong> beforeEach方法体内的<strong>每一个条件(if/else)</strong>，都要有next()方法出口。</li>
+</ul>
+<p><a href="https://router.vuejs.org/zh/guide/advanced/navigation-guards.html#%E5%85%A8%E5%B1%80%E5%AE%88%E5%8D%AB" target="_blank" rel="noopener">官方：导航守卫</a><br><a href="https://www.cnblogs.com/minigrasshopper/p/7928311.html" target="_blank" rel="noopener">vue2.0 实现导航守卫（路由守卫）</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/30/vue-router全局守卫使用记录/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-python魔法变量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -965,166 +1148,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/07/13/urllib、urllib2的使用及区别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-搭建本地yum源(CentOS)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/05/搭建本地yum源(CentOS)/">搭建本地yum源(CentOS)</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/05/搭建本地yum源(CentOS)/" class="archive-article-date">
-  	<time datetime="2018-07-05T11:52:25.852Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="yum介绍"><a href="#yum介绍" class="headerlink" title="yum介绍"></a>yum介绍</h4><p>YUM主要用于自动升级、安装\移除rpm软件包，它能自动查找并解决rpm包之间的依赖关系，要成功的使用YUM工具更新系统和软件，需要有一个包含各种rpm软件包的repository（软件仓库），提供软件仓库的服务器习惯上成为“源”服务器。</p>
-<p>网络上有大量的源服务器，但是，由于受到网络连接速度、带宽的限制，导致软件安装耗时过长甚至失败。特别是当有大量服务器大量软件包需要升级时，更新的缓慢程序令人难以忍受。</p>
-<p>相比较而言，本地YUM源服务器最大优点在局域网的快速网络连接和稳定性。有了局域网中的YUM源服务器，即便在Internet连接中断的情况下，也不会影响其他YUM客户端的软件升级和安装。</p>
-<h4 id="搭建本地yum源"><a href="#搭建本地yum源" class="headerlink" title="搭建本地yum源"></a>搭建本地yum源</h4><ol>
-<li><p>安装web服务器(httpd)</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum -y install httpd  <span class="comment">// 安装httpd服务</span></span><br><span class="line">systemctl enable httpd.service</span><br><span class="line">systemctl start httpd<span class="selector-class">.service</span>  <span class="comment">//启动http服务</span></span><br><span class="line"></span><br><span class="line">vi /etc/httpd/conf/httpd<span class="selector-class">.conf</span> <span class="comment">//修改配置文件</span></span><br><span class="line">Listen <span class="number">88</span>     <span class="comment">//本例修改为88</span></span><br><span class="line">DocumentRoot <span class="string">"/var/www/html"</span>  <span class="comment">//默认的文件根目录，软件包存放在该目录下</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装createrepo yum-utils工具</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> yum-utils createrepo</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>同步网络源至本地</p>
-<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 下载repo文件</span><br><span class="line">wget -nv http://<span class="meta">public</span>-repo-<span class="number">1.</span>hortonworks.com/ambari/centos7/<span class="number">2.</span>x/updates/<span class="number">2.6</span><span class="meta">.2</span><span class="meta">.0</span>/ambari.repo -O /etc/yum.repos.d/ambari.repo</span><br><span class="line">wget -nv http://<span class="meta">public</span>-repo-<span class="number">1.</span>hortonworks.com/HDP/centos6/<span class="number">2.</span>x/updates/<span class="number">2.6</span><span class="meta">.5</span><span class="meta">.0</span>/hdp.repo -O /etc/yum.repos.d/hdp.repo</span><br><span class="line"></span><br><span class="line"># 同步网络源上的rpm包，至/var/www/html目录 </span><br><span class="line">cd /var/www/html  </span><br><span class="line">reposync -r ambari-<span class="number">2.6</span><span class="meta">.2</span><span class="meta">.0</span></span><br><span class="line">reposync -r HDP-<span class="number">2.6</span><span class="meta">.5</span><span class="meta">.0</span></span><br><span class="line">reposync -r HDP-UTILS-<span class="number">1.1</span><span class="meta">.0</span><span class="meta">.22</span></span><br><span class="line"></span><br><span class="line"># 或者将下载好的rmp包，拷贝至/var/www/html下对应的子目录下</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用createrepo命令创建repodata</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> <span class="string">/var/www/html/ambari-2.6.2.0</span></span><br><span class="line">createrepo <span class="string">./</span>  <span class="comment"># 创建repodata</span></span><br><span class="line"><span class="keyword">cd</span> <span class="string">/var/www/html/HDP-2.6.5.0</span></span><br><span class="line">createrepo <span class="string">./</span></span><br><span class="line"><span class="keyword">cd</span> <span class="string">/var/www/html/HDP-UTILS-1.1.0.22</span></span><br><span class="line">createrepo <span class="string">./</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用局域网内的本地yum源</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> <span class="string">/root</span></span><br><span class="line">mkdri repos</span><br><span class="line">vi ambari.repo</span><br><span class="line">[Ambari-2.6.2.0]</span><br><span class="line">baseurl = http:<span class="string">//10.110.13.238</span><span class="function">:88</span>/ambari/ambari-2.6.2.0 <span class="comment">#httpd服务所在的局域网内的主机</span></span><br><span class="line">gpgcheck = 0</span><br><span class="line">enalbed = 1</span><br><span class="line">name = Ambari-2.6.2.0</span><br><span class="line">vi hdp.repo</span><br><span class="line">vi hdp-utils.repo</span><br><span class="line"><span class="comment"># 其他的源做相同的操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在局域网内的其他主机使用本地源，以10.110.13.33主机为例</span></span><br><span class="line"><span class="keyword">cd</span> <span class="string">/etc/yum.repo.d</span></span><br><span class="line">mkdir yum.bak</span><br><span class="line">mv *<span class="string">.repo</span> yum.bak <span class="comment">#备份原有的repo文件，也可删除</span></span><br><span class="line">scp -r 10.110.13.238:<span class="string">/root/repos/</span>* <span class="string">./</span>  <span class="comment">#远程拷贝新建的repo文件至33主机的/etc/yum.repo.d目录</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="利用系统的iso镜像制作本地源"><a href="#利用系统的iso镜像制作本地源" class="headerlink" title="利用系统的iso镜像制作本地源"></a>利用系统的iso镜像制作本地源</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~ <span class="comment"># iso镜像已拷贝到该目录</span></span><br><span class="line">mkdir iso</span><br><span class="line">mount -o loop <span class="string">/root/CentOS-7-x86_64-Minimal-1511.iso</span> <span class="string">/root/iso</span></span><br><span class="line">cp iso/* <span class="string">/var/www/html/cenos7</span></span><br><span class="line">umout <span class="string">/root/iso</span> <span class="comment">#卸载镜像</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://my.oschina.net/u/1461927/blog/372147" target="_blank" rel="noopener">参考资料：CentOS搭建本地yum源（http方式）</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/05/搭建本地yum源(CentOS)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Tomcat vs Apache：您钟情于哪一款" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/04/Tomcat vs Apache：您钟情于哪一款/">Tomcat vs Apache：您钟情于哪一款</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/04/Tomcat vs Apache：您钟情于哪一款/" class="archive-article-date">
-  	<time datetime="2018-07-04T03:13:52.249Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h4><p>Apache Web服务器通常比称之为“Apache”或者“httpd”，Apache是目前最流行的Web应用服务器，拥有超过一亿的网站用户，占据互联网应用服务器63%的份额，以及全球最繁忙网站中有66%采用Apache的（比方说，维基百科网站服务器就是使用Apache）。<br>pache Web服务器是一个用C语言实现的HTTP Web服务器，支持各种特性和模块从而来扩展核心功能。</p>
-<h5 id="Apache的优越特性："><a href="#Apache的优越特性：" class="headerlink" title="Apache的优越特性："></a>Apache的优越特性：</h5><ul>
-<li>访问静态页面比Tomcat要快</li>
-<li>Apache有更多的配置选项</li>
-<li>支持CGI 脚本，Server API模块，Perl，PHP等<h5 id="Apache的缺点："><a href="#Apache的缺点：" class="headerlink" title="Apache的缺点："></a>Apache的缺点：</h5></li>
-<li>不支持Java Servlets或JavaServer Pages(JSP)</li>
-</ul>
-<h4 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h4><p>Apache Tomcat又被称之为“Tomcat”是一款开源的Web服务器，Jakarta项目中的一个核心项目，1999年被开发而成，支持Servlet和JSP，由Apache软件基金会提供支持与维护。<br>Tomcat是靠Java实现的，<strong>支持Java Servlets和JavaServer Pages(JSP)</strong>，由Oracle公司指定的，因JSPs而著称。<br>Tomcat部分是Apache服务器的扩展，但它是独立运行的，所以当Apache Tomcat运行tomcat时，它实际上是作为一个与Apache独立的进程单独运行的。</p>
-<h5 id="Tomcat的优越特性："><a href="#Tomcat的优越特性：" class="headerlink" title="Tomcat的优越特性："></a>Tomcat的优越特性：</h5><ul>
-<li>提供Java Servlet和JSP支持动态服务器网页</li>
-<li>一个轻量级应用服务器</li>
-<li>可在不同的模式中运行，以提高其性能</li>
-</ul>
-<p><a href="https://blog.csdn.net/ithomer/article/details/7403579" target="_blank" rel="noopener">参考资料：Tomcat vs Apache</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/04/Tomcat vs Apache：您钟情于哪一款/">展开全文 >></a>
         </p>
       
 

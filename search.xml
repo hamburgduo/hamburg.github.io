@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[shell脚本--常用的小命令记录]]></title>
+    <url>%2F2018%2F08%2F30%2Fshell%E8%84%9A%E6%9C%AC--%E5%B8%B8%E7%94%A8%E5%B0%8F%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[read 从键盘读取变量值read [option] variable 选项-p： 加提示字符(prompt)-t： 输入值等待的时间(s)12345# 注意参数、变量之间的空格[root@33 ~]# read -p 'Enter your name:' -t 10 first_name last_nameEnter your name:Tom Li[root@33 ~]# echo $first_name $last_nameTom Li echo 取用变量或者输出指定字符串echo [option] var 选项-e：激活转义字符123456789[root@33 ~]# echo -e '\n\n\t' [root@33 ~]# echo '\n\n\t'\n\n\t# 输出变量需要变量名前加美元符号$[root@33 ~]# echo $JAVA_HOME/usr/local/jdk echo加管道命令|自动回复yes 或者直接yes12345678910[root@33 ~]# lstest.txt test.txt.bak# 存在test.txt.bak，执行cp会提示是否覆盖[root@33 ~]# cp test.txt test.txt.bakcp: overwrite ‘test.txt.bak’? # 此处等待用户输入yes/no# echo yes 或者 yes 自动回复[root@33 ~]# echo yes | cp test.txt test.txt.bak cp: overwrite ‘test.txt.bak’? [root@33 ~]# [root@33 ~]# yes | cp test.txt test.txt.bak cp: overwrite ‘test.txt.bak’? [root@33 ~]# 一条命令中的子命令——`` 或 $() 在一串命令中，还需要藉由其他的命令提供的信息，可以使用反单引号『命令』或 『$(命令)』。123456[root@33 ~]# version=`cat /etc/redhat-release`[root@33 ~]# echo $version CentOS Linux release 7.2.1511 (Core)[root@33 ~]# currpath=$(pwd)[root@33 ~]# echo $currpath/root]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[vue-router全局守卫使用记录]]></title>
+    <url>%2F2018%2F08%2F30%2Fvue-router%E5%85%A8%E5%B1%80%E5%AE%88%E5%8D%AB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[router.beforeEach 全局前置守卫的注册 独立的permission.js文件 在main.js中import ‘path/permission.js’,实现全局前置守卫12345678910111213141516171819202122232425262728import Vue from &apos;vue&apos;import router from &quot;../router&quot;;let self = Vue.prototype;router.beforeEach((to, from, next) =&gt; &#123; if (to.path === &quot;/login&quot;) &#123; self.DR.isLogin = true; next() &#125; else if (self.cookie.get(&apos;username&apos;)) &#123; Vue.http.post(self.api(&apos;login&apos;)).then( (response) =&gt; &#123; const res = JSON.parse(response.bodyText); if (res.state === 0) &#123; next() &#125; else &#123; self.DR.isLogin = true; next(&apos;/login&apos;); // 强制再刷新一次，目的是隐藏头部导航菜单 window.location.reload(); &#125; &#125;, (response) =&gt; &#123; &#125; ); &#125; else &#123; next(&apos;/login&apos;) &#125;&#125;); 关于next()防范 官方定义：一定要调用该方法来 resolve 这个钩子。 确保要调用 next 方法，否则钩子就不会被 resolved。 个人理解： beforeEach方法体内的每一个条件(if/else)，都要有next()方法出口。 官方：导航守卫vue2.0 实现导航守卫（路由守卫）]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Vue.js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[(*args)与(**kwargs)魔法变量]]></title>
     <url>%2F2018%2F08%2F29%2Fpython%E9%AD%94%E6%B3%95%E5%8F%98%E9%87%8F%2F</url>
     <content type="text"><![CDATA[当函数中参数的数量可变时，通常使用魔法变量；args 与 \*kwargs 只是习惯写法，你完全可以用 params 与 \*params或者其他任意参数名；当声明一个 args 参数时，此处开始所有的 位置参数 被收集成一个名为 args的元组（tuple）中；当声明一个 \*kwargs 参数时， 此处开始所有的 关键字参数 被收集为名为 kwargs的字典（dict）中。 使用顺序：1234# 1.命名参数 2.非关键字可变长参数列表 3.关键字可变长参数；# 关键字可变长参数排最后def some_func(fargs, *args, **kwargs): pass 函数定义时，代码示例：1234567891011def total(a=5, *numbers, **phonebook): print('a', a) #遍历元组中的所有项目 for single_item in numbers: print('single_item', single_item) #遍历字典中的所有项目 for first_part, second_part in phonebook.items(): print(first_part,second_part) res = total(10,1,2,3,Jack=1123,John=2231,Inge=1560)print(res) 运行结果:12345678('a', 10)('single_item', 1)('single_item', 2)('single_item', 3)('Inge', 1560)('John', 2231)('Jack', 1123)None 函数调用时，代码示例：123456def print_three_things(a, b, c): print 'a = &#123;0&#125;, b = &#123;1&#125;, c = &#123;2&#125;'.format(a,b,c) a = ['Tom', 'Jack', 'Lucy']print_three_things(*a) 运行结果：1a = Tom, b = Jack, c = Lucy 12345678910def format_output(): tom = &#123; "gender":"male", "age":21 &#125; print('gender:&#123;gender&#125;,age:&#123;age&#125;'.format(**tom)) print('gender: &#123;gender&#125;'.format(**tom)) print('age: &#123;age&#125;'.format(**tom)) format_output() 运行结果：123gender:male,age:21gender: maleage: 21 参考： args and *kwargs]]></content>
