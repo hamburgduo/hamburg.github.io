@@ -138,6 +138,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Promise使用小记--vue-resouce多次请求的顺序执行" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/">Promise使用小记--vue-resouce多次请求的顺序执行</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/" class="archive-article-date">
+  	<time datetime="2018-09-14T03:00:50.751Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg" alt="image"><br>页面加载时：  </p>
+<ol>
+<li>请求主机组列表；</li>
+<li>根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；  </li>
+</ol>
+<h5 id="未使用promise之前的代码："><a href="#未使用promise之前的代码：" class="headerlink" title="未使用promise之前的代码："></a>未使用promise之前的代码：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一次请求</span></span><br><span class="line"><span class="keyword">this</span>.getHostGroupList();</span><br><span class="line"><span class="comment">// 默认选择第一个主机组</span></span><br><span class="line"><span class="comment">// 等待200m后，发起第二次请求</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.group_name = <span class="keyword">this</span>.group_list[<span class="number">0</span>];</span><br><span class="line">      <span class="keyword">this</span>.selectGroup(<span class="keyword">this</span>.group_list[<span class="number">0</span>]);</span><br><span class="line">    &#125;, <span class="number">200</span>);</span><br><span class="line"><span class="comment">// 默认选用前三台主机搭建foundation环境</span></span><br><span class="line"><span class="comment">// 再等待200ms(400 - 200),对第二次请求的结果进行切分处理</span></span><br><span class="line">   setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.selected_hosts = <span class="keyword">this</span>.availableHosts.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">    &#125;, <span class="number">400</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="延时的处理的弊端："><a href="#延时的处理的弊端：" class="headerlink" title="延时的处理的弊端："></a>延时的处理的弊端：</h5><ol>
+<li>设置的延时时间，是开发过程中的测试时间；</li>
+<li>实际应用过程中会因为请求响应的时间长短，很容易出现赋值失败的情况；</li>
+</ol>
+<h5 id="使用promise实现请求的链式调用：-then-then"><a href="#使用promise实现请求的链式调用：-then-then" class="headerlink" title="使用promise实现请求的链式调用：.then().then()"></a>使用promise实现请求的链式调用：.then().then()</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">this</span>.getHostGroupList() <span class="comment">// vue的this</span></span><br><span class="line">  .then(<span class="function">(<span class="params">group_list</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.group_name = that.group_list[<span class="number">0</span>]; <span class="comment">// promise内部that替代this</span></span><br><span class="line">    <span class="keyword">return</span> that.selectGroup(group_list[<span class="number">0</span>]); <span class="comment">// then()方法中返回Promise对象</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">available_host</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.selected_hosts = available_host.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="对getHostGrouplist-selectGroup-两个方法的promise改造："><a href="#对getHostGrouplist-selectGroup-两个方法的promise改造：" class="headerlink" title="对getHostGrouplist(),selectGroup()两个方法的promise改造："></a>对getHostGrouplist(),selectGroup()两个方法的promise改造：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1. 将请求的代码块封在Promise内部,并return new Promise()</span></span><br><span class="line"><span class="comment">2. 通过resolve将结果数据传回去</span></span><br><span class="line"><span class="comment">3. promise里的this和vue中的this指向不同，Promise内部用that变量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">getHostGroupList() &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), &#123;<span class="attr">platform_name</span>: <span class="string">'indata_foundation'</span>, <span class="attr">group_name</span>: <span class="string">''</span>&#125;)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="keyword">let</span> group_list = [];</span><br><span class="line">              <span class="keyword">let</span> host_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> host_list) &#123;</span><br><span class="line">                group_list.push(host_list[index].group_name);</span><br><span class="line">              &#125;</span><br><span class="line">              that.group_list = group_list;</span><br><span class="line">              resolve(group_list);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line"> selectGroup(group) &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 清空已选主机的tag</span></span><br><span class="line">          that.newPlatformInfo.selected_hosts = [];</span><br><span class="line">          <span class="keyword">let</span> post_data = &#123;</span><br><span class="line">            platform_name: <span class="string">'indata_foundation'</span>, <span class="comment">// 基础环境下，可用主机列表</span></span><br><span class="line">            group_name: group</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="keyword">let</span> available_host = [];</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), post_data)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="comment">// 当前组内的主机列表</span></span><br><span class="line">              <span class="keyword">let</span> indata_foundation_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> indata_foundation_list) &#123;</span><br><span class="line">                <span class="keyword">if</span> (indata_foundation_list[index].group_name == post_data.group_name) &#123;</span><br><span class="line">                  available_host = indata_foundation_list[index].host_ips</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              that.availableHosts = available_host;</span><br><span class="line">              resolve(available_host);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.csdn.net/zjscy666/article/details/76390350" target="_blank" rel="noopener">参考1：vue中promise和axios 同步爬坑小记</a><br><a href="https://www.cnblogs.com/zhuzhenwei918/p/6915451.html" target="_blank" rel="noopener">参考2：vue中promise的使用</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javaScript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-shell脚本--常用小命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1106,88 +1203,6 @@
 
 
   
-    <article id="post-urllib、urllib2的使用及区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/13/urllib、urllib2的使用及区别/">urllib、urllib2的使用及区别</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/13/urllib、urllib2的使用及区别/" class="archive-article-date">
-  	<time datetime="2018-07-13T09:24:24.550Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="urllib-urlopen-的使用"><a href="#urllib-urlopen-的使用" class="headerlink" title="urllib.urlopen()的使用"></a>urllib.urlopen()的使用</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urllib模块的urlopen()方法原型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">urlopen</span><span class="params">(url, data=None, proxies=None, context=None)</span>:</span></span><br></pre></td></tr></table></figure>
-<p>urlopen()打开一个给定 URL 字符串表示的 Web 连接，并返回文件类型的对象。<br>例如,返回的对象是res，那么“句柄”会支持一些读取内容的方法，如 res.read()、<br>res.readline()、 res.readlines()、 res.close()和 res.fileno()。<br>其中data需要使用urllib.urlencode(dict)进行编码处理，帮我们将key:value这样的键值对转换成”key=value”这样的字符串。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 实例：</span><br><span class="line">student = &#123;<span class="string">'name'</span>:<span class="string">'LiLei'</span>,<span class="string">'age'</span>:<span class="number">18</span>,<span class="string">'school'</span>: <span class="string">'TsingHua'</span>&#125;</span><br><span class="line">encode_student = urllib.urlencode(student)</span><br><span class="line">print(encode_student)</span><br><span class="line"></span><br><span class="line">age=<span class="number">18</span>&amp;name=LiLei&amp;school=TsingHua // url编码后</span><br></pre></td></tr></table></figure>
-<h5 id="更复杂的应用场景，使用urllib2-urlopen"><a href="#更复杂的应用场景，使用urllib2-urlopen" class="headerlink" title="更复杂的应用场景，使用urllib2.urlopen()"></a>更复杂的应用场景，使用urllib2.urlopen()</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urllib2模块的urlopen()方法原型</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">urlopen</span><span class="params">(url, data=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,</span></span></span><br><span class="line"><span class="function"><span class="params">            cafile=None, capath=None, cadefault=False, context=None)</span>:</span></span><br><span class="line">            </span><br><span class="line"><span class="comment"># urllib2.Request类原型</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Request</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, url, data=None, headers=&#123;&#125;,</span></span></span><br><span class="line"><span class="function"><span class="params">                 origin_req_host=None, unverifiable=False)</span>:</span></span><br></pre></td></tr></table></figure>
-<p>通过Request类实例化request对象，并设置请求头，认证等复杂应用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实例，设置请求头等，add_header()方法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_request</span><span class="params">(url, data)</span>:</span></span><br><span class="line">    req = urllib2.Request(url + <span class="string">'?'</span> + urllib.urlencode(data))</span><br><span class="line">    req.add_header(<span class="string">'User-Agent'</span>,<span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'</span>)</span><br><span class="line">    response = urllib2.urlopen(req)</span><br><span class="line">    <span class="keyword">return</span> response.read()</span><br></pre></td></tr></table></figure></p>
-<h5 id="简单应用场景，三者等价"><a href="#简单应用场景，三者等价" class="headerlink" title="简单应用场景，三者等价"></a>简单应用场景，三者等价</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">job_info = &#123;</span><br><span class="line">        <span class="string">"jenkins_job_name"</span>: <span class="string">"v1_indata_framework"</span>,</span><br><span class="line">        <span class="string">"jenkins_job_number"</span>: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">post_data = &#123;<span class="string">'data'</span>: json.dumps(job_info)&#125;</span><br><span class="line">data = urllib.urlencode(post_data)</span><br><span class="line">print(data)</span><br><span class="line">req2 = urllib2.urlopen(url, data=data)</span><br><span class="line">req3 = urllib.urlopen(url, data=data)</span><br><span class="line"><span class="keyword">print</span> (req2.read())</span><br><span class="line"><span class="keyword">print</span> (req3.read())</span><br><span class="line">req = urllib2.Request(url, data=data)</span><br><span class="line">response = urllib2.urlopen(req)</span><br></pre></td></tr></table></figure>
-<p>运行结果：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data=%7B%22jenkins_job_name%22%3A+%22v1_indata_framework%22%2C+%22jenkins_job_number%22%3A+1%7D</span><br><span class="line">&#123;<span class="attr">"building"</span>: <span class="literal">false</span>, <span class="attr">"type"</span>: <span class="literal">true</span>, <span class="attr">"result"</span>: <span class="string">"SUCCESS"</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="attr">"building"</span>: <span class="literal">false</span>, <span class="attr">"type"</span>: <span class="literal">true</span>, <span class="attr">"result"</span>: <span class="string">"SUCCESS"</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="attr">"building"</span>: <span class="literal">false</span>, <span class="attr">"type"</span>: <span class="literal">true</span>, <span class="attr">"result"</span>: <span class="string">"SUCCESS"</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><p>如果读者使用的是 2.x 版本，这里强烈建议在 2.6 和 3.0 版本中使用 urllib2.urlopen()。因<br>为从 2.6 版本开始， urllib 中弃用了 urlopen 函数，而 3.0 版本中移除了该函数。在阅读前面那<br>个核心模块侧边栏时，已经提到这两个模块中的功能在 Python 3 中都合并进了 urllib.request<br>中。这表示 2.x 版本中的 urlib2.urlopen()（已经没有 urllib.urlopen()了）在 3.x 版本中需要使用<br>的 urllib.request.urlopen()函数。</p>
-<p><a href="https://blog.csdn.net/GeekLeee/article/details/52776724" target="_blank" rel="noopener">参考资料：urllib和urllib2的区别和使用</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/13/urllib、urllib2的使用及区别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1294,6 +1309,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">element-ui</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/6 | 一亩三分地</title>
+  <title>Promise使用小记--vue-resouce多次请求的顺序执行 | 一亩三分地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="一亩三分地">
-<meta property="og:url" content="http://yoursite.com/archives/2018/06/index.html">
+  <meta name="description" content="问题描述：页面加载时：    请求主机组列表； 根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；    未使用promise之前的代码：12345678910111213// 第一次请求this.getHostGroupList();// 默认选择第一个主机组// 等待200m后，发起第二次请求  setTimeout(() =&amp;gt; &amp;#123;      thi">
+<meta name="keywords" content="javaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise使用小记--vue-resouce多次请求的顺序执行">
+<meta property="og:url" content="http://yoursite.com/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/index.html">
 <meta property="og:site_name" content="一亩三分地">
+<meta property="og:description" content="问题描述：页面加载时：    请求主机组列表； 根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；    未使用promise之前的代码：12345678910111213// 第一次请求this.getHostGroupList();// 默认选择第一个主机组// 等待200m后，发起第二次请求  setTimeout(() =&amp;gt; &amp;#123;      thi">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg">
+<meta property="og:updated_time" content="2018-09-14T11:33:35.249Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一亩三分地">
+<meta name="twitter:title" content="Promise使用小记--vue-resouce多次请求的顺序执行">
+<meta name="twitter:description" content="问题描述：页面加载时：    请求主机组列表； 根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；    未使用promise之前的代码：12345678910111213// 第一次请求this.getHostGroupList();// 默认选择第一个主机组// 等待200m后，发起第二次请求  setTimeout(() =&amp;gt; &amp;#123;      thi">
+<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -136,117 +143,90 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Promise使用小记--vue-resouce多次请求的顺序执行" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/29/Hexo使用问题记录/" class="archive-article-date">
-  	<time datetime="2018-06-29T01:51:39.052Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/29/Hexo使用问题记录/">Hexo使用问题记录[文章标题显示no title、设置主页language]</a>
+    <h1 class="article-title" itemprop="name">
+      Promise使用小记--vue-resouce多次请求的顺序执行
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/28/Centos-SuSE关闭防火墙/" class="archive-article-date">
-  	<time datetime="2018-06-28T08:11:33.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
+        
+        <a href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/" class="archive-article-date">
+  	<time datetime="2018-09-14T03:00:50.751Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-14</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/28/Centos-SuSE关闭防火墙/">Centos-SuSE关闭防火墙</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg" alt="image"><br>页面加载时：  </p>
+<ol>
+<li>请求主机组列表；</li>
+<li>根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；  </li>
+</ol>
+<h5 id="未使用promise之前的代码："><a href="#未使用promise之前的代码：" class="headerlink" title="未使用promise之前的代码："></a>未使用promise之前的代码：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一次请求</span></span><br><span class="line"><span class="keyword">this</span>.getHostGroupList();</span><br><span class="line"><span class="comment">// 默认选择第一个主机组</span></span><br><span class="line"><span class="comment">// 等待200m后，发起第二次请求</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.group_name = <span class="keyword">this</span>.group_list[<span class="number">0</span>];</span><br><span class="line">      <span class="keyword">this</span>.selectGroup(<span class="keyword">this</span>.group_list[<span class="number">0</span>]);</span><br><span class="line">    &#125;, <span class="number">200</span>);</span><br><span class="line"><span class="comment">// 默认选用前三台主机搭建foundation环境</span></span><br><span class="line"><span class="comment">// 再等待200ms(400 - 200),对第二次请求的结果进行切分处理</span></span><br><span class="line">   setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.selected_hosts = <span class="keyword">this</span>.availableHosts.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">    &#125;, <span class="number">400</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="延时的处理的弊端："><a href="#延时的处理的弊端：" class="headerlink" title="延时的处理的弊端："></a>延时的处理的弊端：</h5><ol>
+<li>设置的延时时间，是开发过程中的测试时间；</li>
+<li>实际应用过程中会因为请求响应的时间长短，很容易出现赋值失败的情况；</li>
+</ol>
+<h5 id="使用promise实现请求的链式调用：-then-then"><a href="#使用promise实现请求的链式调用：-then-then" class="headerlink" title="使用promise实现请求的链式调用：.then().then()"></a>使用promise实现请求的链式调用：.then().then()</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">this</span>.getHostGroupList() <span class="comment">// vue的this</span></span><br><span class="line">  .then(<span class="function">(<span class="params">group_list</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.group_name = that.group_list[<span class="number">0</span>]; <span class="comment">// promise内部that替代this</span></span><br><span class="line">    <span class="keyword">return</span> that.selectGroup(group_list[<span class="number">0</span>]); <span class="comment">// then()方法中返回Promise对象</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">available_host</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.selected_hosts = available_host.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="对getHostGrouplist-selectGroup-两个方法的promise改造："><a href="#对getHostGrouplist-selectGroup-两个方法的promise改造：" class="headerlink" title="对getHostGrouplist(),selectGroup()两个方法的promise改造："></a>对getHostGrouplist(),selectGroup()两个方法的promise改造：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1. 将请求的代码块封在Promise内部,并return new Promise()</span></span><br><span class="line"><span class="comment">2. 通过resolve将结果数据传回去</span></span><br><span class="line"><span class="comment">3. promise里的this和vue中的this指向不同，Promise内部用that变量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">getHostGroupList() &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), &#123;<span class="attr">platform_name</span>: <span class="string">'indata_foundation'</span>, <span class="attr">group_name</span>: <span class="string">''</span>&#125;)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="keyword">let</span> group_list = [];</span><br><span class="line">              <span class="keyword">let</span> host_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> host_list) &#123;</span><br><span class="line">                group_list.push(host_list[index].group_name);</span><br><span class="line">              &#125;</span><br><span class="line">              that.group_list = group_list;</span><br><span class="line">              resolve(group_list);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line"> selectGroup(group) &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 清空已选主机的tag</span></span><br><span class="line">          that.newPlatformInfo.selected_hosts = [];</span><br><span class="line">          <span class="keyword">let</span> post_data = &#123;</span><br><span class="line">            platform_name: <span class="string">'indata_foundation'</span>, <span class="comment">// 基础环境下，可用主机列表</span></span><br><span class="line">            group_name: group</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="keyword">let</span> available_host = [];</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), post_data)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="comment">// 当前组内的主机列表</span></span><br><span class="line">              <span class="keyword">let</span> indata_foundation_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> indata_foundation_list) &#123;</span><br><span class="line">                <span class="keyword">if</span> (indata_foundation_list[index].group_name == post_data.group_name) &#123;</span><br><span class="line">                  available_host = indata_foundation_list[index].host_ips</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              that.availableHosts = available_host;</span><br><span class="line">              resolve(available_host);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.csdn.net/zjscy666/article/details/76390350" target="_blank" rel="noopener">参考1：vue中promise和axios 同步爬坑小记</a><br><a href="https://www.cnblogs.com/zhuzhenwei918/p/6915451.html" target="_blank" rel="noopener">参考2：vue中promise的使用</a></p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>只是测试一下功能O(∩_∩)O哈哈~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/8fd05f9cb87b23b5a1147beef043cca2.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/ffae88b991959d6c8ff83ec2bb2dacbe.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javaScript</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/28/ElementUi rules表单验证/" class="archive-article-date">
-  	<time datetime="2018-06-28T07:45:29.257Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/28/ElementUi rules表单验证/">ElementUi rules表单验证</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">element-ui</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -259,17 +239,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/08/30/shell脚本--常用小命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">shell脚本--常用的小命令记录</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -292,8 +359,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
