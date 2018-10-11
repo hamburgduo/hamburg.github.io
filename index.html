@@ -138,6 +138,94 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-网关(Gateway)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/11/网关(Gateway)/">网关(Gateway)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/11/网关(Gateway)/" class="archive-article-date">
+  	<time datetime="2018-10-11T11:10:31.586Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><ul>
+<li>网关是OSI参考模型中负责将从<strong>传输层</strong>到应用层的数据进行转换和转发的设备。</li>
+<li>网间连接器、<strong>协议转换器</strong>。</li>
+<li>网关在网络层以上实现网络互连，是最复杂的网络互连设备，仅用于两个高层协议不同的网络互连。</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/11/ed1b30af0544887013113751fdb48fb9.jpg" alt="image"></p>
+<p>网关不仅转发数据还负责对数据进行转换，它通常会使用一个表示层或应用层网关，在两个不能进行直接通信的协议之间进行翻译，最终实现两者之间的通信。</p>
+<h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><p>互联网邮件与手机邮件之间的转换服务。<br>手机邮件有时可能会与互联网邮件互不兼容，这是由于它们在表示层和应用层中的“电子邮件协议”互不相同所致。</p>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/11/c5e5dd07ee4b96b6b08c991ba1325aca.jpg" alt="image"></p>
+<p>如图，邮件网关。网关负责读取完各种不同协议后，对它们逐一进行合理转换，再将相应的数据转发出去。这样一来即使应用的是不同电子邮件协议，计算机与手机之间也能互相发送邮件。  </p>
+<ul>
+<li>控制网络流量和用于安全的代理服务器也是一种应用网关。<br>有了代理服务器，客户端与服务器之间无需在网络层上直接通信，而是从传输层到应用层<strong>对数据和访问进行各种控制和处理</strong>。</li>
+<li>防火墙就是一款通过网关通信，针对不同应用提高安全性的产品。</li>
+</ul>
+<p>参考资料： 图解TCP/IP</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网络//" class="article-tag-list-link color3">网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/11/网关(Gateway)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Promise使用小记--vue-resouce多次请求的顺序执行" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1136,73 +1224,6 @@
 
 
   
-    <article id="post-jupyter的安装使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/14/jupyter的安装使用/">jupyter的安装及使用</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/14/jupyter的安装使用/" class="archive-article-date">
-  	<time datetime="2018-07-14T06:13:44.366Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> jupyter</span><br></pre></td></tr></table></figure>
-<h5 id="生成配置文件"><a href="#生成配置文件" class="headerlink" title="生成配置文件"></a>生成配置文件</h5><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --<span class="keyword">generate</span>-<span class="keyword">config</span></span><br></pre></td></tr></table></figure>
-<h5 id="设置登录密码"><a href="#设置登录密码" class="headerlink" title="设置登录密码"></a>设置登录密码</h5><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook password</span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">Wrote hashed password <span class="keyword">to</span> <span class="regexp">/root/</span>.jupyter/jupyter_notebook_config.json</span><br></pre></td></tr></table></figure>
-<h5 id="后台启动服务"><a href="#后台启动服务" class="headerlink" title="后台启动服务"></a>后台启动服务</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nohup jupyter notebook --no-browser --allow-root  --ip=0.0.0.0 &amp;</span><br><span class="line"><span class="meta">#</span><span class="bash"> nohup <span class="built_in">command</span> &amp; 设置后台运行</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --no-browser 启动不打开浏览器</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --ip 指定ip地址，可以为任意ip</span></span><br></pre></td></tr></table></figure>
-<h5 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h5><p>浏览器地址栏输入server_ip:8888 访问，出现登录界面，输入设置的密码，即可使用。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/14/jupyter的安装使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1304,19 +1325,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">element-ui</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Vue.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">element-ui</a>
               </li>
             
             <div class="clearfix"></div>
