@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[git多账号配置问题]]></title>
+    <url>%2F2018%2F10%2F15%2Fgit%20commit%20%E5%A4%9A%E8%B4%A6%E5%8F%B7%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[问题描述：github 仓库commit之后，contributions不显示，如图： 问题原因查找官方描述：You haven’t added your local Git commit email to your profile Commits must be made with an email address that has been added to your GitHub profile in order to appear on your contributions graph. You can check the email address used for a commit by adding .patch to the end of a commit URL, e.g. https://github.com/octocat/octocat.github.io/commit/67c0afc1da354d8571f51b6f0af8f2794117fd10.patch:1234From 67c0afc1da354d8571f51b6f0af8f2794117fd10 Mon Sep 17 00:00:00 2001From: The Octocat &lt;octocat@nowhere.com&gt;Date: Sun, 27 Apr 2014 15:36:39 +0530Subject: [PATCH] updated index for better welcome message 即提交用户邮箱与github注册的邮箱不对应，导致contributions图不能正常显示。 不匹配的用户名与邮箱 匹配的用户名与邮箱【contributions图正常显示】 不匹配的原因分析由于在C盘用户目录下.gitconfig文件下配置：公司的TFS代码仓库的账户和邮箱，该配置为全局配置，导致github代码仓库也用该配置，所以不显示contributions。123[user]name = xxxemail = xxx@xxx.com 多账号配置 每个仓库单独配置[user],不使用全局配置 （避免账号邮箱串用） 公司的仓库配置公司的用户名及邮箱 私人的github仓库配置github账号及注册邮箱.git目录下的config文件中添加,[user]部分的配置： 123[user]name = xxxemail = xxx@xxx.com 也可以利用命令操作1git config user.email "email@example.com" 参考：Setting your email address for a single repository]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[网关(Gateway)]]></title>
     <url>%2F2018%2F10%2F11%2F%E7%BD%91%E5%85%B3(Gateway)%2F</url>
     <content type="text"><![CDATA[定义 网关是OSI参考模型中负责将从传输层到应用层的数据进行转换和转发的设备。 网间连接器、协议转换器。 网关在网络层以上实现网络互连，是最复杂的网络互连设备，仅用于两个高层协议不同的网络互连。 网关不仅转发数据还负责对数据进行转换，它通常会使用一个表示层或应用层网关，在两个不能进行直接通信的协议之间进行翻译，最终实现两者之间的通信。 实例互联网邮件与手机邮件之间的转换服务。手机邮件有时可能会与互联网邮件互不兼容，这是由于它们在表示层和应用层中的“电子邮件协议”互不相同所致。 如图，邮件网关。网关负责读取完各种不同协议后，对它们逐一进行合理转换，再将相应的数据转发出去。这样一来即使应用的是不同电子邮件协议，计算机与手机之间也能互相发送邮件。 控制网络流量和用于安全的代理服务器也是一种应用网关。有了代理服务器，客户端与服务器之间无需在网络层上直接通信，而是从传输层到应用层对数据和访问进行各种控制和处理。 防火墙就是一款通过网关通信，针对不同应用提高安全性的产品。 参考资料： 图解TCP/IP]]></content>
