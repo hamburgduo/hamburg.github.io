@@ -138,6 +138,137 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-httpd 配置负载均衡" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/16/httpd 配置负载均衡/">httpd 配置负载均衡（负载均衡多个服务）</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/16/httpd 配置负载均衡/" class="archive-article-date">
+  	<time datetime="2018-10-16T12:26:38.695Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="监听多个端口，负载均衡多个服务httpd-conf"><a href="#监听多个端口，负载均衡多个服务httpd-conf" class="headerlink" title="监听多个端口，负载均衡多个服务httpd.conf"></a>监听多个端口，负载均衡多个服务httpd.conf</h5><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 修改httpd.<span class="keyword">conf</span></span><br><span class="line">vi /etc/httpd/<span class="keyword">conf</span>/httpd.<span class="keyword">conf</span></span><br><span class="line"># 监听多个端口</span><br><span class="line">Listen 80</span><br><span class="line">Listen 6080</span><br><span class="line">Listen 8443</span><br><span class="line"></span><br><span class="line"># 服务的virtual host配置文件</span><br><span class="line"><span class="keyword">Include</span> <span class="keyword">conf</span>/ranger-<span class="keyword">cluster</span>.<span class="keyword">conf</span></span><br><span class="line"><span class="keyword">Include</span> <span class="keyword">conf</span>/knox-<span class="keyword">cluster</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
+<h5 id="新建-ranger-cluster-conf-与-knox-cluster-conf"><a href="#新建-ranger-cluster-conf-与-knox-cluster-conf" class="headerlink" title="新建 ranger-cluster.conf 与 knox-cluster.conf"></a>新建 ranger-cluster.conf 与 knox-cluster.conf</h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">cd</span> /etc/httpd/conf</span><br><span class="line"><span class="attribute">vi</span> ranger-cluster.conf</span><br><span class="line"><span class="comment"># ranger服务配置文件详情</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># This is the Apache server configuration file providing SSL support.</span></span><br><span class="line"><span class="comment"># It contains the configuration directives to instruct the server how to</span></span><br><span class="line"><span class="comment"># serve pages over an https connection. For detailing information about these</span></span><br><span class="line"><span class="comment"># directives see &lt;URL:http://httpd.apache.org/docs/2.2/mod/mod_ssl.html&gt;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Do NOT simply read the instructions in here without understanding</span></span><br><span class="line"><span class="comment"># what they do. They're here only as hints or reminders. If you are unsure</span></span><br><span class="line"><span class="comment"># consult the online docs. You have been warned.</span></span><br><span class="line"><span class="comment">#Listen 80</span></span><br><span class="line"><span class="section">&lt;VirtualHost *:6080&gt;</span></span><br><span class="line">        <span class="attribute">ProxyRequests</span> <span class="literal">off</span></span><br><span class="line">        <span class="attribute">ProxyPreserveHost</span> <span class="literal">on</span></span><br><span class="line">        <span class="attribute"><span class="nomarkup">Header</span></span> add Set-Cookie <span class="string">"ROUTEID=.%&#123;BALANCER_WORKER_ROUTE&#125;e; path=/"</span> env=BALANCER_ROUTE_CHANGED</span><br><span class="line">        <span class="section">&lt;Proxy balancer://rangercluster&gt;</span></span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.91:6080 loadfactor=1 route=1</span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.92:6080 loadfactor=1 route=2</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> Deny,Allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Deny</span></span> from none</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">                <span class="attribute">ProxySet</span> lbmethod=byrequests scolonpathdelim=<span class="literal">On</span> stickysession=ROUTEID maxattempts=1 failonstatus=500,501,502,503 nofailover=<span class="literal">Off</span></span><br><span class="line">        <span class="section">&lt;/Proxy&gt;</span></span><br><span class="line">        <span class="comment"># balancer-manager</span></span><br><span class="line">        <span class="comment"># This tool is built into the mod_proxy_balancer</span></span><br><span class="line">        <span class="comment"># module and will allow you to do some simple</span></span><br><span class="line">        <span class="comment"># modifications to the balanced group via a gui</span></span><br><span class="line">        <span class="comment"># web interface.</span></span><br><span class="line">        <span class="section">&lt;Location /balancer-manager&gt;</span></span><br><span class="line">                <span class="attribute"><span class="nomarkup">SetHandler</span></span> balancer-manager</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> deny,allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">        <span class="section">&lt;/Location&gt;</span></span><br><span class="line">        <span class="attribute">ProxyPass</span> /balancer-manager !</span><br><span class="line">        <span class="attribute">ProxyPass</span> / balancer://rangercluster/</span><br><span class="line">        <span class="attribute">ProxyPassReverse</span> / balancer://rangercluster/</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">vi</span> ranger-cluster.conf</span><br><span class="line"><span class="comment"># konx服务配置文件详情</span></span><br><span class="line"><span class="section">&lt;VirtualHost *:8443&gt;</span></span><br><span class="line">        <span class="attribute">ProxyRequests</span> <span class="literal">off</span></span><br><span class="line">        <span class="attribute">ProxyPreserveHost</span> <span class="literal">on</span></span><br><span class="line">        <span class="attribute"><span class="nomarkup">Header</span></span> add Set-Cookie <span class="string">"ROUTEID=.%&#123;BALANCER_WORKER_ROUTE&#125;e; path=/"</span> env=BALANCER_ROUTE_CHANGED</span><br><span class="line">        <span class="section">&lt;Proxy balancer://knoxcluster&gt;</span></span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.91:8444 loadfactor=1 route=1</span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.92:8444 loadfactor=1 route=2</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> Deny,Allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Deny</span></span> from none</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">                <span class="attribute">ProxySet</span> lbmethod=byrequests scolonpathdelim=<span class="literal">On</span> stickysession=ROUTEID maxattempts=1 failonstatus=500,501,502,503 nofailover=<span class="literal">Off</span></span><br><span class="line">        <span class="section">&lt;/Proxy&gt;</span></span><br><span class="line">        <span class="comment"># balancer-manager</span></span><br><span class="line">        <span class="comment"># This tool is built into the mod_proxy_balancer</span></span><br><span class="line">        <span class="comment"># module and will allow you to do some simple</span></span><br><span class="line">        <span class="comment"># modifications to the balanced group via a gui</span></span><br><span class="line">        <span class="comment"># web interface.</span></span><br><span class="line">        <span class="section">&lt;Location /balancer-manager&gt;</span></span><br><span class="line">                <span class="attribute"><span class="nomarkup">SetHandler</span></span> balancer-manager</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> deny,allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">        <span class="section">&lt;/Location&gt;</span></span><br><span class="line">        <span class="attribute">ProxyPass</span> /balancer-manager !</span><br><span class="line">        <span class="attribute">ProxyPass</span> / balancer://knoxcluster/</span><br><span class="line">        <span class="attribute">ProxyPassReverse</span> / balancer://knoxcluster/</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>ranger 服务的balancer-manager界面6080<br><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/16/d370771378cfcaa9ae3c21d94b80ebec.jpg" alt="image"></li>
+<li>knox 服务balancer-manager界面8443<br><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/16/70b822ce04a9907f448964a76226d417.jpg" alt="image"></li>
+</ul>
+<h5 id="负载均衡开启的模块，模块含义表："><a href="#负载均衡开启的模块，模块含义表：" class="headerlink" title="负载均衡开启的模块，模块含义表："></a>负载均衡开启的模块，模块含义表：</h5><table>
+<thead>
+<tr>
+<th>httpd.conf配置文件中加载的模块</th>
+<th>模块名称</th>
+<th>模块功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LoadModule proxy_module  modules/mod_proxy.so</td>
+<td>proxy_module</td>
+<td>提供代理服务器功能</td>
+</tr>
+<tr>
+<td>LoadModule proxy_balancer_module  modules/mod_proxy_balancer.so</td>
+<td>proxy_balancer_module</td>
+<td>提供负载均衡功能</td>
+</tr>
+<tr>
+<td>LoadModule proxy_http_module  modules/mod_proxy_http.so</td>
+<td>proxy_http_module</td>
+<td>代理服务器能支持HTTP协议</td>
+</tr>
+<tr>
+<td>LoadModule proxy_ajp_module  modules/mod_proxy_ajp.so</td>
+<td>proxy_ajp_module</td>
+<td>代理服务器能支持AJP协议</td>
+</tr>
+<tr>
+<td>LoadModule slotmem_shm_module  modules/mod_slotmem_shm.so</td>
+<td>slotmem_shm_module</td>
+<td>基于插槽的共享内存提供程序</td>
+</tr>
+<tr>
+<td>LoadModule  lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so</td>
+<td>lbmethod_byrequests_module</td>
+<td>负载均衡算法：按照请求次数均衡(默认)</td>
+</tr>
+<tr>
+<td>LoadModule lbmethod_bytraffic_module  modules/mod_lbmethod_bytraffic.so</td>
+<td>lbmethod_bytraffic_module</td>
+<td>负载均衡算法：按照流量均衡</td>
+</tr>
+<tr>
+<td>LoadModule lbmethod_bybusyness_module  modules/mod_lbmethod_bybusyness.so</td>
+<td>lbmethod_bybusyness_module</td>
+<td>负载均衡算法：按照繁忙程度均衡(总是分配给活跃请求数最少的服务器)</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://httpd.apache.org/docs/2.4/mod/" target="_blank" rel="noopener">更多模块详情：官网信息</a><br><a href="http://www.jeffxue.cn/2016/03/08/apache2.4%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/" target="_blank" rel="noopener">参考资料：Apache 2.4 配置说明</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/运维//" class="article-tag-list-link color3">运维</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/16/httpd 配置负载均衡/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-git commit 多账号问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1080,129 +1211,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/13/shell编程--判断条件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-nmap使用记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/09/nmap使用记录/">nmap使用记录</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/09/nmap使用记录/" class="archive-article-date">
-  	<time datetime="2018-08-09T12:48:04.829Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Nmap（Network Mapper）是一款开放源代码的网络探测和安全审核工具。它用于快速扫描一个网络和一台主机开放的端口，还能使用TCP/IP协议栈特征探测远程主机的操作系统类型</p>
-<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> nmap <span class="comment"># centos redhat</span></span><br></pre></td></tr></table></figure>
-<h5 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line">nmap -T4 -sP <span class="number">10.110</span><span class="number">.13</span>.*</span><br><span class="line">nmap -T4 -sn <span class="number">10.110</span><span class="number">.13</span><span class="number">.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
-<p>以上三条命令的运行效果一样，得到相同的结果，即扫描13网段的256个ip主机的活跃状态<br><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/91e29a7d4e9f7e08d3d75cfe3846f12c.jpg" alt="image"><br>参数说明：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nmap --help </span><br><span class="line">-sn:<span class="built_in"> Ping </span>Scan - <span class="builtin-name">disable</span><span class="built_in"> port </span>scan #ping 扫描，禁用端口扫描</span><br><span class="line">-T&lt;0-5&gt;: <span class="builtin-name">Set</span> timing template (higher is faster) # -T4 代表快速扫描</span><br><span class="line">* # 是通配符</span><br><span class="line">0/24 # 代表子网掩码(255.255.255.0)</span><br></pre></td></tr></table></figure></p>
-<p> <a href="https://blog.csdn.net/hzhsan/article/details/44100215" target="_blank" rel="noopener">关于子网掩码的问题请戳我</a><br> 而之前一直使用-sP参数，nmap –help 与man nmap都未发现-sP参数。网上搜索一番：</p>
-<table>
-<thead>
-<tr>
-<th>-sT</th>
-<th>TCP  connect()扫描，这是最基本的TCP扫描方式。这种扫描很容易被检测到，在目标主机的日志中会记录大批的连接请求以及错误信息。</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-sS</td>
-<td>TCP同步扫描(TCP  SYN)，因为不必全部打开一个TCP连接，所以这项技术通常称为半开扫描(half-open)。这项技术最大的好处是，很少有系统能够把这记入系统日志。不过，你需要root权限来定制SYN数据包。</td>
-</tr>
-<tr>
-<td>-sF,-sX,-sN</td>
-<td>秘密FIN数据包扫描、圣诞树(Xmas  Tree)、空(Null)扫描模式。这些扫描方式的理论依据是：关闭的端口需要对你的探测包回应RST包，而打开的端口必需忽略有问题的包(参考RFC  793第64页)。</td>
-</tr>
-<tr>
-<td>-sP</td>
-<td>ping扫描，用ping方式检查网络上哪些主机正在运行。当主机阻塞ICMP  echo请求包是ping扫描是无效的。nmap在任何情况下都会进行ping扫描，只有目标主机处于运行状态，才会进行后续的扫描。</td>
-</tr>
-<tr>
-<td>-sU</td>
-<td>如果你想知道在某台主机上提供哪些UDP(用户数据报协议,RFC768)服务，可以使用此选项。</td>
-</tr>
-<tr>
-<td>-sA</td>
-<td>ACK扫描，这项高级的扫描方法通常可以用来穿过防火墙。</td>
-</tr>
-<tr>
-<td>-sW</td>
-<td>滑动窗口扫描，非常类似于ACK的扫描。</td>
-</tr>
-<tr>
-<td>-sR</td>
-<td>RPC扫描，和其它不同的端口扫描方法结合使用。</td>
-</tr>
-<tr>
-<td>-b</td>
-<td>FTP反弹攻击(bounce  attack)，连接到防火墙后面的一台FTP服务器做代理，接着进行端口扫描。</td>
-</tr>
-</tbody>
-</table>
-<p><a href="http://linux.51yip.com/search/nmap" target="_blank" rel="noopener">nmap 使用参考</a><br>继续查看官网发现一句英文的解释：<br>In previous releases of Nmap, -sn was known as -sP.即旧版中为-sP<br><a href="https://nmap.org/book/man-host-discovery.html" target="_blank" rel="noopener">官网英文doc参考</a></p>
-<h5 id="常见的使用方式"><a href="#常见的使用方式" class="headerlink" title="常见的使用方式"></a>常见的使用方式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.0.101-110 # ip范围</span><br><span class="line">nmap 192.168.0.101,102,103 # 逗号扫描多个主机</span><br></pre></td></tr></table></figure>
-<p><a href="http://blog.jobbole.com/54595/" target="_blank" rel="noopener">更多使用:详见</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/09/nmap使用记录/">展开全文 >></a>
         </p>
       
 
