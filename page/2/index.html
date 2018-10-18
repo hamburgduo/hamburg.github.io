@@ -138,6 +138,219 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-shell编程--判断条件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/13/shell编程--判断条件/">shell编程--判断条件</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/13/shell编程--判断条件/" class="archive-article-date">
+  	<time datetime="2018-08-13T13:25:19.698Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-关于某个档名的『文件类型』判断，如-test-e-filename-表示存在否"><a href="#1-关于某个档名的『文件类型』判断，如-test-e-filename-表示存在否" class="headerlink" title="1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否"></a>1. 关于某个档名的『文件类型』判断，如 test -e filename 表示存在否</h5><table>
+<thead>
+<tr>
+<th>测试的标志</th>
+<th>代表意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-e</td>
+<td>该『档名』是否存在？(常用)</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>该『档名』是否存在且为文件(file)？(常用)</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>该『档名』是否存在且为目录(directory)？(常用)</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>该『档名』是否存在且为一个 block device 装置？</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>该『档名』是否存在且为一个 character device 装置？</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>该『档名』是否存在且为一个 Socket 文件？</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>该『档名』是否存在且为一个 FIFO (pipe) 文件？</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>该『档名』是否存在且为一个连结档？</td>
+</tr>
+</tbody>
+</table>
+<h5 id="2-关于文件的权限测试，如-test-r-filename-表示可读否-但-root-权限常有例外"><a href="#2-关于文件的权限测试，如-test-r-filename-表示可读否-但-root-权限常有例外" class="headerlink" title="2. 关于文件的权限测试，如 test -r filename 表示可读否 (但 root 权限常有例外)"></a>2. 关于文件的权限测试，如 test -r filename 表示可读否 (但 root 权限常有例外)</h5><table>
+<thead>
+<tr>
+<th>测试的标志</th>
+<th>代表的意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-r</td>
+<td>侦测该档名是否存在且具有『可读』的权限？</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>侦测该档名是否存在且具有『可写』的权限？</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>侦测该档名是否存在且具有『可运行』的权限？</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>侦测该档名是否存在且具有『SUID』的属性？</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>侦测该档名是否存在且具有『SGID』的属性？</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>侦测该档名是否存在且具有『Sticky bit』的属性？</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>侦测该档名是否存在且为『非空白文件』？</td>
+</tr>
+</tbody>
+</table>
+<h5 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rw-r--r--</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Not Executable</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> chmod +x test_do.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %A test_do.sh </span></span><br><span class="line">-rwxr-xr-x</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">test</span> -x test_do.sh &amp;&amp; <span class="built_in">echo</span> <span class="string">"Executable"</span> || <span class="built_in">echo</span> <span class="string">"Not Executable"</span></span></span><br><span class="line">Executable</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">stat</span> -c %a test_do.sh </span></span><br><span class="line">755</span><br></pre></td></tr></table></figure>
+<h5 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h5><p>对于&amp;&amp;：当前面执行条件正确时，执行&amp;&amp;之后的，错误就停住了。<br>对于||：当前面的执行条件错误时，执行||之后的，正确就停住了。<br>因此根据&amp;&amp;、||的特性可以对条件作出一个模式“条件 &amp;&amp; 执行1|| 执行2”。<br>当条件为真时执行1；当为假时“条件&amp;&amp;执行1”绝对为假，因此执行2。</p>
+<p>stat 这个命令可以实现数字形式输出文件的权限</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>- c</td>
+<td>–format=FORMAT</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>access rights in octal （8进制数显示文件权限）</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>access rights in human readable form（可阅读方式显示文件权限）</td>
+</tr>
+</tbody>
+</table>
+<h5 id="3-关于两个整数之间的判定，例如-test-n1-eq-n2"><a href="#3-关于两个整数之间的判定，例如-test-n1-eq-n2" class="headerlink" title="3. 关于两个整数之间的判定，例如 test n1 -eq n2"></a>3. 关于两个整数之间的判定，例如 test n1 -eq n2</h5><table>
+<thead>
+<tr>
+<th>测试的标志</th>
+<th>代表的意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-eq</td>
+<td>两数值相等 (equal)</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td>两数值不等 (not equal)</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>n1 大于 n2 (greater than)</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>n1 小于 n2 (less than)</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>n1 大于等于 n2 (greater than or equal)</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>n1 小于等于 n2 (less than or equal)</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://cn.linux.vbird.org/linux_basic/0340bashshell-scripts.php#test" target="_blank" rel="noopener">鸟哥Linux私房菜： 第十三章、3.1 test</a><br><a href="https://www.cnblogs.com/kaituorensheng/archive/2013/03/25/2981487.html" target="_blank" rel="noopener">shell编程——判断条件</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/13/shell编程--判断条件/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-nmap使用记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -927,80 +1140,9 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/09/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/09/hello-world/" class="archive-article-date">
-  	<time datetime="2018-02-09T09:00:43.448Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/09/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1095,15 +1237,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">element-ui</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
