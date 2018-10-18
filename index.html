@@ -138,6 +138,84 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-pip 常用命令及技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/18/pip 常用命令及技巧/">pip 常用命令及技巧</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/18/pip 常用命令及技巧/" class="archive-article-date">
+  	<time datetime="2018-10-18T13:45:19.511Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看版本、帮助</span></span><br><span class="line">pip --version</span><br><span class="line">pip --<span class="built_in">help</span></span><br><span class="line"><span class="comment"># 查看已安装的python包</span></span><br><span class="line">pip list</span><br><span class="line"><span class="comment"># pip安装、卸载</span></span><br><span class="line">pip install pkg_name</span><br><span class="line">pip install Django==1.7</span><br><span class="line">pip uninstall pkg_name</span><br><span class="line">pip uninstall -y pkg_name</span><br></pre></td></tr></table></figure>
+<h5 id="pip加速源或者是全局配置"><a href="#pip加速源或者是全局配置" class="headerlink" title="pip加速源或者是全局配置"></a>pip加速源或者是<a href="https://www.cnblogs.com/zeopean/p/pip.html" target="_blank" rel="noopener">全局配置</a></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">pip install -i https://pypi.douban.com/simple/ pkg_name</span><br><span class="line"><span class="comment"># 创建全局配置文件</span></span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">mkdir .pip</span><br><span class="line"><span class="built_in">cd</span> .pip</span><br><span class="line">vi pip.config</span><br><span class="line"><span class="comment"># 配置文件找那个添加如下代码</span></span><br><span class="line">[global]</span><br><span class="line">timeout = 60</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+<h5 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载包及其依赖</span></span><br><span class="line">pip download -d /root/pipfiles pkg_name</span><br><span class="line"><span class="comment"># 离线安装</span></span><br><span class="line">pip install pkg_name --no-index --find-links=/root/pipfiles/</span><br></pre></td></tr></table></figure>
+<p><a href="http://imshuai.com/python-pip-install-package-offline-tensorflow/" target="_blank" rel="noopener">一篇很透彻的python包，离线安装指南</a></p>
+<p><a href="https://pip.pypa.io/en/stable/reference/" target="_blank" rel="noopener">pip 官方用户指导参考</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/18/pip 常用命令及技巧/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Centos 设定网络参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1003,87 +1081,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/08/27/数据流重定向/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-sed流编辑器的使用 " class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/18/sed流编辑器的使用 /">sed 流编辑器的使用（stream editor）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/18/sed流编辑器的使用 /" class="archive-article-date">
-  	<time datetime="2018-08-18T06:50:51.154Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h5><p>流编辑器用于对输入流（文件或来自管道的输入）执行基本文本转换。处理时以行为单位，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有改变，除非你使用重定向存储输出。</p>
-<h5 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h5><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常用命令格式</span></span><br><span class="line"># sed SCRIPT INPUTFILE...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 全格式命令</span></span><br><span class="line"># sed OPTIONS... [SCRIPT] [INPUTFILE...]</span><br></pre></td></tr></table></figure>
-<h5 id="OPTIONS-选项参数"><a href="#OPTIONS-选项参数" class="headerlink" title="OPTIONS 选项参数"></a>OPTIONS 选项参数</h5><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">e &lt;script&gt;或--expression=&lt;script&gt;：以选项中的指定的script来处理输入的文本文件；</span></span><br><span class="line"><span class="ruby">-n 或--quiet或——silent：仅显示script处理后的结果；</span></span><br><span class="line"><span class="ruby">-i 直接修改inputfile,而不是将处理结果输出到屏幕；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-f &lt;script文件&gt;或--file=&lt;script文件&gt;：以选项中指定的script文件来处理输入的文本文件；</span></span><br><span class="line"><span class="ruby">-h 或--help：显示帮助；</span></span><br><span class="line"><span class="ruby">--version：显示版本信息。</span></span><br></pre></td></tr></table></figure>
-<h5 id="SCRIPT常用命令-也称commond，由行号或者pattern-命令组成，由‘’包裹"><a href="#SCRIPT常用命令-也称commond，由行号或者pattern-命令组成，由‘’包裹" class="headerlink" title="SCRIPT常用命令(也称commond，由行号或者pattern + 命令组成，由‘’包裹)"></a>SCRIPT常用命令(也称commond，由行号或者pattern + 命令组成，由‘’包裹)</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span> 在当前行下面插入文本。</span><br><span class="line"><span class="selector-tag">i</span> 在当前行上面插入文本。</span><br><span class="line">c 把选定的行改为新的文本。</span><br><span class="line">d 删除，删除选择的行。</span><br><span class="line">s 替换指定字符。</span><br><span class="line">g 表示行内全局替换。</span><br><span class="line"><span class="selector-tag">p</span> 打印模板块的行。</span><br></pre></td></tr></table></figure>
-<h5 id="实战举例：s命令"><a href="#实战举例：s命令" class="headerlink" title="实战举例：s命令"></a>实战举例：s命令</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/my/him'</span> test.txt</span><br><span class="line"><span class="comment">// -i  参数直接修改文件内容</span></span><br><span class="line"><span class="comment">// s   表示替换命令</span></span><br><span class="line"><span class="comment">//  g  替换每一行中的所有匹配</span></span><br><span class="line">sed <span class="string">'s/my/him/g'</span> test<span class="selector-class">.txt</span> &gt; him_test.txt</span><br><span class="line"><span class="comment">// 将替换后的结果，重定向到 him_test.txt文件</span></span><br></pre></td></tr></table></figure>
-<h5 id="实战举例：a命令"><a href="#实战举例：a命令" class="headerlink" title="实战举例：a命令"></a>实战举例：a命令</h5><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cat test_sed.txt </span><br><span class="line"><span class="comment"># This is the test file.</span></span><br><span class="line">PORT=<span class="string">"</span></span><br><span class="line"><span class="string">80</span></span><br><span class="line"><span class="string">8888</span></span><br><span class="line"><span class="string">8080</span></span><br><span class="line"><span class="string">"</span></span><br><span class="line"><span class="comment"># 在test_sed文件中PORT=后追加一行8081(/PORT为匹配，/a为追加一行)</span></span><br><span class="line">sed -i '/PORT=/a8081' test_sed.txt</span><br><span class="line"><span class="comment"># 追加后</span></span><br><span class="line">cat test_sed.txt </span><br><span class="line"><span class="comment"># This is the test file.</span></span><br><span class="line">PORT=<span class="string">"</span></span><br><span class="line"><span class="string">8081</span></span><br><span class="line"><span class="string">80</span></span><br><span class="line"><span class="string">8888</span></span><br><span class="line"><span class="string">8080</span></span><br><span class="line"><span class="string">"</span></span><br></pre></td></tr></table></figure>
-<h5 id="实战举例：-n参数，p命令"><a href="#实战举例：-n参数，p命令" class="headerlink" title="实战举例：-n参数，p命令"></a>实战举例：-n参数，p命令</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nl 命令查看test_sed.txt并用管道sed 'p' 打印，每行输出两遍 </span></span><br><span class="line"># nl test_sed.txt | sed 'p'</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">2</span>	PORT=<span class="string">"</span></span><br><span class="line"><span class="string"> 2	PORT="</span></span><br><span class="line"> <span class="number">3</span>	<span class="number">8081</span></span><br><span class="line"> <span class="number">3</span>	<span class="number">8081</span></span><br><span class="line"> <span class="number">4</span>	<span class="number">80</span></span><br><span class="line"> <span class="number">4</span>	<span class="number">80</span></span><br><span class="line"> <span class="number">5</span>	<span class="number">8888</span></span><br><span class="line"> <span class="number">5</span>	<span class="number">8888</span></span><br><span class="line"> <span class="number">6</span>	<span class="number">8080</span></span><br><span class="line"> <span class="number">6</span>	<span class="number">8080</span></span><br><span class="line"> <span class="number">7</span>	<span class="string">"</span></span><br><span class="line"><span class="string"> 7	"</span></span><br><span class="line"> <span class="comment">// nl 命令查看test_sed.txt， -n参数静默输出，只输出一遍 </span></span><br><span class="line"> nl test_sed.txt | sed -n 'p'</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">2</span>	PORT=<span class="string">"</span></span><br><span class="line"><span class="string"> 3	8081</span></span><br><span class="line"><span class="string"> 4	80</span></span><br><span class="line"><span class="string"> 5	8888</span></span><br><span class="line"><span class="string"> 6	8080</span></span><br><span class="line"><span class="string"> 7	"</span></span><br><span class="line"> <span class="comment">// 输出1-3行'line1,line2p'</span></span><br><span class="line"> nl test_sed.txt | sed -n '<span class="number">1</span>,<span class="number">3</span>p'</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">2</span>	PORT=<span class="string">"</span></span><br><span class="line"><span class="string"> 3	8081</span></span><br><span class="line"><span class="string"> // 输出奇数行,'line1~stepp'，起始行~步长  </span></span><br><span class="line"><span class="string"> nl test_sed.txt | sed -n '1~2p'</span></span><br><span class="line"><span class="string"> 1	# This is the test file.</span></span><br><span class="line"><span class="string"> 3	8081</span></span><br><span class="line"><span class="string"> 5	8888</span></span><br><span class="line"><span class="string"> 7	"</span></span><br></pre></td></tr></table></figure>
-<h5 id="更多使用细节查阅："><a href="#更多使用细节查阅：" class="headerlink" title="更多使用细节查阅："></a>更多使用细节查阅：</h5><p><a href="http://webcache.googleusercontent.com/search?q=cache:http://man.linuxde.net/sed&amp;gws_rd=cr" target="_blank" rel="noopener">Linux命令大全：sed命令</a><br><a href="https://www.gnu.org/software/sed/manual/sed.html" target="_blank" rel="noopener">GNU: sed page</a><br><a href="http://cn.linux.vbird.org/linux_basic/0330regularex.php#sed" target="_blank" rel="noopener">鸟哥Linux私房菜：sed 工具</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/18/sed流编辑器的使用 /">展开全文 >></a>
         </p>
       
 

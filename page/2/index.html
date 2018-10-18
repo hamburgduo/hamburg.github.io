@@ -138,6 +138,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-sed流编辑器的使用 " class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/18/sed流编辑器的使用 /">sed 流编辑器的使用（stream editor）</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/18/sed流编辑器的使用 /" class="archive-article-date">
+  	<time datetime="2018-08-18T06:50:51.154Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h5><p>流编辑器用于对输入流（文件或来自管道的输入）执行基本文本转换。处理时以行为单位，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有改变，除非你使用重定向存储输出。</p>
+<h5 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h5><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常用命令格式</span></span><br><span class="line"># sed SCRIPT INPUTFILE...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 全格式命令</span></span><br><span class="line"># sed OPTIONS... [SCRIPT] [INPUTFILE...]</span><br></pre></td></tr></table></figure>
+<h5 id="OPTIONS-选项参数"><a href="#OPTIONS-选项参数" class="headerlink" title="OPTIONS 选项参数"></a>OPTIONS 选项参数</h5><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">e &lt;script&gt;或--expression=&lt;script&gt;：以选项中的指定的script来处理输入的文本文件；</span></span><br><span class="line"><span class="ruby">-n 或--quiet或——silent：仅显示script处理后的结果；</span></span><br><span class="line"><span class="ruby">-i 直接修改inputfile,而不是将处理结果输出到屏幕；</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby">-f &lt;script文件&gt;或--file=&lt;script文件&gt;：以选项中指定的script文件来处理输入的文本文件；</span></span><br><span class="line"><span class="ruby">-h 或--help：显示帮助；</span></span><br><span class="line"><span class="ruby">--version：显示版本信息。</span></span><br></pre></td></tr></table></figure>
+<h5 id="SCRIPT常用命令-也称commond，由行号或者pattern-命令组成，由‘’包裹"><a href="#SCRIPT常用命令-也称commond，由行号或者pattern-命令组成，由‘’包裹" class="headerlink" title="SCRIPT常用命令(也称commond，由行号或者pattern + 命令组成，由‘’包裹)"></a>SCRIPT常用命令(也称commond，由行号或者pattern + 命令组成，由‘’包裹)</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span> 在当前行下面插入文本。</span><br><span class="line"><span class="selector-tag">i</span> 在当前行上面插入文本。</span><br><span class="line">c 把选定的行改为新的文本。</span><br><span class="line">d 删除，删除选择的行。</span><br><span class="line">s 替换指定字符。</span><br><span class="line">g 表示行内全局替换。</span><br><span class="line"><span class="selector-tag">p</span> 打印模板块的行。</span><br></pre></td></tr></table></figure>
+<h5 id="实战举例：s命令"><a href="#实战举例：s命令" class="headerlink" title="实战举例：s命令"></a>实战举例：s命令</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s/my/him'</span> test.txt</span><br><span class="line"><span class="comment">// -i  参数直接修改文件内容</span></span><br><span class="line"><span class="comment">// s   表示替换命令</span></span><br><span class="line"><span class="comment">//  g  替换每一行中的所有匹配</span></span><br><span class="line">sed <span class="string">'s/my/him/g'</span> test<span class="selector-class">.txt</span> &gt; him_test.txt</span><br><span class="line"><span class="comment">// 将替换后的结果，重定向到 him_test.txt文件</span></span><br></pre></td></tr></table></figure>
+<h5 id="实战举例：a命令"><a href="#实战举例：a命令" class="headerlink" title="实战举例：a命令"></a>实战举例：a命令</h5><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cat test_sed.txt </span><br><span class="line"><span class="comment"># This is the test file.</span></span><br><span class="line">PORT=<span class="string">"</span></span><br><span class="line"><span class="string">80</span></span><br><span class="line"><span class="string">8888</span></span><br><span class="line"><span class="string">8080</span></span><br><span class="line"><span class="string">"</span></span><br><span class="line"><span class="comment"># 在test_sed文件中PORT=后追加一行8081(/PORT为匹配，/a为追加一行)</span></span><br><span class="line">sed -i '/PORT=/a8081' test_sed.txt</span><br><span class="line"><span class="comment"># 追加后</span></span><br><span class="line">cat test_sed.txt </span><br><span class="line"><span class="comment"># This is the test file.</span></span><br><span class="line">PORT=<span class="string">"</span></span><br><span class="line"><span class="string">8081</span></span><br><span class="line"><span class="string">80</span></span><br><span class="line"><span class="string">8888</span></span><br><span class="line"><span class="string">8080</span></span><br><span class="line"><span class="string">"</span></span><br></pre></td></tr></table></figure>
+<h5 id="实战举例：-n参数，p命令"><a href="#实战举例：-n参数，p命令" class="headerlink" title="实战举例：-n参数，p命令"></a>实战举例：-n参数，p命令</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nl 命令查看test_sed.txt并用管道sed 'p' 打印，每行输出两遍 </span></span><br><span class="line"># nl test_sed.txt | sed 'p'</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">2</span>	PORT=<span class="string">"</span></span><br><span class="line"><span class="string"> 2	PORT="</span></span><br><span class="line"> <span class="number">3</span>	<span class="number">8081</span></span><br><span class="line"> <span class="number">3</span>	<span class="number">8081</span></span><br><span class="line"> <span class="number">4</span>	<span class="number">80</span></span><br><span class="line"> <span class="number">4</span>	<span class="number">80</span></span><br><span class="line"> <span class="number">5</span>	<span class="number">8888</span></span><br><span class="line"> <span class="number">5</span>	<span class="number">8888</span></span><br><span class="line"> <span class="number">6</span>	<span class="number">8080</span></span><br><span class="line"> <span class="number">6</span>	<span class="number">8080</span></span><br><span class="line"> <span class="number">7</span>	<span class="string">"</span></span><br><span class="line"><span class="string"> 7	"</span></span><br><span class="line"> <span class="comment">// nl 命令查看test_sed.txt， -n参数静默输出，只输出一遍 </span></span><br><span class="line"> nl test_sed.txt | sed -n 'p'</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">2</span>	PORT=<span class="string">"</span></span><br><span class="line"><span class="string"> 3	8081</span></span><br><span class="line"><span class="string"> 4	80</span></span><br><span class="line"><span class="string"> 5	8888</span></span><br><span class="line"><span class="string"> 6	8080</span></span><br><span class="line"><span class="string"> 7	"</span></span><br><span class="line"> <span class="comment">// 输出1-3行'line1,line2p'</span></span><br><span class="line"> nl test_sed.txt | sed -n '<span class="number">1</span>,<span class="number">3</span>p'</span><br><span class="line"> <span class="number">1</span>	# This is the test file.</span><br><span class="line"> <span class="number">2</span>	PORT=<span class="string">"</span></span><br><span class="line"><span class="string"> 3	8081</span></span><br><span class="line"><span class="string"> // 输出奇数行,'line1~stepp'，起始行~步长  </span></span><br><span class="line"><span class="string"> nl test_sed.txt | sed -n '1~2p'</span></span><br><span class="line"><span class="string"> 1	# This is the test file.</span></span><br><span class="line"><span class="string"> 3	8081</span></span><br><span class="line"><span class="string"> 5	8888</span></span><br><span class="line"><span class="string"> 7	"</span></span><br></pre></td></tr></table></figure>
+<h5 id="更多使用细节查阅："><a href="#更多使用细节查阅：" class="headerlink" title="更多使用细节查阅："></a>更多使用细节查阅：</h5><p><a href="http://webcache.googleusercontent.com/search?q=cache:http://man.linuxde.net/sed&amp;gws_rd=cr" target="_blank" rel="noopener">Linux命令大全：sed命令</a><br><a href="https://www.gnu.org/software/sed/manual/sed.html" target="_blank" rel="noopener">GNU: sed page</a><br><a href="http://cn.linux.vbird.org/linux_basic/0330regularex.php#sed" target="_blank" rel="noopener">鸟哥Linux私房菜：sed 工具</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/18/sed流编辑器的使用 /">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-shell编程--判断条件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1010,107 +1091,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/06/28/Centos-SuSE关闭防火墙/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ElementUi rules表单验证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/28/ElementUi rules表单验证/">ElementUi rules表单验证</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/28/ElementUi rules表单验证/" class="archive-article-date">
-  	<time datetime="2018-06-28T07:45:29.257Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="表单验证之pattern正则表达式"><a href="#表单验证之pattern正则表达式" class="headerlink" title="表单验证之pattern正则表达式"></a>表单验证之pattern正则表达式</h5><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">virtual_ipaddress: [</span><br><span class="line">  &#123;required: true, message: '请输入管理节点虚拟IP', trigger: 'blur'&#125;,</span><br><span class="line">  &#123;min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'&#125;,</span><br><span class="line">  # 正则表达式，校验IP地址</span><br><span class="line">  &#123;</span><br><span class="line">    pattern: /^(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="tag">\<span class="name">.</span></span>(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="tag">\<span class="name">.</span></span>(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="tag">\<span class="name">.</span></span>(<span class="tag">\<span class="name">d</span><span class="string">&#123;1,2&#125;</span></span>|1<span class="tag">\<span class="name">d</span></span><span class="tag">\<span class="name">d</span></span>|2[0-4]<span class="tag">\<span class="name">d</span></span>|25[0-5])<span class="formula">$/,</span></span><br><span class="line"><span class="formula">    message: '请输入正确格式的IP地址'</span></span><br><span class="line"><span class="formula">  &#125;</span></span><br><span class="line"><span class="formula">]</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://segmentfault.com/a/1190000012551362#articleHeader0" target="_blank" rel="noopener">参考资料：rules表单验证</a></p>
-<h5 id="表单验证之data为多层obj数据"><a href="#表单验证之data为多层obj数据" class="headerlink" title="表单验证之data为多层obj数据"></a>表单验证之data为多层obj数据</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">// 检验baseConfigForm-&gt;base_config-&gt;ambari_clustername为例</span><br><span class="line">baseConfigForm: &#123;</span><br><span class="line">  base_confi<span class="variable">g:</span> &#123;</span><br><span class="line">    ambari_clustername: <span class="string">''</span>,</span><br><span class="line">    keycloak_realm_name: <span class="string">''</span>,</span><br><span class="line">    keycloak_realm_admin: <span class="string">''</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  config_plan: <span class="string">''</span>,</span><br><span class="line">  selected_host<span class="variable">s:</span> []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// template中的编写</span><br><span class="line">// 深层的数据</span><br><span class="line">&lt;<span class="keyword">el</span>-form :model=<span class="string">"baseConfigForm"</span> :rules=<span class="string">"rules"</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">el</span>-form-item prop=<span class="string">"base_config.ambari_clustername"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">el</span>-<span class="built_in">input</span> :model=<span class="string">"baseConfigForm.base_config.ambari_clustername"</span>&gt;</span><br><span class="line">    &lt;/<span class="keyword">el</span>-<span class="built_in">input</span>&gt;</span><br><span class="line">  &lt;/<span class="keyword">el</span>-form-item&gt;</span><br><span class="line">// 常规的单层数据</span><br><span class="line">  &lt;<span class="keyword">el</span>-form-item prop=<span class="string">"config_plan"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">el</span>-<span class="built_in">input</span> :model=<span class="string">"baseConfigForm.config_plan"</span>&gt;</span><br><span class="line">    &lt;/<span class="keyword">el</span>-<span class="built_in">input</span>&gt;</span><br><span class="line">  &lt;/<span class="keyword">el</span>-form-item&gt;</span><br><span class="line">&lt;/<span class="keyword">el</span>-form&gt;</span><br><span class="line"></span><br><span class="line">// rules的编写：</span><br><span class="line">rulse:&#123;</span><br><span class="line">  config_plan: [</span><br><span class="line">    &#123;required: true, message: <span class="string">'请选择配置方案'</span>, trigger: <span class="string">'change'</span>&#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="string">'base_config.keycloak_realm_name'</span>: [</span><br><span class="line">    &#123;required: true, message: <span class="string">'请输入KeyCloak域名'</span>, trigger: <span class="string">'blur'</span>&#125;,</span><br><span class="line">    &#123;validator: validateRealm, trigger: <span class="string">'blur'</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>注意事项：</em></p>
-<p><el-form-item>标签中的prop属性必须与item中的model中的数据一一对应,校验才生效！</el-form-item></p>
-<p><a href="https://github.com/ElemeFE/element/issues/1655" target="_blank" rel="noopener">参考资料：表单验证model绑定的是一个对象下的某个子对象属性</a></p>
-<h5 id="表单验证之type-array下拉多选，多CheckBox"><a href="#表单验证之type-array下拉多选，多CheckBox" class="headerlink" title="表单验证之type:array下拉多选，多CheckBox"></a>表单验证之type:array下拉多选，多CheckBox</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// template 多选</span><br><span class="line">&lt;<span class="keyword">el</span>-form-item :label=<span class="string">"$t('platformList.host')"</span> :label-width=<span class="string">"formLabelWidth"</span> prop=<span class="string">"selected_hosts"</span>&gt;</span><br><span class="line">          &lt;<span class="keyword">el</span>-select v-model=<span class="string">"newPlatformInfo.selected_hosts"</span> size=<span class="string">"large"</span> multiple</span><br><span class="line">                     :placeholder=<span class="string">"$t('platformList.host_placeholder')"</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">el</span>-option</span><br><span class="line">              v-<span class="keyword">for</span>=<span class="string">"item in availableHosts"</span></span><br><span class="line">              :key=<span class="string">"item"</span></span><br><span class="line">              :label=<span class="string">"item"</span></span><br><span class="line">              :value=<span class="string">"item"</span>&gt;</span><br><span class="line">            &lt;/<span class="keyword">el</span>-option&gt;</span><br><span class="line">          &lt;/<span class="keyword">el</span>-select&gt;</span><br><span class="line">&lt;/<span class="keyword">el</span>-form-item&gt;</span><br><span class="line">// rules编写</span><br><span class="line">rule<span class="variable">s:</span>&#123;</span><br><span class="line">   selected_host<span class="variable">s:</span> [</span><br><span class="line">          &#123;required: true, message: <span class="string">'请选择主机'</span>, trigger: <span class="string">'change'</span>&#125;,</span><br><span class="line">          &#123; <span class="built_in">type</span>: <span class="string">'array'</span>, <span class="built_in">max</span>: <span class="number">3</span>, message: <span class="string">'基础环境最多需要 3 台主机'</span>, trigger: <span class="string">'change'</span> &#125;</span><br><span class="line">        ], </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>效果图：</strong></p>
-<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/9973997d8101df26265bda2bc975a21e.jpg" alt="image"></p>
-<p><a href="https://www.iviewui.com/components/form" target="_blank" rel="noopener">参考资料：iView Form 表单</a></p>
-<h5 id="表单验证之input输入框数字范围限制"><a href="#表单验证之input输入框数字范围限制" class="headerlink" title="表单验证之input输入框数字范围限制"></a>表单验证之input输入框数字范围限制</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// el-input Template部分</span><br><span class="line">// v-model.number 将输入由字符型转为数值型</span><br><span class="line">&lt;el-form-item :label=&quot;$t(&apos;baseConfig.ambari_knox_proxy_port&apos;)&quot; prop=&quot;base_config.ambari_knox_proxy_port&quot;&gt;</span><br><span class="line">          &lt;el-input v-model.number=&quot;baseConfigForm.base_config.ambari_knox_proxy_port&quot;&gt;&lt;/el-input&gt;</span><br><span class="line">  &lt;/el-form-item&gt;</span><br><span class="line">// rules部分</span><br><span class="line">// type:&apos;number&apos;,min,max限制输入数值的范围</span><br><span class="line">&apos;base_config.ambari_nifi_proxy_port&apos;: [</span><br><span class="line">            &#123;required: true, message: this.$t(&apos;baseConfig.msg_nifi_proxy_port&apos;), trigger: &apos;blur&apos;&#125;,</span><br><span class="line">            &#123;type: &apos;number&apos;, min: 1, max:65535, message: this.$t(&apos;baseConfig.msg_port_range&apos;), trigger: &apos;blur&apos;&#125;,</span><br><span class="line">            &#123;validator: validateNiFiProxyPort, trigger: &apos;blur&apos;&#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
-<p><strong>效果图：</strong></p>
-<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/31/0771b361260c5636d41ec6aa6561b39a.jpg" alt="image"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">element-ui</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/28/ElementUi rules表单验证/">展开全文 >></a>
         </p>
       
 

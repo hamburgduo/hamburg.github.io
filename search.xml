@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[pip 常用命令及技巧]]></title>
+    <url>%2F2018%2F10%2F18%2Fpip%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E6%8A%80%E5%B7%A7%2F</url>
+    <content type="text"><![CDATA[基本命令12345678910# 查看版本、帮助pip --versionpip --help# 查看已安装的python包pip list# pip安装、卸载pip install pkg_namepip install Django==1.7pip uninstall pkg_namepip uninstall -y pkg_name pip加速源或者是全局配置12345678910111213pip install -i https://pypi.douban.com/simple/ pkg_name# 创建全局配置文件cd ~mkdir .pipcd .pipvi pip.config# 配置文件找那个添加如下代码[global]timeout = 60index-url = http://mirrors.aliyun.com/pypi/simple/[install]trusted-host=mirrors.aliyun.com 离线安装1234# 下载包及其依赖pip download -d /root/pipfiles pkg_name# 离线安装pip install pkg_name --no-index --find-links=/root/pipfiles/ 一篇很透彻的python包，离线安装指南 pip 官方用户指导参考]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Centos 设定网络参数]]></title>
     <url>%2F2018%2F10%2F18%2FCentos%20%E8%AE%BE%E5%AE%9A%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0%2F</url>
     <content type="text"><![CDATA[12# 编辑ifcfg-eth0配置文件vi /etc/sysconfig/network-scripts/ifcfg-eth0 1234567891011121314151617TYPE="Ethernet"BOOTPROTO="none" # 取得IP的方式，dhcp动态获取，手动可输入none或static静态DEFROUTE="yes"IPV4_FAILURE_FATAL="no"IPV6INIT="yes"IPV6_AUTOCONF="yes"IPV6_DEFROUTE="yes"IPV6_FAILURE_FATAL="no"NAME="eth0"DEVICE="eth0" # 网卡名称ONBOOT="yes" # 系统启动时是否激活网卡，只有在激活状态(yes)的网卡才能去连接网络，进行网络通讯PREFIX=24IPV6_PEERDNS=yesIPV6_PEERROUTES=yesIPADDR=10.110.13.33 # 静态IPGATEWAY=10.110.13.254 # 网关 12345# 重启网络service network restart# 检查ip ifconfg ip a 参考资料：鸟哥，设置固定ip地址]]></content>
