@@ -6,19 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | 一亩三分地</title>
+  <title>LVM是逻辑盘卷管理 | 一亩三分地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="1. 概念LVM是逻辑盘卷管理（Logical Volume Manager）的简称,可以在服务器不停机前提下，自如对文件系统的大小进行调整。LVM是建立在硬盘和分区之上的一个逻辑层，来提高磁盘分区管理的灵活性。   PV(physical volume)：物理卷在逻辑卷管理系统最底层，可为整个物理硬盘或实际物理硬盘上的分区。   VG(volume group)：卷组建立在物理卷上，一卷组中至少">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2018/02/09/hello-world/index.html">
+<meta property="og:title" content="LVM是逻辑盘卷管理">
+<meta property="og:url" content="http://yoursite.com/2018/10/26/LVM是逻辑盘卷管理/index.html">
 <meta property="og:site_name" content="一亩三分地">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="1. 概念LVM是逻辑盘卷管理（Logical Volume Manager）的简称,可以在服务器不停机前提下，自如对文件系统的大小进行调整。LVM是建立在硬盘和分区之上的一个逻辑层，来提高磁盘分区管理的灵活性。   PV(physical volume)：物理卷在逻辑卷管理系统最底层，可为整个物理硬盘或实际物理硬盘上的分区。   VG(volume group)：卷组建立在物理卷上，一卷组中至少">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-09T09:00:43.449Z">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/26/6dcb2bf3ed08f81f9add5df06206fc05.jpg">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/26/234865f05cba42a07146e3249544e920.jpg">
+<meta property="og:updated_time" content="2018-10-26T06:44:51.556Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="LVM是逻辑盘卷管理">
+<meta name="twitter:description" content="1. 概念LVM是逻辑盘卷管理（Logical Volume Manager）的简称,可以在服务器不停机前提下，自如对文件系统的大小进行调整。LVM是建立在硬盘和分区之上的一个逻辑层，来提高磁盘分区管理的灵活性。   PV(physical volume)：物理卷在逻辑卷管理系统最底层，可为整个物理硬盘或实际物理硬盘上的分区。   VG(volume group)：卷组建立在物理卷上，一卷组中至少">
+<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/26/6dcb2bf3ed08f81f9add5df06206fc05.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -140,35 +144,95 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-LVM是逻辑盘卷管理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      LVM是逻辑盘卷管理
     </h1>
   
 
         
-        <a href="/2018/02/09/hello-world/" class="archive-article-date">
-  	<time datetime="2018-02-09T09:00:43.448Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-09</time>
+        <a href="/2018/10/26/LVM是逻辑盘卷管理/" class="archive-article-date">
+  	<time datetime="2018-10-26T06:44:51.183Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h3><p>LVM是逻辑盘卷管理（Logical Volume Manager）的简称,可以在服务器不停机前提下，自如对文件系统的大小进行调整。<br>LVM是建立在<strong>硬盘</strong>和<strong>分区</strong>之上的一个<strong>逻辑层</strong>，来提高磁盘分区管理的灵活性。</p>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/26/6dcb2bf3ed08f81f9add5df06206fc05.jpg" alt="image"></p>
+<ul>
+<li>PV(physical volume)：<br>物理卷在逻辑卷管理系统最底层，可为整个物理硬盘或实际物理硬盘上的分区。  </li>
+<li>VG(volume group)：<br>卷组建立在物理卷上，一卷组中至少要包括一物理卷，卷组建立后可动态的添加卷到卷组中，一个逻辑卷管理系统工程中可有多个卷组。  </li>
+<li>LV(logical volume)：<br>逻辑卷建立在卷组基础上，卷组中未分配空间可用于建立新的逻辑卷，逻辑卷建立后可以动态扩展和缩小空间。</li>
+<li>PE(physical extent)：物理区域是物理卷中可用于分配的最小存储单元，物理区域大小在建立卷组时指定，一旦确定不能更改，同一卷组所有物理卷的物理区域大小需一致，新的pv加入到vg后，pe的大小自动更改为vg中定义的pe大小。</li>
+<li>LE(logical extent)：逻辑区域是逻辑卷中可用于分配的最小存储单元，逻辑区域的大小取决于逻辑卷所在卷组中的物理区域的大小。<br>当系统添加了新的磁盘，通过LVM管理员就==不必将磁盘的文件移动到新的磁盘上以充分利用新的存储空间，而是直接扩展文件系统跨越磁盘。==</li>
+</ul>
+<h3 id="2-常用命令"><a href="#2-常用命令" class="headerlink" title="2. 常用命令"></a>2. 常用命令</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>查看显示</th>
+<th>所有信息</th>
+<th>创建</th>
+<th>扩容</th>
+<th>删除</th>
+<th>激活</th>
+<th>扫描查找</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LV</td>
+<td>lvdispaly</td>
+<td>lvs</td>
+<td>lvcreate</td>
+<td>lvextend</td>
+<td>lvremove</td>
+<td>lvchange</td>
+<td>lvscan</td>
+</tr>
+<tr>
+<td>VG</td>
+<td>vgdisplay</td>
+<td>vgs</td>
+<td>vgcreate</td>
+<td></td>
+<td>vgremove</td>
+<td>vgchange</td>
+<td>vgscan</td>
+</tr>
+<tr>
+<td>PV</td>
+<td>pvdisplay</td>
+<td>pvs</td>
+<td>pvcreate</td>
+<td>pvextend</td>
+<td>pvremove</td>
+<td>pvchange</td>
+<td>pvscan</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/26/234865f05cba42a07146e3249544e920.jpg" alt="image"></p>
+<p><a href="https://yq.aliyun.com/articles/270393" target="_blank" rel="noopener">参考资料：lvm卷管理</a><br><a href="http://blog.51cto.com/ponyjia/1680969" target="_blank" rel="noopener">LVM中的PV、VG、LV、PE、LE的关系</a></p>
+<h3 id="3-实践应用"><a href="#3-实践应用" class="headerlink" title="3. 实践应用"></a>3. 实践应用</h3><p>/root, /var, /usr, /tmp, /swap四个lv都属于centos这个vg<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="number">13</span><span class="number">-92</span> ~]# lvs</span><br><span class="line">  LV   VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span><br><span class="line">  root centos -wi-ao----  <span class="number">47.80</span>g                                                    </span><br><span class="line">  swap centos -wi-ao----   <span class="number">2.00</span>g                                                    </span><br><span class="line">  tmp  centos -wi-ao----   <span class="number">6.00</span>g                                                    </span><br><span class="line">  usr  centos -wi-ao----  <span class="number">22.00</span>g                                                    </span><br><span class="line">  var  centos -wi-ao----  <span class="number">22.00</span>g                                                    </span><br><span class="line">  lv_0 vg_0   -wi-ao---- <span class="number">200.00</span>g                                                    </span><br><span class="line">  lv_1 vg_1   -wi-ao---- <span class="number">200.00</span>g                                                    </span><br><span class="line">[root@<span class="number">13</span><span class="number">-92</span> ~]# vgs</span><br><span class="line">  VG     #PV #LV #SN Attr   VSize   VFree</span><br><span class="line">  centos   <span class="number">1</span>   <span class="number">5</span>   <span class="number">0</span> wz--n-  <span class="number">99.80</span>g <span class="number">4.00</span>m</span><br><span class="line">  vg_0     <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span> wz--n- <span class="number">200.00</span>g    <span class="number">0</span> </span><br><span class="line">  vg_1     <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span> wz--n- <span class="number">200.00</span>g    <span class="number">0</span> </span><br><span class="line">[root@<span class="number">13</span><span class="number">-92</span> ~]# pvs</span><br><span class="line">  PV         VG     Fmt  Attr PSize   PFree</span><br><span class="line">  /dev/sda2  centos lvm2 a--   <span class="number">99.80</span>g <span class="number">4.00</span>m   # centos这个vg只有 <span class="number">100</span>G</span><br><span class="line">  /dev/sdb   vg_0   lvm2 a--  <span class="number">200.00</span>g    <span class="number">0</span> </span><br><span class="line">  /dev/sdc   vg_1   lvm2 a--  <span class="number">200.00</span>g    <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="4-实践应用–扩展某一数据目录"><a href="#4-实践应用–扩展某一数据目录" class="headerlink" title="4. 实践应用–扩展某一数据目录"></a>4. 实践应用–扩展某一数据目录</h3><h5 id="扩展前-var-100-使用空间已满"><a href="#扩展前-var-100-使用空间已满" class="headerlink" title="扩展前, /var 100%使用空间已满"></a>扩展前, /var 100%使用空间已满</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="number">13</span><span class="number">-92</span> ~]# df -Th</span><br><span class="line">Filesystem              Type      Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/centos-root xfs        <span class="number">48</span>G  <span class="number">2.0</span>G   <span class="number">46</span>G   <span class="number">5</span>% /</span><br><span class="line">devtmpfs                devtmpfs   <span class="number">16</span>G     <span class="number">0</span>   <span class="number">16</span>G   <span class="number">0</span>% /dev</span><br><span class="line">tmpfs                   tmpfs      <span class="number">16</span>G   <span class="number">44</span>K   <span class="number">16</span>G   <span class="number">1</span>% /dev/shm</span><br><span class="line">tmpfs                   tmpfs      <span class="number">16</span>G  <span class="number">1.6</span>G   <span class="number">15</span>G  <span class="number">10</span>% /run</span><br><span class="line">tmpfs                   tmpfs      <span class="number">16</span>G     <span class="number">0</span>   <span class="number">16</span>G   <span class="number">0</span>% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-usr  xfs        <span class="number">22</span>G  <span class="number">8.6</span>G   <span class="number">14</span>G  <span class="number">39</span>% /usr</span><br><span class="line">/dev/mapper/vg_0-lv_0   xfs       <span class="number">200</span>G  <span class="number">147</span>M  <span class="number">200</span>G   <span class="number">1</span>% /indata/disk_0</span><br><span class="line">/dev/mapper/vg_1-lv_1   xfs       <span class="number">200</span>G  <span class="number">5.5</span>G  <span class="number">195</span>G   <span class="number">3</span>% /indata/disk_1</span><br><span class="line">/dev/mapper/centos-var  xfs        <span class="number">22</span>G   <span class="number">22</span>G   <span class="number">20</span>K <span class="number">100</span>% /var           ## /var <span class="number">100</span>% used</span><br><span class="line">/dev/mapper/centos-tmp  xfs       <span class="number">6.0</span>G  <span class="number">353</span>M  <span class="number">5.7</span>G   <span class="number">6</span>% /tmp</span><br><span class="line">/dev/sda1               xfs       <span class="number">197</span>M   <span class="number">92</span>M  <span class="number">105</span>M  <span class="number">47</span>% /boot</span><br><span class="line">tmpfs                   tmpfs     <span class="number">3.2</span>G     <span class="number">0</span>  <span class="number">3.2</span>G   <span class="number">0</span>% /run/user/<span class="number">1000</span></span><br><span class="line">tmpfs                   tmpfs     <span class="number">3.2</span>G     <span class="number">0</span>  <span class="number">3.2</span>G   <span class="number">0</span>% /run/user/<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h5 id="1-新建分区"><a href="#1-新建分区" class="headerlink" title="1. 新建分区"></a>1. 新建分区</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sda</span><br><span class="line">n  --创建新分区</span><br><span class="line">&lt;回车&gt;  --默认主分区</span><br><span class="line">&lt;回车&gt;  --默认分区编号</span><br><span class="line">&lt;回车&gt;  --默认起始扇区位置。</span><br><span class="line">&lt;回车&gt;  --默认结束扇区位置。</span><br><span class="line">w</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出信息</span></span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: Device or resource busy.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">Syncing disks.</span><br></pre></td></tr></table></figure>
+<h5 id="2-使用工具partprobe让kernel读取分区信息"><a href="#2-使用工具partprobe让kernel读取分区信息" class="headerlink" title="2. 使用工具partprobe让kernel读取分区信息"></a>2. 使用工具partprobe让kernel读取分区信息</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">partprobe</span><br><span class="line"><span class="comment"># 使用fdisk工具只是将分区信息写到磁盘，如果需要mkfs磁盘分区则需要重启系统，</span></span><br><span class="line"><span class="comment"># 而使用partprobe则可以使kernel重新读取分区信息，从而避免重启系统。</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-查看多出的新分区"><a href="#3-查看多出的新分区" class="headerlink" title="3. 查看多出的新分区"></a>3. 查看多出的新分区</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">Disk /dev/sdb: 214.7 GB, 214748364800 bytes, 419430400 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line">Disk /dev/sdc: 214.7 GB, 214748364800 bytes, 419430400 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 644.2 GB, 644245094400 bytes, 1258291200 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label <span class="built_in">type</span>: dos</span><br><span class="line">Disk identifier: 0x0005b7b2</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048      411647      204800   83  Linux</span><br><span class="line">/dev/sda2          411648   209715199   104651776   8e  Linux LVM</span><br><span class="line">/dev/sda3       209715200  1258291199   524288000   83  Linux</span><br></pre></td></tr></table></figure>
+<h5 id="4-创建物理分区pvcreate"><a href="#4-创建物理分区pvcreate" class="headerlink" title="4. 创建物理分区pvcreate"></a>4. 创建物理分区pvcreate</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pvcreate /dev/sda3</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">Physical volume <span class="string">"/dev/sda3"</span> successfully created</span><br></pre></td></tr></table></figure>
+<h5 id="5-扩展卷组vgextend-lvs查看可知，-var属于centos卷组"><a href="#5-扩展卷组vgextend-lvs查看可知，-var属于centos卷组" class="headerlink" title="5. 扩展卷组vgextend [ lvs查看可知，/var属于centos卷组]"></a>5. 扩展卷组vgextend [ lvs查看可知，/var属于centos卷组]</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vgextend centos /dev/sda3</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">Volume group <span class="string">"centos"</span> successfully extended</span><br></pre></td></tr></table></figure>
+<h5 id="6-扩展逻辑分区lvextend-扩展-var"><a href="#6-扩展逻辑分区lvextend-扩展-var" class="headerlink" title="6. 扩展逻辑分区lvextend [扩展/var]"></a>6. 扩展逻辑分区lvextend [扩展/var]</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 扩展50G</span></span><br><span class="line">lvextend -L +50G /dev/mapper/centos-var</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">Size of logical volume centos/var changed from 22.00 GiB (5632 extents) to 72.00 GiB (18432 extents).</span><br><span class="line">  Logical volume var successfully resized.</span><br></pre></td></tr></table></figure>
+<h5 id="7-扩展文件系统xfs-growfs"><a href="#7-扩展文件系统xfs-growfs" class="headerlink" title="7. 扩展文件系统xfs_growfs"></a>7. 扩展文件系统xfs_growfs</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">xfs_growfs /dev/mapper/centos-var</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">meta-data=/dev/mapper/centos-var isize=256    agcount=4, agsize=1441792 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=0        finobt=0</span><br><span class="line">data     =                       bsize=4096   blocks=5767168, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=0</span><br><span class="line"><span class="built_in">log</span>      =internal               bsize=4096   blocks=2816, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">data blocks changed from 5767168 to 18874368</span><br></pre></td></tr></table></figure>
+<h5 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h5><p>因为安装CentOS用的xfs分区，所以使用命令xfs_growfs扩展文件系统大小。否则的话使用resize2fs命令。</p>
+<h5 id="扩展后-var-31-Used"><a href="#扩展后-var-31-Used" class="headerlink" title="扩展后, /var 31% Used"></a>扩展后, /var 31% Used</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">df -Th </span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">Filesystem              Type      Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/centos-root xfs        48G  2.0G   46G   5% /</span><br><span class="line">devtmpfs                devtmpfs   16G     0   16G   0% /dev</span><br><span class="line">tmpfs                   tmpfs      16G   44K   16G   1% /dev/shm</span><br><span class="line">tmpfs                   tmpfs      16G  1.6G   15G  10% /run</span><br><span class="line">tmpfs                   tmpfs      16G     0   16G   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-usr  xfs        22G  8.6G   14G  39% /usr</span><br><span class="line">/dev/mapper/vg_0-lv_0   xfs       200G  147M  200G   1% /indata/disk_0</span><br><span class="line">/dev/mapper/vg_1-lv_1   xfs       200G  5.4G  195G   3% /indata/disk_1</span><br><span class="line">/dev/mapper/centos-var  xfs        72G   22G   50G  31% /var  <span class="comment"># %31 used</span></span><br><span class="line">/dev/mapper/centos-tmp  xfs       6.0G  353M  5.7G   6% /tmp</span><br><span class="line">/dev/sda1               xfs       197M   92M  105M  47% /boot</span><br><span class="line">tmpfs                   tmpfs     3.2G     0  3.2G   0% /run/user/1000</span><br><span class="line">tmpfs                   tmpfs     3.2G     0  3.2G   0% /run/user/0</span><br></pre></td></tr></table></figure>
+<p><a href="https://segmentfault.com/a/1190000007645451" target="_blank" rel="noopener">参考：CentOS 7扩展根分区</a></p>
 
       
 
@@ -208,6 +272,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -258,7 +333,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/02/09/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/26/LVM是逻辑盘卷管理/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -272,15 +347,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/06/28/ElementUi rules表单验证/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          ElementUi rules表单验证
-        
-      </div>
-    </a>
   
+    <a href="/2018/10/18/pip 常用命令及技巧/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">pip 常用命令及技巧</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

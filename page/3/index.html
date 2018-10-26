@@ -138,6 +138,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Centos-SuSE关闭防火墙" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/28/Centos-SuSE关闭防火墙/">Centos-SuSE关闭防火墙</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/28/Centos-SuSE关闭防火墙/" class="archive-article-date">
+  	<time datetime="2018-06-28T08:11:33.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="查看防火墙状态"><a href="#查看防火墙状态" class="headerlink" title="查看防火墙状态"></a>查看防火墙状态</h6><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.servie</span><br><span class="line"><span class="comment">// 查看防火墙状态</span></span><br></pre></td></tr></table></figure>
+<h6 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h6><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">stop</span> firewalld.service</span><br><span class="line"><span class="comment">// 关闭防火墙</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// suse系统</span></span><br><span class="line">systemctl <span class="built_in">stop</span> SuSEfirewall2</span><br></pre></td></tr></table></figure>
+<h6 id="禁用防火墙开启启动"><a href="#禁用防火墙开启启动" class="headerlink" title="禁用防火墙开启启动"></a>禁用防火墙开启启动</h6><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="keyword">disable</span> firewalld.service</span><br><span class="line"><span class="comment">// 禁止firewall开机启动 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//suse系统</span></span><br><span class="line">systemctl <span class="keyword">disable</span> SuSEfirewall2</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/28/Centos-SuSE关闭防火墙/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ElementUi rules表单验证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -419,11 +495,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
               </li>
              
               <li class="article-tag-list-item">

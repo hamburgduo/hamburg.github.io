@@ -138,6 +138,116 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-数据流重定向" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/27/数据流重定向/">数据流重定向使用记录</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/27/数据流重定向/" class="archive-article-date">
+  	<time datetime="2018-08-27T13:23:48.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="数据流向与命令的关系"><a href="#数据流向与命令的关系" class="headerlink" title="数据流向与命令的关系"></a>数据流向与命令的关系</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/27/84a78a66072658b722565f4f548525be.jpg" alt="image"></p>
+<h5 id="三种文件描述符"><a href="#三种文件描述符" class="headerlink" title="三种文件描述符"></a>三种文件描述符</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/27/b6029a35780a987dbb6ae0e2d52503c9.jpg" alt="image"></p>
+<table>
+<thead>
+<tr>
+<th><strong>文件</strong></th>
+<th><strong>文件描述符</strong></th>
+<th><strong>覆盖操作符</strong></th>
+<th><strong>追加加操作符</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>标准输入      STDIN</strong></td>
+<td><strong>0</strong></td>
+<td><strong>&lt;</strong></td>
+<td><strong>&lt;&lt;</strong></td>
+</tr>
+<tr>
+<td><strong>标准输出      STDOUT</strong></td>
+<td><strong>1</strong></td>
+<td><strong>1&gt;</strong></td>
+<td><strong>1&gt;&gt;</strong></td>
+</tr>
+<tr>
+<td><strong>标准错误输出  STDERR</strong></td>
+<td><strong>2</strong></td>
+<td><strong>2&gt;</strong></td>
+<td><strong>2&gt;&gt;</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>说明：标准输出的操作符，文件描述符可省略即[覆盖&gt;,追加&gt;&gt;]</strong></p>
+<h5 id="示例：输出重定向"><a href="#示例：输出重定向" class="headerlink" title="示例：输出重定向"></a>示例：输出重定向</h5><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@iop ~]<span class="meta"># su test                       <span class="comment">// 由root用户，切换至test用户</span></span></span><br><span class="line">[test@iop ~]$ <span class="built_in">find</span> /<span class="built_in">home</span>/ -name .bashrc     <span class="comment">// 在test用户的家目录查找 .bashrc文件名</span></span><br><span class="line"><span class="built_in">find</span>: ‘/<span class="built_in">home</span>/admin’: Permission denied      <span class="comment">// 标准错误输出</span></span><br><span class="line"><span class="built_in">find</span>: ‘/<span class="built_in">home</span>/deploymgr’: Permission denied  <span class="comment">// 标准错误输出</span></span><br><span class="line">/<span class="built_in">home</span>/test/.bashrc                          <span class="comment">// 标准输出</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将标准输出重定向至list_right;将标准错误重定向至list_error</span></span><br><span class="line">[test@iop ~]$ <span class="built_in">find</span> /<span class="built_in">home</span> -name .bashrc &gt; list_right <span class="number">2</span>&gt; list_error</span><br><span class="line">[test@iop ~]$ ls</span><br><span class="line">list_error  list_right</span><br><span class="line"></span><br><span class="line">[test@iop ~]$ cat list_error </span><br><span class="line"><span class="built_in">find</span>: ‘/<span class="built_in">home</span>/admin’: Permission denied</span><br><span class="line"><span class="built_in">find</span>: ‘/<span class="built_in">home</span>/deploymgr’: Permission denied</span><br><span class="line"></span><br><span class="line">[test@iop ~]$ cat list_right </span><br><span class="line">/<span class="built_in">home</span>/test/.bashrc</span><br></pre></td></tr></table></figure>
+<h5 id="示例：标准输出与标准错误重定向至同一个文件-gt-amp"><a href="#示例：标准输出与标准错误重定向至同一个文件-gt-amp" class="headerlink" title="示例：标准输出与标准错误重定向至同一个文件(&gt;&amp;)"></a>示例：标准输出与标准错误重定向至同一个文件(&gt;&amp;)</h5><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">test</span>@iop ~]$ <span class="keyword">ls</span> list_right right</span><br><span class="line"><span class="keyword">ls</span>: cannot access right: <span class="keyword">No</span> such <span class="keyword">file</span> or directory  <span class="comment">// 标准错误输出</span></span><br><span class="line">list_right              <span class="comment">// 标准输出</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 先将标准输出重定向至onefile,再将标准错误重定向至onefile</span></span><br><span class="line">[<span class="keyword">test</span>@iop ~]$ <span class="keyword">ls</span> list_right right &gt; onefile 2&gt;&amp;1</span><br><span class="line">[<span class="keyword">test</span>@iop ~]$ <span class="keyword">cat</span> onefile </span><br><span class="line"><span class="keyword">ls</span>: cannot access right: <span class="keyword">No</span> such <span class="keyword">file</span> or directory</span><br><span class="line">list_right</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先将标准错误重定向至anotherfile,再将标准输出重定向至anotherfile</span></span><br><span class="line">[<span class="keyword">test</span>@iop ~]$ <span class="keyword">ls</span> list_right right 2&gt; anotherfile &gt;&amp;2</span><br><span class="line">[<span class="keyword">test</span>@iop ~]$ <span class="keyword">cat</span> anotherfile </span><br><span class="line"><span class="keyword">ls</span>: cannot access right: <span class="keyword">No</span> such <span class="keyword">file</span> or directory</span><br><span class="line">list_right</span><br></pre></td></tr></table></figure>
+<h5 id="示例：-输入重定向"><a href="#示例：-输入重定向" class="headerlink" title="示例： 输入重定向"></a>示例： 输入重定向</h5><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[test@iop ~]$ cat &gt; catfile &lt;&lt; 'EOF'  // &gt; 自动创建catfile这个文件，</span><br><span class="line">&gt; test     </span><br><span class="line">&gt; test</span><br><span class="line">&gt; test test cat </span><br><span class="line">&gt; EOF                                 // &lt;&lt; 键盘输入至字符'EOF'，停止接收字符</span><br><span class="line"></span><br><span class="line">[test@iop ~]$ cat &gt; catfile2 &lt; catfile // 将文件catfile作为重定向的标准输入，并重定向输出至catfile2这文件</span><br><span class="line">[test@iop ~]$ cat catfile2</span><br><span class="line">test</span><br><span class="line">test</span><br><span class="line"><span class="keyword">test test</span> cat</span><br></pre></td></tr></table></figure>
+<p><a href="http://cn.linux.vbird.org/linux_basic/0320bash.php#redirect" target="_blank" rel="noopener">鸟哥linux私房菜：数据流重导向</a><br><a href="https://www.guru99.com/linux-redirection.html" target="_blank" rel="noopener">Input Output Redirection in Linux/Unix Examples</a><br><a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-i-o-redirection" target="_blank" rel="noopener">An Introduction to Linux I/O Redirection</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/27/数据流重定向/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-sed流编辑器的使用 " class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1044,82 +1154,6 @@
 
 
   
-    <article id="post-Centos-SuSE关闭防火墙" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/28/Centos-SuSE关闭防火墙/">Centos-SuSE关闭防火墙</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/28/Centos-SuSE关闭防火墙/" class="archive-article-date">
-  	<time datetime="2018-06-28T08:11:33.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="查看防火墙状态"><a href="#查看防火墙状态" class="headerlink" title="查看防火墙状态"></a>查看防火墙状态</h6><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.servie</span><br><span class="line"><span class="comment">// 查看防火墙状态</span></span><br></pre></td></tr></table></figure>
-<h6 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h6><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">stop</span> firewalld.service</span><br><span class="line"><span class="comment">// 关闭防火墙</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// suse系统</span></span><br><span class="line">systemctl <span class="built_in">stop</span> SuSEfirewall2</span><br></pre></td></tr></table></figure>
-<h6 id="禁用防火墙开启启动"><a href="#禁用防火墙开启启动" class="headerlink" title="禁用防火墙开启启动"></a>禁用防火墙开启启动</h6><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="keyword">disable</span> firewalld.service</span><br><span class="line"><span class="comment">// 禁止firewall开机启动 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//suse系统</span></span><br><span class="line">systemctl <span class="keyword">disable</span> SuSEfirewall2</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/28/Centos-SuSE关闭防火墙/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1229,11 +1263,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
               </li>
              
               <li class="article-tag-list-item">
