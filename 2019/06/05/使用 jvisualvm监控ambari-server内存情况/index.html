@@ -6,22 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Promise使用小记--vue-resouce多次请求的顺序执行 | 一亩三分地</title>
+  <title>使用 jvisualvm监控ambari-server内存情况 | 一亩三分地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题描述：页面加载时：    请求主机组列表； 根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；    未使用promise之前的代码：12345678910111213// 第一次请求this.getHostGroupList();// 默认选择第一个主机组// 等待200m后，发起第二次请求  setTimeout(() =&amp;gt; &amp;#123;      thi">
-<meta name="keywords" content="javaScript">
+  <meta name="description" content="1. jvsualvm 启动123456# 启动windows 命令行cmd # 输入jvsualvm# 或者$JAVA_HOME/bin/jvisualvm  2. ambari-server 配置文件中添加JVM remoted jmx相关参数 port 选用一个未占用的端口  1234567# 在ambari-env.sh中添加 remote jmx参数vi /var/lib/ambari-">
+<meta name="keywords" content="Ambari">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Promise使用小记--vue-resouce多次请求的顺序执行">
-<meta property="og:url" content="http://yoursite.com/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/index.html">
+<meta property="og:title" content="使用 jvisualvm监控ambari-server内存情况">
+<meta property="og:url" content="http://yoursite.com/2019/06/05/使用 jvisualvm监控ambari-server内存情况/index.html">
 <meta property="og:site_name" content="一亩三分地">
-<meta property="og:description" content="问题描述：页面加载时：    请求主机组列表； 根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；    未使用promise之前的代码：12345678910111213// 第一次请求this.getHostGroupList();// 默认选择第一个主机组// 等待200m后，发起第二次请求  setTimeout(() =&amp;gt; &amp;#123;      thi">
+<meta property="og:description" content="1. jvsualvm 启动123456# 启动windows 命令行cmd # 输入jvsualvm# 或者$JAVA_HOME/bin/jvisualvm  2. ambari-server 配置文件中添加JVM remoted jmx相关参数 port 选用一个未占用的端口  1234567# 在ambari-env.sh中添加 remote jmx参数vi /var/lib/ambari-">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg">
-<meta property="og:updated_time" content="2018-09-14T11:33:35.249Z">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/94ea7917a4b8c613a0d06e369e64a6e2.jpg">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/c72eeebe8cd20a759b66a942263cb65f.jpg">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/e0e0b8d7c1027463221f9a85e9274028.jpg">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/a0132e77b6240a1935c7620c6c5adeff.jpg">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/08b31411a4db0288fc1eeea60ff30127.jpg">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/9e3f3aa200069a8fc19d8c275e9bd400.jpg">
+<meta property="og:updated_time" content="2019-06-05T12:53:52.845Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Promise使用小记--vue-resouce多次请求的顺序执行">
-<meta name="twitter:description" content="问题描述：页面加载时：    请求主机组列表； 根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；    未使用promise之前的代码：12345678910111213// 第一次请求this.getHostGroupList();// 默认选择第一个主机组// 等待200m后，发起第二次请求  setTimeout(() =&amp;gt; &amp;#123;      thi">
-<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg">
+<meta name="twitter:title" content="使用 jvisualvm监控ambari-server内存情况">
+<meta name="twitter:description" content="1. jvsualvm 启动123456# 启动windows 命令行cmd # 输入jvsualvm# 或者$JAVA_HOME/bin/jvisualvm  2. ambari-server 配置文件中添加JVM remoted jmx相关参数 port 选用一个未占用的端口  1234567# 在ambari-env.sh中添加 remote jmx参数vi /var/lib/ambari-">
+<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/94ea7917a4b8c613a0d06e369e64a6e2.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -143,39 +148,50 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Promise使用小记--vue-resouce多次请求的顺序执行" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-使用 jvisualvm监控ambari-server内存情况" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Promise使用小记--vue-resouce多次请求的顺序执行
+      使用 jvisualvm监控ambari-server内存情况
     </h1>
   
 
         
-        <a href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/" class="archive-article-date">
-  	<time datetime="2018-09-14T03:00:50.751Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-14</time>
+        <a href="/2019/06/05/使用 jvisualvm监控ambari-server内存情况/" class="archive-article-date">
+  	<time datetime="2019-06-05T12:53:34.820Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg" alt="image"><br>页面加载时：  </p>
-<ol>
-<li>请求主机组列表；</li>
-<li>根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；  </li>
-</ol>
-<h5 id="未使用promise之前的代码："><a href="#未使用promise之前的代码：" class="headerlink" title="未使用promise之前的代码："></a>未使用promise之前的代码：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一次请求</span></span><br><span class="line"><span class="keyword">this</span>.getHostGroupList();</span><br><span class="line"><span class="comment">// 默认选择第一个主机组</span></span><br><span class="line"><span class="comment">// 等待200m后，发起第二次请求</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.group_name = <span class="keyword">this</span>.group_list[<span class="number">0</span>];</span><br><span class="line">      <span class="keyword">this</span>.selectGroup(<span class="keyword">this</span>.group_list[<span class="number">0</span>]);</span><br><span class="line">    &#125;, <span class="number">200</span>);</span><br><span class="line"><span class="comment">// 默认选用前三台主机搭建foundation环境</span></span><br><span class="line"><span class="comment">// 再等待200ms(400 - 200),对第二次请求的结果进行切分处理</span></span><br><span class="line">   setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.selected_hosts = <span class="keyword">this</span>.availableHosts.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">    &#125;, <span class="number">400</span>);</span><br></pre></td></tr></table></figure>
-<h5 id="延时的处理的弊端："><a href="#延时的处理的弊端：" class="headerlink" title="延时的处理的弊端："></a>延时的处理的弊端：</h5><ol>
-<li>设置的延时时间，是开发过程中的测试时间；</li>
-<li>实际应用过程中会因为请求响应的时间长短，很容易出现赋值失败的情况；</li>
-</ol>
-<h5 id="使用promise实现请求的链式调用：-then-then"><a href="#使用promise实现请求的链式调用：-then-then" class="headerlink" title="使用promise实现请求的链式调用：.then().then()"></a>使用promise实现请求的链式调用：.then().then()</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">this</span>.getHostGroupList() <span class="comment">// vue的this</span></span><br><span class="line">  .then(<span class="function">(<span class="params">group_list</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.group_name = that.group_list[<span class="number">0</span>]; <span class="comment">// promise内部that替代this</span></span><br><span class="line">    <span class="keyword">return</span> that.selectGroup(group_list[<span class="number">0</span>]); <span class="comment">// then()方法中返回Promise对象</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">available_host</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.selected_hosts = available_host.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="对getHostGrouplist-selectGroup-两个方法的promise改造："><a href="#对getHostGrouplist-selectGroup-两个方法的promise改造：" class="headerlink" title="对getHostGrouplist(),selectGroup()两个方法的promise改造："></a>对getHostGrouplist(),selectGroup()两个方法的promise改造：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1. 将请求的代码块封在Promise内部,并return new Promise()</span></span><br><span class="line"><span class="comment">2. 通过resolve将结果数据传回去</span></span><br><span class="line"><span class="comment">3. promise里的this和vue中的this指向不同，Promise内部用that变量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">getHostGroupList() &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), &#123;<span class="attr">platform_name</span>: <span class="string">'indata_foundation'</span>, <span class="attr">group_name</span>: <span class="string">''</span>&#125;)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="keyword">let</span> group_list = [];</span><br><span class="line">              <span class="keyword">let</span> host_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> host_list) &#123;</span><br><span class="line">                group_list.push(host_list[index].group_name);</span><br><span class="line">              &#125;</span><br><span class="line">              that.group_list = group_list;</span><br><span class="line">              resolve(group_list);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line"> selectGroup(group) &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 清空已选主机的tag</span></span><br><span class="line">          that.newPlatformInfo.selected_hosts = [];</span><br><span class="line">          <span class="keyword">let</span> post_data = &#123;</span><br><span class="line">            platform_name: <span class="string">'indata_foundation'</span>, <span class="comment">// 基础环境下，可用主机列表</span></span><br><span class="line">            group_name: group</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="keyword">let</span> available_host = [];</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), post_data)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="comment">// 当前组内的主机列表</span></span><br><span class="line">              <span class="keyword">let</span> indata_foundation_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> indata_foundation_list) &#123;</span><br><span class="line">                <span class="keyword">if</span> (indata_foundation_list[index].group_name == post_data.group_name) &#123;</span><br><span class="line">                  available_host = indata_foundation_list[index].host_ips</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              that.availableHosts = available_host;</span><br><span class="line">              resolve(available_host);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
-<p><a href="https://blog.csdn.net/zjscy666/article/details/76390350" target="_blank" rel="noopener">参考1：vue中promise和axios 同步爬坑小记</a><br><a href="https://www.cnblogs.com/zhuzhenwei918/p/6915451.html" target="_blank" rel="noopener">参考2：vue中promise的使用</a></p>
+        <h4 id="1-jvsualvm-启动"><a href="#1-jvsualvm-启动" class="headerlink" title="1. jvsualvm 启动"></a>1. jvsualvm 启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动windows 命令行</span></span><br><span class="line">cmd </span><br><span class="line"><span class="comment"># 输入</span></span><br><span class="line">jvsualvm</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"><span class="variable">$JAVA_HOME</span>/bin/jvisualvm</span><br></pre></td></tr></table></figure>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/94ea7917a4b8c613a0d06e369e64a6e2.jpg" alt="image"></p>
+<h4 id="2-ambari-server-配置文件中添加JVM-remoted-jmx相关参数"><a href="#2-ambari-server-配置文件中添加JVM-remoted-jmx相关参数" class="headerlink" title="2. ambari-server 配置文件中添加JVM remoted jmx相关参数"></a>2. ambari-server 配置文件中添加JVM remoted jmx相关参数</h4><ul>
+<li>port 选用一个未占用的端口</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在ambari-env.sh中添加 remote jmx参数</span></span><br><span class="line">vi /var/lib/ambari-server/ambari-env.sh</span><br><span class="line"><span class="comment"># 要添加的参数如下</span></span><br><span class="line">-Dcom.sun.management.jmxremote=<span class="literal">true</span> -Dcom.sun.management.jmxremote.port=4444 -Dcom.sun.management.jmxremote.authenticate=<span class="literal">false</span> -Dcom.sun.management.jmxremote.ssl=<span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加后的</span></span><br><span class="line"><span class="built_in">export</span> AMBARI_JVM_ARGS=<span class="variable">$AMBARI_JVM_ARGS</span><span class="string">' -Xms512m -Xmx2048m -XX:MaxPermSize=128m -Djava.security.auth.login.config=$ROOT/etc/ambari-server/conf/krb5JAASLogin.conf -Djava.security.krb5.conf=/etc/krb5.conf -Djavax.security.auth.useSubjectCredsOnly=false -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=4444 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改完后，重启ambari-server</li>
+</ul>
+<h4 id="3-ViualVM中添加远程主机"><a href="#3-ViualVM中添加远程主机" class="headerlink" title="3. ViualVM中添加远程主机"></a>3. ViualVM中添加远程主机</h4><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/c72eeebe8cd20a759b66a942263cb65f.jpg" alt="image"></p>
+<h4 id="4-添加JMX连接"><a href="#4-添加JMX连接" class="headerlink" title="4. 添加JMX连接"></a>4. 添加JMX连接</h4><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/e0e0b8d7c1027463221f9a85e9274028.jpg" alt="image"></p>
+<ul>
+<li>端口与参数配置里保持一致即可</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/a0132e77b6240a1935c7620c6c5adeff.jpg" alt="image"></p>
+<h4 id="5-查看监控信息，堆内存使用情况，进程数量等"><a href="#5-查看监控信息，堆内存使用情况，进程数量等" class="headerlink" title="5. 查看监控信息，堆内存使用情况，进程数量等"></a>5. 查看监控信息，堆内存使用情况，进程数量等</h4><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/08b31411a4db0288fc1eeea60ff30127.jpg" alt="image"></p>
+<p><a href="https://community.hortonworks.com/content/kbentry/71048/how-to-monitor-ambariservers-memory-using-jvisualv.html" target="_blank" rel="noopener">参考：How to monitor AmbariServer’s memory using jvisualvm or jconsole ?</a></p>
+<h4 id="配置jmxremote-参数后，可通过ambari中的grafana监控-Ambari-Server-JVM"><a href="#配置jmxremote-参数后，可通过ambari中的grafana监控-Ambari-Server-JVM" class="headerlink" title="配置jmxremote 参数后，可通过ambari中的grafana监控 Ambari Server JVM"></a>配置jmxremote 参数后，可通过ambari中的grafana监控 Ambari Server JVM</h4><ul>
+<li>在未配置jmx remote参数时，通过grafana dashboard无法监控到数据</li>
+<li>登录地址： grafana_host:3000</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/9e3f3aa200069a8fc19d8c275e9bd400.jpg" alt="image"></p>
+<p><a href="https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.1.0/bk_ambari-operations/content/ambari_server_jvm.html" target="_blank" rel="noopener">参考：Apache Ambari Operations
+</a></p>
 
       
 
@@ -220,24 +236,13 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javaScript</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Ambari</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -287,7 +292,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/05/使用 jvisualvm监控ambari-server内存情况/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +306,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/10/11/网关(Gateway)/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          网关(Gateway)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/08/30/shell脚本--常用小命令/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">shell脚本--常用的小命令记录</div>
+    <a href="/2018/10/26/LVM是逻辑盘卷管理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LVM是逻辑盘卷管理</div>
       <i class="icon-circle-right"></i>
     </a>
   
