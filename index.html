@@ -138,6 +138,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-celery实战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/20/celery实战/">celery 实现远程任务执行</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/20/celery实战/" class="archive-article-date">
+  	<time datetime="2019-07-20T09:20:56.199Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="角色分配"><a href="#角色分配" class="headerlink" title="角色分配"></a>角色分配</h4><ul>
+<li>10.111.24.74 | broker | worker</li>
+<li>10.111.24.75 producer  发送任务给74的worker执行</li>
+</ul>
+<h4 id="安装准备"><a href="#安装准备" class="headerlink" title="安装准备"></a>安装准备</h4><h5 id="两台机器都安装的Python包"><a href="#两台机器都安装的Python包" class="headerlink" title="两台机器都安装的Python包"></a>两台机器都安装的Python包</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install celery</span><br><span class="line">pip install redis</span><br></pre></td></tr></table></figure>
+<h5 id="74安装broker，即redis"><a href="#74安装broker，即redis" class="headerlink" title="74安装broker，即redis"></a>74安装broker，即redis</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yum -y instal redis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置可远程连接，配置密码</span></span><br><span class="line">vi /etc/redis.conf</span><br><span class="line"><span class="comment"># 密码设置</span></span><br><span class="line">requirepass 1234567890Aa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许远程访问设置</span></span><br><span class="line"><span class="comment"># 注释掉 bind 127.0.0.1  并关闭保护模式</span></span><br><span class="line"><span class="comment"># bind 127.0.0.1</span></span><br><span class="line">protected-mode no</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">service start redis</span><br></pre></td></tr></table></figure>
+<h4 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h4><h5 id="10-111-24-74"><a href="#10-111-24-74" class="headerlink" title="10.111.24.74"></a>10.111.24.74</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># celery_app</span></span><br><span class="line">.</span><br><span class="line">├── celeryconfig.py</span><br><span class="line">├── celeryconfig.pyc</span><br><span class="line">├── __init__.py</span><br><span class="line">├── __init__.pyc</span><br><span class="line">├── test_task.py</span><br><span class="line">└── test_task.pyc</span><br></pre></td></tr></table></figure>
+<h5 id="init-py"><a href="#init-py" class="headerlink" title="__init__.py"></a>__init__.py</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 Celery 实例</span></span><br><span class="line">app = Celery(<span class="string">'celery_app'</span>) </span><br><span class="line"><span class="comment"># 通过 Celery 实例加载配置模块</span></span><br><span class="line">app.config_from_object(<span class="string">'celery_app.celeryconfig'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="celeryconfig-py"><a href="#celeryconfig-py" class="headerlink" title="celeryconfig.py"></a>celeryconfig.py</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># 指定 Broker</span></span><br><span class="line">BROKER_URL = <span class="string">'redis://:1234567890Aa@10.111.24.74:6379/0'</span> </span><br><span class="line"><span class="comment"># 指定 Backend</span></span><br><span class="line">CELERY_RESULT_BACKEND = <span class="string">'redis://:1234567890Aa@10.111.24.74:6379/1'</span>  </span><br><span class="line"> <span class="comment"># 指定时区，默认是 UTC</span></span><br><span class="line">CELERY_TIMEZONE=<span class="string">'Asia/Shanghai'</span>                    </span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定导入的任务模块</span></span><br><span class="line">CELERY_IMPORTS = (                                 </span><br><span class="line">    <span class="string">'celery_app.test_task'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h5 id="test-task-py"><a href="#test-task-py" class="headerlink" title="test_task.py"></a>test_task.py</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> celery_app <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    time.sleep(<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">return</span> x * y</span><br></pre></td></tr></table></figure>
+<h5 id="10-111-24-74-1"><a href="#10-111-24-74-1" class="headerlink" title="10.111.24.74"></a>10.111.24.74</h5><ul>
+<li>将74主机上的celery_app整个目录拷到75主机任一目录<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">├── celery_app</span><br><span class="line">│   ├── celeryconfig.py</span><br><span class="line">│   ├── celeryconfig.pyc</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── __init__.pyc</span><br><span class="line">│   ├── test_task.py</span><br><span class="line">│   └── test_task.pyc</span><br><span class="line">└── producer.py</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="与celery-app同级目录新建producer-py，用于发送任务"><a href="#与celery-app同级目录新建producer-py，用于发送任务" class="headerlink" title="与celery_app同级目录新建producer.py，用于发送任务"></a>与celery_app同级目录新建producer.py，用于发送任务</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> celery_app <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">from</span> celery_app.test_task <span class="keyword">import</span> multiply</span><br><span class="line"></span><br><span class="line">print(<span class="string">"send task to 74...."</span>)</span><br><span class="line">multiply.delay(<span class="number">56</span>, <span class="number">89</span>)</span><br><span class="line">print(<span class="string">"end...."</span>)</span><br><span class="line"><span class="comment"># send_task方法，发送任务</span></span><br><span class="line">app.send_task(<span class="string">"celery_app.test_task.multiply"</span>,args=(<span class="number">32</span>,<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="在74主机上，启动celery-worker"><a href="#在74主机上，启动celery-worker" class="headerlink" title="在74主机上，启动celery worker"></a>在74主机上，启动celery worker</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/python /usr/bin/celery -A celery_app worker -l INFO</span><br></pre></td></tr></table></figure>
+<h5 id="启动后的woker如图"><a href="#启动后的woker如图" class="headerlink" title="启动后的woker如图"></a>启动后的woker如图</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/20/2178805f0348def8e0db80f03c88621f.jpg" alt="image"></p>
+<h4 id="75主机上发送任务"><a href="#75主机上发送任务" class="headerlink" title="75主机上发送任务"></a>75主机上发送任务</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 75上执行，发送耗时任务给74的worker</span></span><br><span class="line">python producer.py</span><br></pre></td></tr></table></figure>
+<h5 id="如图：左边74窗口worker接收来自75的任务"><a href="#如图：左边74窗口worker接收来自75的任务" class="headerlink" title="如图：左边74窗口worker接收来自75的任务"></a>如图：左边74窗口worker接收来自75的任务</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/gif/celery.gif" alt="image"></p>
+<p><a href="https://www.jianshu.com/p/fb3de1d9508c" target="_blank" rel="noopener">参考：分布式异步任务队列神器-Celery</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/43768308" target="_blank" rel="noopener">参考：一文搞懂 Celery 远程任务调度</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">celery</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/20/celery实战/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-使用 jvisualvm监控ambari-server内存情况" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -158,7 +252,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="1-jvsualvm-启动"><a href="#1-jvsualvm-启动" class="headerlink" title="1. jvsualvm 启动"></a>1. jvsualvm 启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动windows 命令行</span></span><br><span class="line">cmd </span><br><span class="line"><span class="comment"># 输入</span></span><br><span class="line">jvsualvm</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"><span class="variable">$JAVA_HOME</span>/bin/jvisualvm</span><br></pre></td></tr></table></figure>
+        <h4 id="1-jvisualvm-启动"><a href="#1-jvisualvm-启动" class="headerlink" title="1. jvisualvm 启动"></a>1. jvisualvm 启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动windows 命令行</span></span><br><span class="line">cmd </span><br><span class="line"><span class="comment"># 输入</span></span><br><span class="line">jvisualvm</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"><span class="variable">$JAVA_HOME</span>/bin/jvisualvm</span><br></pre></td></tr></table></figure>
 <p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/6/5/94ea7917a4b8c613a0d06e369e64a6e2.jpg" alt="image"></p>
 <h4 id="2-ambari-server-配置文件中添加JVM-remoted-jmx相关参数"><a href="#2-ambari-server-配置文件中添加JVM-remoted-jmx相关参数" class="headerlink" title="2. ambari-server 配置文件中添加JVM remoted jmx相关参数"></a>2. ambari-server 配置文件中添加JVM remoted jmx相关参数</h4><ul>
 <li>port 选用一个未占用的端口</li>
@@ -1053,101 +1147,6 @@
 
 
   
-    <article id="post-vue-router全局守卫使用记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/30/vue-router全局守卫使用记录/">vue-router全局守卫使用记录</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/30/vue-router全局守卫使用记录/" class="archive-article-date">
-  	<time datetime="2018-08-30T09:15:45.167Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="router-beforeEach-全局前置守卫的注册"><a href="#router-beforeEach-全局前置守卫的注册" class="headerlink" title="router.beforeEach 全局前置守卫的注册"></a>router.beforeEach 全局前置守卫的注册</h5><ul>
-<li>独立的permission.js文件</li>
-<li>在main.js中import ‘path/permission.js’,实现全局前置守卫<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import router from &quot;../router&quot;;</span><br><span class="line"></span><br><span class="line">let self = Vue.prototype;</span><br><span class="line">router.beforeEach((to, from, next) =&gt; &#123;</span><br><span class="line">  if (to.path === &quot;/login&quot;) &#123;</span><br><span class="line">    self.DR.isLogin = true;</span><br><span class="line">    next()</span><br><span class="line">  &#125; else if (self.cookie.get(&apos;username&apos;)) &#123;</span><br><span class="line">    Vue.http.post(self.api(&apos;login&apos;)).then(</span><br><span class="line">      (response) =&gt; &#123;</span><br><span class="line">        const res = JSON.parse(response.bodyText);</span><br><span class="line">        if (res.state === 0) &#123;</span><br><span class="line">          next()</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          self.DR.isLogin = true;</span><br><span class="line">          next(&apos;/login&apos;);</span><br><span class="line">          // 强制再刷新一次，目的是隐藏头部导航菜单</span><br><span class="line">          window.location.reload();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      (response) =&gt; &#123;</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    next(&apos;/login&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="关于next-方法"><a href="#关于next-方法" class="headerlink" title="关于next()方法"></a>关于next()方法</h5><ul>
-<li>官方定义：一定要调用该方法来 resolve 这个钩子。</li>
-<li>确保要调用 next 方法，否则钩子就不会被 resolved。</li>
-<li><strong>个人理解：</strong> beforeEach方法体内的<strong>每一个条件(if/else)</strong>，都要有next()方法出口。</li>
-</ul>
-<p><a href="https://router.vuejs.org/zh/guide/advanced/navigation-guards.html#%E5%85%A8%E5%B1%80%E5%AE%88%E5%8D%AB" target="_blank" rel="noopener">官方：导航守卫</a><br><a href="https://www.cnblogs.com/minigrasshopper/p/7928311.html" target="_blank" rel="noopener">vue2.0 实现导航守卫（路由守卫）</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/30/vue-router全局守卫使用记录/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1254,6 +1253,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">element-ui</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">celery</a>
               </li>
              
               <li class="article-tag-list-item">
