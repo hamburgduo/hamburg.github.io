@@ -138,6 +138,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Jenkins pipeline中的shell命令command not found解决" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/27/Jenkins pipeline中的shell命令command not found解决/">Jenkins pipeline中的shell命令command not found问题解决</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/27/Jenkins pipeline中的shell命令command not found解决/" class="archive-article-date">
+  	<time datetime="2019-07-27T07:49:20.038Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Jenkins-pipeline-中运行shell-命令command-not-found"><a href="#Jenkins-pipeline-中运行shell-命令command-not-found" class="headerlink" title="Jenkins pipeline 中运行shell 命令command not found"></a>Jenkins pipeline 中运行shell 命令command not found</h4><ul>
+<li>这些命令配置了环境变量，在shell中可以任意目录下运行</li>
+<li>jenkins pipeline中，只查找(/sbin:/usr/sbin:/bin:/usr/bin)</li>
+<li>需要将实际的安装路径，软链接至(/sbin:/usr/sbin:/bin:/usr/bin)任意一个PATH</li>
+</ul>
+<h5 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mvn : command not found</span></span><br><span class="line">/var/lib/jenkins/workspace/<span class="built_in">test</span>@tmp/durable-e9913be4/script.sh: line 4: mvn: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 mvn 绝对路径 /usr/local/src/apache-maven/bin/mvn clean 执行</span></span><br><span class="line">+ /usr/<span class="built_in">local</span>/src/apache-maven/bin/mvn -Dmaven.test.failure.ignore clean package</span><br><span class="line"><span class="built_in">which</span>: no java <span class="keyword">in</span> (/sbin:/usr/sbin:/bin:/usr/bin)</span><br><span class="line">The JAVA_HOME environment variable is not defined correctly</span><br><span class="line">This environment variable is needed to run this program</span><br><span class="line">NB: JAVA_HOME should point to a JDK not a JRE</span><br><span class="line"></span><br><span class="line"><span class="comment"># java 错误详情：which: no java in (/sbin:/usr/sbin:/bin:/usr/bin)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ansible-playbook : command not found</span></span><br><span class="line">/var/lib/jenkins/workspace/news_app_deploy@tmp/durable-2c6f0bc8/script.sh: line 4: ansible-playbook: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
+<h5 id="linx-shell-查看java命令的路径，的确不在-sbin-usr-sbin-bin-usr-bin"><a href="#linx-shell-查看java命令的路径，的确不在-sbin-usr-sbin-bin-usr-bin" class="headerlink" title="linx shell 查看java命令的路径，的确不在(/sbin:/usr/sbin:/bin:/usr/bin)"></a>linx shell 查看java命令的路径，的确不在(/sbin:/usr/sbin:/bin:/usr/bin)</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># which java </span></span><br><span class="line">/usr/<span class="built_in">local</span>/jdk/bin/java  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 软链接 java 实际安装路径至  (/sbin:/usr/sbin:/bin:/usr/bin)任意一个PATH</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/jdk/bin/java  /usr/bin/java</span><br></pre></td></tr></table></figure>
+<h5 id="其他命令同样的解决方式-ln-至-usr-bin"><a href="#其他命令同样的解决方式-ln-至-usr-bin" class="headerlink" title="其他命令同样的解决方式: ln 至 /usr/bin"></a>其他命令同样的解决方式: ln 至 /usr/bin</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/27/637166ce55990fe860aa04243d499a5d.jpg" alt="image"></p>
+<h5 id="软链接至-sbin-usr-sbin-bin-usr-bin"><a href="#软链接至-sbin-usr-sbin-bin-usr-bin" class="headerlink" title="软链接至(/sbin:/usr/sbin:/bin:/usr/bin)"></a>软链接至(/sbin:/usr/sbin:/bin:/usr/bin)</h5><ul>
+<li>在jenkins pipeline执行，完美运行mvn / ansible  / ansible-playbook</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/27/e51c79b4fe69e95fd703d5bc497374a2.jpg" alt="image"></p>
+<h4 id="小知识：PATH-环境变量"><a href="#小知识：PATH-环境变量" class="headerlink" title="小知识：PATH 环境变量"></a>小知识：PATH 环境变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line"><span class="comment">## 输出</span></span><br><span class="line">/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/<span class="built_in">local</span>/src/apache-maven/bin:/usr/<span class="built_in">local</span>/jdk/bin:/usr/<span class="built_in">local</span>/jdk/jre/bin:/usr/<span class="built_in">local</span>/jdk:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/root/bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某一文件： 配置的时间PATH值</span></span><br><span class="line"><span class="built_in">which</span> java</span><br><span class="line"><span class="built_in">which</span> mvn </span><br><span class="line"><span class="built_in">which</span> ansible</span><br><span class="line"><span class="built_in">which</span> ansible-playbook</span><br></pre></td></tr></table></figure>
+<ul>
+<li>$PATH：决定了shell将到哪些目录中寻找命令或程序，PATH的值是一系列目录，当您运行一个程序时，Linux在这些目录下进行搜寻编译链接。</li>
+<li>which指令会在环境变量$PATH设置的目录里查找符合条件的文件</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">jenkins</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/27/Jenkins pipeline中的shell命令command not found解决/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-celery实战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1062,94 +1156,6 @@
 
 
   
-    <article id="post-shell脚本--常用小命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/30/shell脚本--常用小命令/">shell脚本--常用的小命令记录</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/30/shell脚本--常用小命令/" class="archive-article-date">
-  	<time datetime="2018-08-30T11:56:26.171Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="read-从键盘读取变量值"><a href="#read-从键盘读取变量值" class="headerlink" title="read 从键盘读取变量值"></a>read 从键盘读取变量值</h5><p>read [option] variable</p>
-<ul>
-<li>选项<br>-p： 加提示字符(prompt)<br>-t： 输入值等待的时间(s)<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 注意参数、变量之间的空格</span></span><br><span class="line">[root@33 ~]# read -p 'Enter your name:' -t 10 first_name last_name</span><br><span class="line">Enter your name:Tom Li</span><br><span class="line">[root@33 ~]# echo $first_name $last_name</span><br><span class="line">Tom Li</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="echo-取用变量或者输出指定字符串"><a href="#echo-取用变量或者输出指定字符串" class="headerlink" title="echo 取用变量或者输出指定字符串"></a>echo 取用变量或者输出指定字符串</h5><p>echo [option] var</p>
-<ul>
-<li>选项<br>-e：激活转义字符<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@33 ~]# echo -e '\n\n\t'</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">[root@33 ~]# echo  '\n\n\t'</span><br><span class="line">\n\n\t</span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出变量需要变量名前加美元符号$</span></span><br><span class="line">[root@33 ~]# echo $JAVA_HOME</span><br><span class="line">/usr/local/jdk</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="echo加管道命令-自动回复yes-或者直接yes"><a href="#echo加管道命令-自动回复yes-或者直接yes" class="headerlink" title="echo加管道命令|自动回复yes 或者直接yes"></a>echo加管道命令|自动回复yes 或者直接yes</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@33 ~]# ls</span><br><span class="line">test.txt  test.txt.bak</span><br><span class="line"><span class="meta">#</span><span class="bash"> 存在test.txt.bak，执行cp会提示是否覆盖</span></span><br><span class="line">[root@33 ~]# cp test.txt test.txt.bak</span><br><span class="line">cp: overwrite ‘test.txt.bak’?   # 此处等待用户输入yes/no</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> yes 或者 yes 自动回复</span></span><br><span class="line">[root@33 ~]# echo yes | cp test.txt test.txt.bak </span><br><span class="line">cp: overwrite ‘test.txt.bak’? [root@33 ~]# </span><br><span class="line">[root@33 ~]# yes | cp test.txt test.txt.bak </span><br><span class="line">cp: overwrite ‘test.txt.bak’? [root@33 ~]#</span><br></pre></td></tr></table></figure>
-<h5 id="一条命令中的子命令——-或"><a href="#一条命令中的子命令——-或" class="headerlink" title="一条命令中的子命令——`` 或 $()"></a>一条命令中的子命令——`` 或 $()</h5><ul>
-<li>在一串命令中，还需要藉由其他的命令提供的信息，可以使用反单引号『<code>命令</code>』或 『$(命令)』。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@33 ~]# version=`cat /etc/redhat-release`</span><br><span class="line">[root@33 ~]# echo $version </span><br><span class="line">CentOS Linux release 7.2.1511 (Core)</span><br><span class="line">[root@33 ~]# currpath=$(pwd)</span><br><span class="line">[root@33 ~]# echo $currpath</span><br><span class="line">/root</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/30/shell脚本--常用小命令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1259,11 +1265,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">celery</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">celery</a>
               </li>
              
               <li class="article-tag-list-item">
