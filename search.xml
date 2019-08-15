@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[进程、线程、协程]]></title>
+    <url>%2F2019%2F08%2F15%2F%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E3%80%81%E5%8D%8F%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[整体关系 进程 &gt; 线程 &gt; 协程协程是最轻量的存在 进程 操作系统会以进程为单位，分配系统资源（CPU时间片、内存等资源） 进程是资源分配的最小单位 进程的状态 阻塞态：等待某个事件的完成； 就绪态：等待系统分配处理器以便运行； 执行态：占有处理器正在运行。 进程间通信IPC（InterProcess Communication）方式 管道(Pipe)、命名管道(FIFO) 消息队列(Message Queue) 信号量(Semaphore) 共享内存（Shared Memory） 套接字（Socket） 多进程 优点： 多进程的程序要比多线程的程序健壮 进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响 缺点： 进程切换耗费资源较大，效率要差一些 线程 操作系统调度（CPU调度）执行的最小单位。 线程，有时被称为轻量级进程(Lightweight Process，LWP），属于进程 多线程 优点： 共享进程的地址空间，线程切换资源开销小 缺点： 线程之间没有单独的地址空间，一个进程死掉就等于所有的线程死掉 关于IO 密集型任务 多线程程序与多进程程序相率相当，甚至多线程优于多进程 协程 协程，是一种比线程更加轻量级的存在 不是被操作系统内核所管理，而完全是由程序所控制（也就是在用户态执行） 协没有线程的上下文切换消耗，性能得到了很大的提升 不需要锁机制，因为只有一个线程，也不存在同时写变量冲突 参考：进程、线程和协程之间的区别和联系]]></content>
+      <tags>
+        <tag>os</tag>
+        <tag>常见面试题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Jenkins pipeline中的shell命令command not found问题解决]]></title>
     <url>%2F2019%2F07%2F27%2FJenkins%20pipeline%E4%B8%AD%E7%9A%84shell%E5%91%BD%E4%BB%A4command%20not%20found%E8%A7%A3%E5%86%B3%2F</url>
     <content type="text"><![CDATA[Jenkins pipeline 中运行shell 命令command not found 这些命令配置了环境变量，在shell中可以任意目录下运行 jenkins pipeline中，只查找(/sbin:/usr/sbin:/bin:/usr/bin) 需要将实际的安装路径，软链接至(/sbin:/usr/sbin:/bin:/usr/bin)任意一个PATH 问题详情1234567891011121314# mvn : command not found/var/lib/jenkins/workspace/test@tmp/durable-e9913be4/script.sh: line 4: mvn: command not found# 用 mvn 绝对路径 /usr/local/src/apache-maven/bin/mvn clean 执行+ /usr/local/src/apache-maven/bin/mvn -Dmaven.test.failure.ignore clean packagewhich: no java in (/sbin:/usr/sbin:/bin:/usr/bin)The JAVA_HOME environment variable is not defined correctlyThis environment variable is needed to run this programNB: JAVA_HOME should point to a JDK not a JRE# java 错误详情：which: no java in (/sbin:/usr/sbin:/bin:/usr/bin)# ansible-playbook : command not found/var/lib/jenkins/workspace/news_app_deploy@tmp/durable-2c6f0bc8/script.sh: line 4: ansible-playbook: command not found linx shell 查看java命令的路径，的确不在(/sbin:/usr/sbin:/bin:/usr/bin)12345# which java /usr/local/jdk/bin/java # 软链接 java 实际安装路径至 (/sbin:/usr/sbin:/bin:/usr/bin)任意一个PATHln -s /usr/local/jdk/bin/java /usr/bin/java 其他命令同样的解决方式: ln 至 /usr/bin 软链接至(/sbin:/usr/sbin:/bin:/usr/bin) 在jenkins pipeline执行，完美运行mvn / ansible / ansible-playbook 小知识：PATH 环境变量12345678910# 查看echo $PATH## 输出/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/src/apache-maven/bin:/usr/local/jdk/bin:/usr/local/jdk/jre/bin:/usr/local/jdk:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin# 查看某一文件： 配置的时间PATH值which javawhich mvn which ansiblewhich ansible-playbook $PATH：决定了shell将到哪些目录中寻找命令或程序，PATH的值是一系列目录，当您运行一个程序时，Linux在这些目录下进行搜寻编译链接。 which指令会在环境变量$PATH设置的目录里查找符合条件的文件]]></content>

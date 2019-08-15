@@ -138,6 +138,140 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-进程、线程、协程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/15/进程、线程、协程/">进程、线程、协程</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/15/进程、线程、协程/" class="archive-article-date">
+  	<time datetime="2019-08-15T12:43:23.099Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="整体关系"><a href="#整体关系" class="headerlink" title="整体关系"></a>整体关系</h4><blockquote>
+<p>进程 &gt; 线程 &gt; 协程<br>协程是最轻量的存在</p>
+</blockquote>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/8/15/7fd030eedad284ee11c56a82992daf06.jpg" alt="image"></p>
+<h4 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h4><ul>
+<li>操作系统会以进程为单位，分配系统资源（CPU时间片、内存等资源）</li>
+<li>进程是<strong>资源分配</strong>的最小单位</li>
+</ul>
+<h5 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h5><ul>
+<li>阻塞态：等待某个事件的完成；</li>
+<li>就绪态：等待系统分配处理器以便运行；</li>
+<li>执行态：占有处理器正在运行。</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/8/15/afeff4dda2617879180ec280123d6b50.jpg" alt="image"></p>
+<h5 id="进程间通信IPC（InterProcess-Communication）方式"><a href="#进程间通信IPC（InterProcess-Communication）方式" class="headerlink" title="进程间通信IPC（InterProcess Communication）方式"></a>进程间通信IPC（InterProcess Communication）方式</h5><ul>
+<li>管道(Pipe)、命名管道(FIFO)</li>
+<li>消息队列(Message Queue) </li>
+<li>信号量(Semaphore) </li>
+<li>共享内存（Shared Memory）</li>
+<li>套接字（Socket）</li>
+</ul>
+<h5 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h5><ul>
+<li>优点：<ul>
+<li>多进程的程序要比多线程的程序健壮</li>
+<li>进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>进程切换耗费资源较大，效率要差一些 <h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4></li>
+</ul>
+</li>
+<li><p>操作系统<strong>调度（CPU调度）执行</strong>的最小单位。</p>
+</li>
+<li>线程，有时被称为轻量级进程(Lightweight Process，LWP），属于进程</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/8/15/2d4ed7e11161b8399235cf1c7b79fab9.jpg" alt="image"> </p>
+<h5 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h5><ul>
+<li>优点：<ul>
+<li>共享进程的地址空间，线程切换资源开销小</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>线程之间没有单独的地址空间，一个进程死掉就等于所有的线程死掉</li>
+</ul>
+</li>
+</ul>
+<h5 id="关于IO-密集型任务"><a href="#关于IO-密集型任务" class="headerlink" title="关于IO 密集型任务"></a>关于IO 密集型任务</h5><ul>
+<li>多线程程序与多进程程序相率相当，甚至多线程优于多进程</li>
+</ul>
+<h4 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h4><ul>
+<li>协程，是一种比线程更加轻量级的存在</li>
+<li>不是被操作系统内核所管理，而完全是由程序所控制（也就是在用户态执行）</li>
+<li>协没有线程的上下文切换消耗，性能得到了很大的提升</li>
+<li>不需要锁机制，因为只有一个线程，也不存在同时写变量冲突</li>
+</ul>
+<p><a href="https://blog.csdn.net/daaikuaichuan/article/details/82951084" target="_blank" rel="noopener">参考：进程、线程和协程之间的区别和联系</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">os</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">常见面试题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/15/进程、线程、协程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Jenkins pipeline中的shell命令command not found解决" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1059,103 +1193,6 @@
 
 
   
-    <article id="post-Promise使用小记--vue-resouce多次请求的顺序执行" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/">Promise使用小记--vue-resouce多次请求的顺序执行</a>
-    </h1>
-  
-
-        
-        <a href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/" class="archive-article-date">
-  	<time datetime="2018-09-14T03:00:50.751Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/9/14/0800e39e8a9490002a6b74d0d75c2ba0.jpg" alt="image"><br>页面加载时：  </p>
-<ol>
-<li>请求主机组列表；</li>
-<li>根据上一步请求的结果，再次请求group_list[0]下的可用主机的前三台；  </li>
-</ol>
-<h5 id="未使用promise之前的代码："><a href="#未使用promise之前的代码：" class="headerlink" title="未使用promise之前的代码："></a>未使用promise之前的代码：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一次请求</span></span><br><span class="line"><span class="keyword">this</span>.getHostGroupList();</span><br><span class="line"><span class="comment">// 默认选择第一个主机组</span></span><br><span class="line"><span class="comment">// 等待200m后，发起第二次请求</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.group_name = <span class="keyword">this</span>.group_list[<span class="number">0</span>];</span><br><span class="line">      <span class="keyword">this</span>.selectGroup(<span class="keyword">this</span>.group_list[<span class="number">0</span>]);</span><br><span class="line">    &#125;, <span class="number">200</span>);</span><br><span class="line"><span class="comment">// 默认选用前三台主机搭建foundation环境</span></span><br><span class="line"><span class="comment">// 再等待200ms(400 - 200),对第二次请求的结果进行切分处理</span></span><br><span class="line">   setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.newPlatformInfo.selected_hosts = <span class="keyword">this</span>.availableHosts.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">    &#125;, <span class="number">400</span>);</span><br></pre></td></tr></table></figure>
-<h5 id="延时的处理的弊端："><a href="#延时的处理的弊端：" class="headerlink" title="延时的处理的弊端："></a>延时的处理的弊端：</h5><ol>
-<li>设置的延时时间，是开发过程中的测试时间；</li>
-<li>实际应用过程中会因为请求响应的时间长短，很容易出现赋值失败的情况；</li>
-</ol>
-<h5 id="使用promise实现请求的链式调用：-then-then"><a href="#使用promise实现请求的链式调用：-then-then" class="headerlink" title="使用promise实现请求的链式调用：.then().then()"></a>使用promise实现请求的链式调用：.then().then()</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">this</span>.getHostGroupList() <span class="comment">// vue的this</span></span><br><span class="line">  .then(<span class="function">(<span class="params">group_list</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.group_name = that.group_list[<span class="number">0</span>]; <span class="comment">// promise内部that替代this</span></span><br><span class="line">    <span class="keyword">return</span> that.selectGroup(group_list[<span class="number">0</span>]); <span class="comment">// then()方法中返回Promise对象</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">available_host</span>) =&gt;</span> &#123;</span><br><span class="line">    that.newPlatformInfo.selected_hosts = available_host.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="对getHostGrouplist-selectGroup-两个方法的promise改造："><a href="#对getHostGrouplist-selectGroup-两个方法的promise改造：" class="headerlink" title="对getHostGrouplist(),selectGroup()两个方法的promise改造："></a>对getHostGrouplist(),selectGroup()两个方法的promise改造：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1. 将请求的代码块封在Promise内部,并return new Promise()</span></span><br><span class="line"><span class="comment">2. 通过resolve将结果数据传回去</span></span><br><span class="line"><span class="comment">3. promise里的this和vue中的this指向不同，Promise内部用that变量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">getHostGroupList() &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), &#123;<span class="attr">platform_name</span>: <span class="string">'indata_foundation'</span>, <span class="attr">group_name</span>: <span class="string">''</span>&#125;)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="keyword">let</span> group_list = [];</span><br><span class="line">              <span class="keyword">let</span> host_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> host_list) &#123;</span><br><span class="line">                group_list.push(host_list[index].group_name);</span><br><span class="line">              &#125;</span><br><span class="line">              that.group_list = group_list;</span><br><span class="line">              resolve(group_list);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line"> selectGroup(group) &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 清空已选主机的tag</span></span><br><span class="line">          that.newPlatformInfo.selected_hosts = [];</span><br><span class="line">          <span class="keyword">let</span> post_data = &#123;</span><br><span class="line">            platform_name: <span class="string">'indata_foundation'</span>, <span class="comment">// 基础环境下，可用主机列表</span></span><br><span class="line">            group_name: group</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="keyword">let</span> available_host = [];</span><br><span class="line">          that.$http.post(that.api(<span class="string">'get_available_hosts'</span>), post_data)</span><br><span class="line">            .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">let</span> res = <span class="built_in">JSON</span>.parse(response.bodyText);</span><br><span class="line">              <span class="comment">// 当前组内的主机列表</span></span><br><span class="line">              <span class="keyword">let</span> indata_foundation_list = res.platform_available_hosts.indata_foundation;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> indata_foundation_list) &#123;</span><br><span class="line">                <span class="keyword">if</span> (indata_foundation_list[index].group_name == post_data.group_name) &#123;</span><br><span class="line">                  available_host = indata_foundation_list[index].host_ips</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              that.availableHosts = available_host;</span><br><span class="line">              resolve(available_host);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
-<p><a href="https://blog.csdn.net/zjscy666/article/details/76390350" target="_blank" rel="noopener">参考1：vue中promise和axios 同步爬坑小记</a><br><a href="https://www.cnblogs.com/zhuzhenwei918/p/6915451.html" target="_blank" rel="noopener">参考2：vue中promise的使用</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javaScript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/14/Promise使用小记--vue-resouce多次请求的顺序执行/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1290,6 +1327,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ambari</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">os</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">常见面试题</a>
               </li>
             
             <div class="clearfix"></div>
