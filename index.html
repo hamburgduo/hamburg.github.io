@@ -138,6 +138,79 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Playbook解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title： Ansible playbook基本结构及示例<br>tags：</p>
+<h2 id="Ansible"><a href="#Ansible" class="headerlink" title="  - Ansible"></a>  - Ansible</h2><h4 id="playbook-构成"><a href="#playbook-构成" class="headerlink" title="playbook 构成"></a>playbook 构成</h4><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/11/10cb08ee900d361e87778e6cff744625.jpg" alt="image"></p>
+<ul>
+<li>一个playbook可以包含多个paly</li>
+<li>一个paly里包含tasks列表，一个或者多个任务</li>
+</ul>
+<h5 id="最基本的playbook脚本分为三个部分"><a href="#最基本的playbook脚本分为三个部分" class="headerlink" title="最基本的playbook脚本分为三个部分:"></a>最基本的playbook脚本分为三个部分:</h5><ol>
+<li>在什么机器上以什么身份执行<ul>
+<li>hosts</li>
+<li>users<br>…</li>
+</ul>
+</li>
+<li>执行的任务是都有什么<ul>
+<li>tasks</li>
+</ul>
+</li>
+<li>善后的任务都有什么<ul>
+<li>handlers</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://getansible.com/playbookji_ben_yu_fa" target="_blank" rel="noopener">详见：Playbook基本语法</a></p>
+<h4 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># play名称</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">unarchive</span> <span class="string">a</span> <span class="string">tar</span> <span class="string">file</span> <span class="string">from</span> <span class="string">ansible</span> <span class="string">controller</span> <span class="string">to</span> <span class="string">a</span> <span class="string">targer</span> <span class="string">server</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">elasticsearch</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line">  <span class="comment"># 任务名称</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">mkdir</span> <span class="string">for</span> <span class="string">es</span></span><br><span class="line"><span class="attr">    file:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/root/es</span></span><br><span class="line"><span class="attr">      state:</span> <span class="string">directory</span></span><br><span class="line"><span class="attr">      owner:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      group:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      mode:</span> <span class="number">0755</span></span><br><span class="line">    <span class="comment"># 使用root权限，执行相关操作</span></span><br><span class="line"><span class="attr">    become:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    become_method:</span> <span class="string">sudo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">unarchive</span> <span class="string">a</span> <span class="string">tar</span> <span class="string">file</span> <span class="string">with</span> <span class="string">absolute</span> <span class="string">path</span></span><br><span class="line"><span class="attr">    unarchive:</span></span><br><span class="line">      <span class="comment"># src 从ansible控制主机，copy至目标主机</span></span><br><span class="line"><span class="attr">      src:</span> <span class="string">/opt/httpfiles/elasticsearch/elasticsearch.tar.gz</span></span><br><span class="line"><span class="attr">      dest:</span> <span class="string">/root/es</span></span><br><span class="line"><span class="attr">    become:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    become_method:</span> <span class="string">sudo</span></span><br></pre></td></tr></table></figure>
+<h5 id="运行指命令"><a href="#运行指命令" class="headerlink" title="运行指命令"></a>运行指命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以通过设置系统环境变量来禁止,检查 keys 的提示</span></span><br><span class="line"><span class="built_in">export</span> ANSIBLE_HOST_KEY_CHECKING=False;</span><br><span class="line">ansible-playbook --user=deploymgr --private-key=/var/lib/jenkins/.keys/devops_admin.pem -i /opt/jenkins/inventory_7d461c80-9eca-11e9-9a1f-81ee33792afc.py test_unarchive.yml</span><br></pre></td></tr></table></figure>
+<p><a href="http://www.178linux.com/6014" target="_blank" rel="noopener">Ansible应用介绍：配置免密钥登陆</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/20/Playbook解析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-pyhton多线程之threading" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1058,114 +1131,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/10/16/httpd 配置负载均衡/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-git commit 多账号问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/15/git commit 多账号问题/">git多账号配置问题</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/15/git commit 多账号问题/" class="archive-article-date">
-  	<time datetime="2018-10-15T10:26:16.879Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h5><p>github 仓库commit之后，contributions不显示，如图：<br><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/12/305dbaabcddd6dae403813264adea02d.jpg" alt="image"></p>
-<h5 id="问题原因查找"><a href="#问题原因查找" class="headerlink" title="问题原因查找"></a>问题原因查找</h5><p><a href="https://help.github.com/articles/why-are-my-contributions-not-showing-up-on-my-profile/" target="_blank" rel="noopener">官方描述：You haven’t added your local Git commit email to your profile</a></p>
-<p>Commits must be made with an email address that has been added to your GitHub profile in order to appear on your contributions graph. You can check the email address used for a commit by adding .patch to the end of a commit URL, e.g. <a href="https://github.com/octocat/octocat.github.io/commit/67c0afc1da354d8571f51b6f0af8f2794117fd10.patch" target="_blank" rel="noopener">https://github.com/octocat/octocat.github.io/commit/67c0afc1da354d8571f51b6f0af8f2794117fd10.patch</a>:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">From <span class="number">67</span>c0afc1da354d8571f51b6f0af8f2794117fd10 Mon Sep <span class="number">17</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> <span class="number">2001</span></span><br><span class="line"><span class="string">From:</span> The Octocat &lt;octocat<span class="meta">@nowhere</span>.com&gt;</span><br><span class="line"><span class="string">Date:</span> Sun, <span class="number">27</span> Apr <span class="number">2014</span> <span class="number">15</span>:<span class="number">36</span>:<span class="number">39</span> +<span class="number">0530</span></span><br><span class="line"><span class="string">Subject:</span> [PATCH] updated index <span class="keyword">for</span> better welcome message</span><br></pre></td></tr></table></figure></p>
-<p>即提交用户邮箱与github注册的邮箱不对应，导致contributions图不能正常显示。</p>
-<ul>
-<li>不匹配的用户名与邮箱  </li>
-</ul>
-<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/12/725426d3ad13eedf7bae67b132a81370.jpg" alt="image"></p>
-<ul>
-<li>匹配的用户名与邮箱【contributions图正常显示】  </li>
-</ul>
-<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/12/a4f6c67fed496be4b6f6d3a1658e9f6e.jpg" alt="image"></p>
-<ul>
-<li>不匹配的原因分析<br>由于在C盘用户目录下.gitconfig文件下配置：<br>公司的TFS代码仓库的账户和邮箱，该配置为<strong>全局配置</strong>，导致github代码仓库也用该配置，所以不显示contributions。<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[user]</span></span><br><span class="line"><span class="attr">name</span> = xxx</span><br><span class="line"><span class="attr">email</span> = xxx@xxx.com</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="多账号配置"><a href="#多账号配置" class="headerlink" title="多账号配置"></a>多账号配置</h5><ul>
-<li>每个仓库单独配置[user],不使用全局配置 （<strong>避免账号邮箱串用</strong>）</li>
-<li>公司的仓库配置公司的用户名及邮箱 </li>
-<li>私人的github仓库配置github账号及注册邮箱<br>.git目录下的config文件中添加,[user]部分的配置：<br><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/15/94b7d3b3c1968289a6f61c014c94f52a.jpg" alt="image"></li>
-</ul>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[user]</span></span><br><span class="line"><span class="attr">name</span> = xxx</span><br><span class="line"><span class="attr">email</span> = xxx@xxx.com</span><br></pre></td></tr></table></figure>
-<p>也可以利用命令操作<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>user.email <span class="string">"email@example.com"</span></span><br></pre></td></tr></table></figure></p>
-<p><a href="https://help.github.com/articles/setting-your-commit-email-address-in-git/#setting-your-email-address-for-a-single-repository" target="_blank" rel="noopener">参考：Setting your email address for a single repository</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工具//" class="article-tag-list-link color3">工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/15/git commit 多账号问题/">展开全文 >></a>
         </p>
       
 

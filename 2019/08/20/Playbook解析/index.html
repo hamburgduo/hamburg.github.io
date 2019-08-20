@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 一亩三分地</title>
+  <title>一亩三分地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="title： Ansible playbook基本结构及示例tags：   - Ansibleplaybook 构成  一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务  最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users…   执行的任务是都有什么 tasks   善后的任务都有什么 handlers">
+<meta property="og:type" content="article">
 <meta property="og:title" content="一亩三分地">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/08/20/Playbook解析/index.html">
 <meta property="og:site_name" content="一亩三分地">
+<meta property="og:description" content="title： Ansible playbook基本结构及示例tags：   - Ansibleplaybook 构成  一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务  最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users…   执行的任务是都有什么 tasks   善后的任务都有什么 handlers">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/11/10cb08ee900d361e87778e6cff744625.jpg">
+<meta property="og:updated_time" content="2019-08-20T10:14:04.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一亩三分地">
+<meta name="twitter:description" content="title： Ansible playbook基本结构及示例tags：   - Ansibleplaybook 构成  一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务  最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users…   执行的任务是都有什么 tasks   善后的任务都有什么 handlers">
+<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/11/10cb08ee900d361e87778e6cff744625.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -136,349 +142,175 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Playbook解析" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title： Ansible playbook基本结构及示例<br>tags：</p>
+<h2 id="Ansible"><a href="#Ansible" class="headerlink" title="  - Ansible"></a>  - Ansible</h2><h4 id="playbook-构成"><a href="#playbook-构成" class="headerlink" title="playbook 构成"></a>playbook 构成</h4><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/11/10cb08ee900d361e87778e6cff744625.jpg" alt="image"></p>
+<ul>
+<li>一个playbook可以包含多个paly</li>
+<li>一个paly里包含tasks列表，一个或者多个任务</li>
+</ul>
+<h5 id="最基本的playbook脚本分为三个部分"><a href="#最基本的playbook脚本分为三个部分" class="headerlink" title="最基本的playbook脚本分为三个部分:"></a>最基本的playbook脚本分为三个部分:</h5><ol>
+<li>在什么机器上以什么身份执行<ul>
+<li>hosts</li>
+<li>users<br>…</li>
+</ul>
+</li>
+<li>执行的任务是都有什么<ul>
+<li>tasks</li>
+</ul>
+</li>
+<li>善后的任务都有什么<ul>
+<li>handlers</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://getansible.com/playbookji_ben_yu_fa" target="_blank" rel="noopener">详见：Playbook基本语法</a></p>
+<h4 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># play名称</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">unarchive</span> <span class="string">a</span> <span class="string">tar</span> <span class="string">file</span> <span class="string">from</span> <span class="string">ansible</span> <span class="string">controller</span> <span class="string">to</span> <span class="string">a</span> <span class="string">targer</span> <span class="string">server</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">elasticsearch</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line">  <span class="comment"># 任务名称</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">mkdir</span> <span class="string">for</span> <span class="string">es</span></span><br><span class="line"><span class="attr">    file:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/root/es</span></span><br><span class="line"><span class="attr">      state:</span> <span class="string">directory</span></span><br><span class="line"><span class="attr">      owner:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      group:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      mode:</span> <span class="number">0755</span></span><br><span class="line">    <span class="comment"># 使用root权限，执行相关操作</span></span><br><span class="line"><span class="attr">    become:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    become_method:</span> <span class="string">sudo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">unarchive</span> <span class="string">a</span> <span class="string">tar</span> <span class="string">file</span> <span class="string">with</span> <span class="string">absolute</span> <span class="string">path</span></span><br><span class="line"><span class="attr">    unarchive:</span></span><br><span class="line">      <span class="comment"># src 从ansible控制主机，copy至目标主机</span></span><br><span class="line"><span class="attr">      src:</span> <span class="string">/opt/httpfiles/elasticsearch/elasticsearch.tar.gz</span></span><br><span class="line"><span class="attr">      dest:</span> <span class="string">/root/es</span></span><br><span class="line"><span class="attr">    become:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    become_method:</span> <span class="string">sudo</span></span><br></pre></td></tr></table></figure>
+<h5 id="运行指命令"><a href="#运行指命令" class="headerlink" title="运行指命令"></a>运行指命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以通过设置系统环境变量来禁止,检查 keys 的提示</span></span><br><span class="line"><span class="built_in">export</span> ANSIBLE_HOST_KEY_CHECKING=False;</span><br><span class="line">ansible-playbook --user=deploymgr --private-key=/var/lib/jenkins/.keys/devops_admin.pem -i /opt/jenkins/inventory_7d461c80-9eca-11e9-9a1f-81ee33792afc.py test_unarchive.yml</span><br></pre></td></tr></table></figure>
+<p><a href="http://www.178linux.com/6014" target="_blank" rel="noopener">Ansible应用介绍：配置免密钥登陆</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>只是测试一下功能O(∩_∩)O哈哈~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/8fd05f9cb87b23b5a1147beef043cca2.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/8/29/ffae88b991959d6c8ff83ec2bb2dacbe.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/08/vue-resource几种使用场景记录/" class="archive-article-date">
-  	<time datetime="2018-08-08T07:22:00.036Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/08/vue-resource几种使用场景记录/">vue-resource几种使用场景记录</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.js</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/20/Playbook解析/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/14/jupyter的安装使用/" class="archive-article-date">
-  	<time datetime="2018-07-14T06:13:44.366Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/16/pyhton多线程之threading/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python多线程--threading</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/14/jupyter的安装使用/">jupyter的安装及使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/13/urllib、urllib2的使用及区别/" class="archive-article-date">
-  	<time datetime="2018-07-13T09:24:24.550Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/13/urllib、urllib2的使用及区别/">urllib、urllib2的使用及区别</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/05/搭建本地yum源(CentOS)/" class="archive-article-date">
-  	<time datetime="2018-07-05T11:52:25.852Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/05/搭建本地yum源(CentOS)/">搭建本地yum源(CentOS)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/04/Tomcat vs Apache：您钟情于哪一款/" class="archive-article-date">
-  	<time datetime="2018-07-04T03:13:52.249Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/04/Tomcat vs Apache：您钟情于哪一款/">Tomcat vs Apache：您钟情于哪一款</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/29/Hexo使用问题记录/" class="archive-article-date">
-  	<time datetime="2018-06-29T01:51:39.052Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/29/Hexo使用问题记录/">Hexo使用问题记录[文章标题显示no title、设置主页language]</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/28/Centos-SuSE关闭防火墙/" class="archive-article-date">
-  	<time datetime="2018-06-28T08:11:33.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/28/Centos-SuSE关闭防火墙/">Centos-SuSE关闭防火墙</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/28/ElementUi rules表单验证/" class="archive-article-date">
-  	<time datetime="2018-06-28T07:45:29.257Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/28/ElementUi rules表单验证/">ElementUi rules表单验证</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">element-ui</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/09/hello-world/" class="archive-article-date">
-  	<time datetime="2018-02-09T09:00:43.448Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-09</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/09/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
   
 
 
@@ -502,8 +334,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
