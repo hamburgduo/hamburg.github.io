@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
+    <title><![CDATA[Ansible playbook基本结构及示例]]></title>
     <url>%2F2019%2F08%2F20%2FPlaybook%E8%A7%A3%E6%9E%90%2F</url>
-    <content type="text"><![CDATA[title： Ansible playbook基本结构及示例tags： - Ansibleplaybook 构成 一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务 最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users… 执行的任务是都有什么 tasks 善后的任务都有什么 handlers 详见：Playbook基本语法 一个例子1234567891011121314151617181920212223242526---# play名称- name: unarchive a tar file from ansible controller to a targer server hosts: elasticsearch tasks: # 任务名称 - name: mkdir for es file: path: /root/es state: directory owner: root group: root mode: 0755 # 使用root权限，执行相关操作 become: yes become_method: sudo - name: unarchive a tar file with absolute path unarchive: # src 从ansible控制主机，copy至目标主机 src: /opt/httpfiles/elasticsearch/elasticsearch.tar.gz dest: /root/es become: yes become_method: sudo 运行指命令123# 可以通过设置系统环境变量来禁止,检查 keys 的提示export ANSIBLE_HOST_KEY_CHECKING=False;ansible-playbook --user=deploymgr --private-key=/var/lib/jenkins/.keys/devops_admin.pem -i /opt/jenkins/inventory_7d461c80-9eca-11e9-9a1f-81ee33792afc.py test_unarchive.yml Ansible应用介绍：配置免密钥登陆]]></content>
+    <content type="text"><![CDATA[playbook 构成 一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务 最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users… 执行的任务是都有什么 tasks 善后的任务都有什么 handlers 详见：Playbook基本语法 一个例子1234567891011121314151617181920212223242526---# play名称- name: unarchive a tar file from ansible controller to a targer server hosts: elasticsearch tasks: # 任务名称 - name: mkdir for es file: path: /root/es state: directory owner: root group: root mode: 0755 # 使用root权限，执行相关操作 become: yes become_method: sudo - name: unarchive a tar file with absolute path unarchive: # src 从ansible控制主机，copy至目标主机 src: /opt/httpfiles/elasticsearch/elasticsearch.tar.gz dest: /root/es become: yes become_method: sudo 运行指命令123# 可以通过设置系统环境变量来禁止,检查 keys 的提示export ANSIBLE_HOST_KEY_CHECKING=False;ansible-playbook --user=deploymgr --private-key=/var/lib/jenkins/.keys/devops_admin.pem -i /opt/jenkins/inventory_7d461c80-9eca-11e9-9a1f-81ee33792afc.py test_unarchive.yml Ansible应用介绍：配置免密钥登陆]]></content>
+      <tags>
+        <tag>Ansible</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[python多线程--threading]]></title>
