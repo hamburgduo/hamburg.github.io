@@ -138,6 +138,110 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python脚本--命令行参数解析及format格式化输出" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/24/python脚本--命令行参数解析及format格式化输出/">python 命令行脚本实战</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/24/python脚本--命令行参数解析及format格式化输出/" class="archive-article-date">
+  	<time datetime="2019-08-24T10:07:30.412Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="脚本功能-–-post请求内容，写文件"><a href="#脚本功能-–-post请求内容，写文件" class="headerlink" title="脚本功能 – post请求内容，写文件"></a>脚本功能 – post请求内容，写文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_argparse</span><span class="params">()</span>:</span></span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">"This is get platform info."</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'--host'</span>, action=<span class="string">'store'</span>, dest=<span class="string">'server'</span>,default=<span class="string">'localhost'</span>, help=<span class="string">'Deploy tool server ip'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'--port'</span>, action=<span class="string">'store'</span>, dest=<span class="string">'port'</span>,default=<span class="string">'5000'</span>, help=<span class="string">'Deploy tool service port'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-platform_id'</span>, action=<span class="string">'store'</span>, dest=<span class="string">'group_platform_id'</span>,required=<span class="keyword">True</span>, help=<span class="string">'Group platform id'</span>)</span><br><span class="line">    <span class="keyword">return</span> parser.parse_args()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_inventory</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 命令行参数解析</span></span><br><span class="line">    parser = _argparse()</span><br><span class="line">    args = dict(server=parser.server, port=parser.port, group_platform_id=parser.group_platform_id)</span><br><span class="line">    <span class="comment"># format &#123;&#125; 大括号转义大括号&#123;&#123;&#125;&#125;</span></span><br><span class="line">    cmd = <span class="string">"curl -X POST -d '&#123;&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br><span class="line">    print(cmd)</span><br><span class="line">    output = os.popen(cmd)</span><br><span class="line">    content = output.read()</span><br><span class="line">    indata_cluster_extend = json.loads(content).get(<span class="string">"indata_cluster_extend"</span>)</span><br><span class="line">    inventory = indata_cluster_extend[<span class="number">0</span>].get(<span class="string">"inventory"</span>)</span><br><span class="line">    cluster_extend_id = indata_cluster_extend[<span class="number">0</span>].get(<span class="string">"group_platform_id"</span>)</span><br><span class="line">    cluster_extend_file = <span class="string">"/opt/jenkins/inventory_&#123;&#125;.py"</span>.format(cluster_extend_id)</span><br><span class="line">    <span class="keyword">with</span> open(cluster_extend_file, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="comment"># 存储中文需要编码--inventory中有中文</span></span><br><span class="line">        f.write(inventory.encode(<span class="string">"utf-8"</span>))</span><br><span class="line">    os.chmod(cluster_extend_file, <span class="number">0o755</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    get_inventory()</span><br></pre></td></tr></table></figure>
+<h4 id="argparse命令行参数解析，自动生成usage"><a href="#argparse命令行参数解析，自动生成usage" class="headerlink" title="argparse命令行参数解析，自动生成usage"></a>argparse命令行参数解析，自动生成usage</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">python get_extend_inventory.py --<span class="built_in">help</span></span><br><span class="line">usage: get_extend_inventory.py [-h] [--host SERVER] [--port PORT] -platform_id</span><br><span class="line">                               GROUP_PLATFORM_ID</span><br><span class="line"></span><br><span class="line">This is get platform info.</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --<span class="built_in">help</span>            show this <span class="built_in">help</span> message and <span class="built_in">exit</span></span><br><span class="line">  --host SERVER         Deploy tool server ip</span><br><span class="line">  --port PORT           Deploy tool service port</span><br><span class="line">  -platform_id GROUP_PLATFORM_ID</span><br><span class="line">                        Group platform id</span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">python get_extend_inventory.py -platform_id=8975cf33-2917-433d-af6f-8002cbc6d871</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">curl -X POST -d <span class="string">'&#123;'</span>group_platform_id<span class="string">': ['</span>8975cf33-2917-433d-af6f-8002cbc6d871<span class="string">']&#125;'</span> http://localhost:5000/indataconfig/platform_host_info</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  354k  100  354k  100    59  1612k    268 --:--:-- --:--:-- --:--:-- 1613k</span><br></pre></td></tr></table></figure>
+<h4 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h4><ol>
+<li>os 模块获取命令执行结果的输出<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">output = os.popen(cmd)</span><br><span class="line">content = output.read()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><a href="https://my.oschina.net/renwofei423/blog/17403" target="_blank" rel="noopener">参考：Python执行系统命令</a></p>
+<ol>
+<li>format格式化输出复杂字符串<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始字符串</span></span><br><span class="line">cmd = <span class="string">"curl -X POST -d '&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br><span class="line"><span class="comment"># 错误输出</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"get_inventory.py"</span>, line 36, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    get_inventory()</span><br><span class="line">  File <span class="string">"get_inventory.py"</span>, line 22, <span class="keyword">in</span> get_inventory</span><br><span class="line">    cmd = <span class="string">"curl -X POST -d '&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br><span class="line">KeyError: <span class="string">"'group_platform_id'"</span></span><br><span class="line"><span class="comment"># 改进后的，大括号转义&#123;&#125;</span></span><br><span class="line">cmd = <span class="string">"curl -X POST -d '&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>我们可以使用大括号 {} 来转义大括号<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> (<span class="string">"&#123;&#125; 对应的位置是 &#123;&#123;0&#125;&#125;"</span>.format(<span class="string">"runoob"</span>))</span><br><span class="line"><span class="comment">## 结果</span></span><br><span class="line">runoob 对应的位置是 &#123;<span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://www.runoob.com/python/att-string-format.html" target="_blank" rel="noopener">参考：Python format 格式化函数</a></p>
+<ol>
+<li>编码问题<ul>
+<li>错误信息<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"get_inventory.py"</span>, <span class="literal">line</span> <span class="number">22</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    get_inventory()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"get_inventory.py"</span>, <span class="literal">line</span> <span class="number">16</span>, <span class="keyword">in</span> get_inventory</span><br><span class="line">    f.write(inventory)</span><br><span class="line">UnicodeEncodeError: <span class="symbol">'ascii</span>' codec can<span class="symbol">'t</span> encode characters <span class="keyword">in</span> position <span class="number">239</span>-<span class="number">258</span>: ordinal <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">128</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>解决办法<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(cluster_extend_file, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="comment"># 存储中文需要编码--inventory中有中文</span></span><br><span class="line">        f.write(inventory.encode(<span class="string">"utf-8"</span>))</span><br><span class="line"><span class="comment"># python2 中使用codes模块</span></span><br><span class="line"><span class="keyword">import</span> codes</span><br><span class="line"><span class="keyword">with</span> codes.open(cluster_extend_file, <span class="string">"w"</span>, encoding=<span class="string">"urf-8"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(invtory)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/24/python脚本--命令行参数解析及format格式化输出/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Playbook解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1026,135 +1130,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/10/18/Centos 设定网络参数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-httpd 配置负载均衡" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/16/httpd 配置负载均衡/">httpd 配置负载均衡（负载均衡多个服务）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/16/httpd 配置负载均衡/" class="archive-article-date">
-  	<time datetime="2018-10-16T12:26:38.695Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="监听多个端口，负载均衡多个服务httpd-conf"><a href="#监听多个端口，负载均衡多个服务httpd-conf" class="headerlink" title="监听多个端口，负载均衡多个服务httpd.conf"></a>监听多个端口，负载均衡多个服务httpd.conf</h5><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 修改httpd.<span class="keyword">conf</span></span><br><span class="line">vi /etc/httpd/<span class="keyword">conf</span>/httpd.<span class="keyword">conf</span></span><br><span class="line"># 监听多个端口</span><br><span class="line">Listen 80</span><br><span class="line">Listen 6080</span><br><span class="line">Listen 8443</span><br><span class="line"></span><br><span class="line"># 服务的virtual host配置文件</span><br><span class="line"><span class="keyword">Include</span> <span class="keyword">conf</span>/ranger-<span class="keyword">cluster</span>.<span class="keyword">conf</span></span><br><span class="line"><span class="keyword">Include</span> <span class="keyword">conf</span>/knox-<span class="keyword">cluster</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
-<h5 id="新建-ranger-cluster-conf-与-knox-cluster-conf"><a href="#新建-ranger-cluster-conf-与-knox-cluster-conf" class="headerlink" title="新建 ranger-cluster.conf 与 knox-cluster.conf"></a>新建 ranger-cluster.conf 与 knox-cluster.conf</h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">cd</span> /etc/httpd/conf</span><br><span class="line"><span class="attribute">vi</span> ranger-cluster.conf</span><br><span class="line"><span class="comment"># ranger服务配置文件详情</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># This is the Apache server configuration file providing SSL support.</span></span><br><span class="line"><span class="comment"># It contains the configuration directives to instruct the server how to</span></span><br><span class="line"><span class="comment"># serve pages over an https connection. For detailing information about these</span></span><br><span class="line"><span class="comment"># directives see &lt;URL:http://httpd.apache.org/docs/2.2/mod/mod_ssl.html&gt;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Do NOT simply read the instructions in here without understanding</span></span><br><span class="line"><span class="comment"># what they do. They're here only as hints or reminders. If you are unsure</span></span><br><span class="line"><span class="comment"># consult the online docs. You have been warned.</span></span><br><span class="line"><span class="comment">#Listen 80</span></span><br><span class="line"><span class="section">&lt;VirtualHost *:6080&gt;</span></span><br><span class="line">        <span class="attribute">ProxyRequests</span> <span class="literal">off</span></span><br><span class="line">        <span class="attribute">ProxyPreserveHost</span> <span class="literal">on</span></span><br><span class="line">        <span class="attribute"><span class="nomarkup">Header</span></span> add Set-Cookie <span class="string">"ROUTEID=.%&#123;BALANCER_WORKER_ROUTE&#125;e; path=/"</span> env=BALANCER_ROUTE_CHANGED</span><br><span class="line">        <span class="section">&lt;Proxy balancer://rangercluster&gt;</span></span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.91:6080 loadfactor=1 route=1</span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.92:6080 loadfactor=1 route=2</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> Deny,Allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Deny</span></span> from none</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">                <span class="attribute">ProxySet</span> lbmethod=byrequests scolonpathdelim=<span class="literal">On</span> stickysession=ROUTEID maxattempts=1 failonstatus=500,501,502,503 nofailover=<span class="literal">Off</span></span><br><span class="line">        <span class="section">&lt;/Proxy&gt;</span></span><br><span class="line">        <span class="comment"># balancer-manager</span></span><br><span class="line">        <span class="comment"># This tool is built into the mod_proxy_balancer</span></span><br><span class="line">        <span class="comment"># module and will allow you to do some simple</span></span><br><span class="line">        <span class="comment"># modifications to the balanced group via a gui</span></span><br><span class="line">        <span class="comment"># web interface.</span></span><br><span class="line">        <span class="section">&lt;Location /balancer-manager&gt;</span></span><br><span class="line">                <span class="attribute"><span class="nomarkup">SetHandler</span></span> balancer-manager</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> deny,allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">        <span class="section">&lt;/Location&gt;</span></span><br><span class="line">        <span class="attribute">ProxyPass</span> /balancer-manager !</span><br><span class="line">        <span class="attribute">ProxyPass</span> / balancer://rangercluster/</span><br><span class="line">        <span class="attribute">ProxyPassReverse</span> / balancer://rangercluster/</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">vi</span> ranger-cluster.conf</span><br><span class="line"><span class="comment"># konx服务配置文件详情</span></span><br><span class="line"><span class="section">&lt;VirtualHost *:8443&gt;</span></span><br><span class="line">        <span class="attribute">ProxyRequests</span> <span class="literal">off</span></span><br><span class="line">        <span class="attribute">ProxyPreserveHost</span> <span class="literal">on</span></span><br><span class="line">        <span class="attribute"><span class="nomarkup">Header</span></span> add Set-Cookie <span class="string">"ROUTEID=.%&#123;BALANCER_WORKER_ROUTE&#125;e; path=/"</span> env=BALANCER_ROUTE_CHANGED</span><br><span class="line">        <span class="section">&lt;Proxy balancer://knoxcluster&gt;</span></span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.91:8444 loadfactor=1 route=1</span><br><span class="line">                <span class="attribute">BalancerMember</span> http://10.110.13.92:8444 loadfactor=1 route=2</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> Deny,Allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Deny</span></span> from none</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">                <span class="attribute">ProxySet</span> lbmethod=byrequests scolonpathdelim=<span class="literal">On</span> stickysession=ROUTEID maxattempts=1 failonstatus=500,501,502,503 nofailover=<span class="literal">Off</span></span><br><span class="line">        <span class="section">&lt;/Proxy&gt;</span></span><br><span class="line">        <span class="comment"># balancer-manager</span></span><br><span class="line">        <span class="comment"># This tool is built into the mod_proxy_balancer</span></span><br><span class="line">        <span class="comment"># module and will allow you to do some simple</span></span><br><span class="line">        <span class="comment"># modifications to the balanced group via a gui</span></span><br><span class="line">        <span class="comment"># web interface.</span></span><br><span class="line">        <span class="section">&lt;Location /balancer-manager&gt;</span></span><br><span class="line">                <span class="attribute"><span class="nomarkup">SetHandler</span></span> balancer-manager</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Order</span></span> deny,allow</span><br><span class="line">                <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></span><br><span class="line">        <span class="section">&lt;/Location&gt;</span></span><br><span class="line">        <span class="attribute">ProxyPass</span> /balancer-manager !</span><br><span class="line">        <span class="attribute">ProxyPass</span> / balancer://knoxcluster/</span><br><span class="line">        <span class="attribute">ProxyPassReverse</span> / balancer://knoxcluster/</span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="ranger-服务的balancer-manager界面6080"><a href="#ranger-服务的balancer-manager界面6080" class="headerlink" title="ranger 服务的balancer-manager界面6080"></a>ranger 服务的balancer-manager界面6080</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/16/d370771378cfcaa9ae3c21d94b80ebec.jpg" alt="image"></p>
-<h5 id="knox-服务balancer-manager界面8443"><a href="#knox-服务balancer-manager界面8443" class="headerlink" title="knox 服务balancer-manager界面8443"></a>knox 服务balancer-manager界面8443</h5><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2018/10/16/70b822ce04a9907f448964a76226d417.jpg" alt="image"></p>
-<h5 id="负载均衡开启的模块，模块含义表："><a href="#负载均衡开启的模块，模块含义表：" class="headerlink" title="负载均衡开启的模块，模块含义表："></a>负载均衡开启的模块，模块含义表：</h5><table>
-<thead>
-<tr>
-<th>httpd.conf配置文件中加载的模块</th>
-<th>模块名称</th>
-<th>模块功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>LoadModule proxy_module  modules/mod_proxy.so</td>
-<td>proxy_module</td>
-<td>提供代理服务器功能</td>
-</tr>
-<tr>
-<td>LoadModule proxy_balancer_module  modules/mod_proxy_balancer.so</td>
-<td>proxy_balancer_module</td>
-<td>提供负载均衡功能</td>
-</tr>
-<tr>
-<td>LoadModule proxy_http_module  modules/mod_proxy_http.so</td>
-<td>proxy_http_module</td>
-<td>代理服务器能支持HTTP协议</td>
-</tr>
-<tr>
-<td>LoadModule proxy_ajp_module  modules/mod_proxy_ajp.so</td>
-<td>proxy_ajp_module</td>
-<td>代理服务器能支持AJP协议</td>
-</tr>
-<tr>
-<td>LoadModule slotmem_shm_module  modules/mod_slotmem_shm.so</td>
-<td>slotmem_shm_module</td>
-<td>基于插槽的共享内存提供程序</td>
-</tr>
-<tr>
-<td>LoadModule  lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so</td>
-<td>lbmethod_byrequests_module</td>
-<td>负载均衡算法：按照请求次数均衡(默认)</td>
-</tr>
-<tr>
-<td>LoadModule lbmethod_bytraffic_module  modules/mod_lbmethod_bytraffic.so</td>
-<td>lbmethod_bytraffic_module</td>
-<td>负载均衡算法：按照流量均衡</td>
-</tr>
-<tr>
-<td>LoadModule lbmethod_bybusyness_module  modules/mod_lbmethod_bybusyness.so</td>
-<td>lbmethod_bybusyness_module</td>
-<td>负载均衡算法：按照繁忙程度均衡(总是分配给活跃请求数最少的服务器)</td>
-</tr>
-</tbody>
-</table>
-<p><a href="https://httpd.apache.org/docs/2.4/mod/" target="_blank" rel="noopener">更多模块详情：官网信息</a><br><a href="http://www.jeffxue.cn/2016/03/08/apache2.4%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E/" target="_blank" rel="noopener">参考资料：Apache 2.4 配置说明</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/运维//" class="article-tag-list-link color3">运维</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/16/httpd 配置负载均衡/">展开全文 >></a>
         </p>
       
 

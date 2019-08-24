@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Ansible playbook基本结构及示例 | 一亩三分地</title>
+  <title>python 命令行脚本实战 | 一亩三分地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="playbook 构成  一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务  最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users…   执行的任务是都有什么 tasks   善后的任务都有什么 handlers    详见：Playbook基本语法 一个例子123456789101112131415161718">
-<meta name="keywords" content="Ansible">
+  <meta name="description" content="脚本功能 – post请求内容，写文件12345678910111213141516171819202122232425262728293031323334353637#!/usr/bin/python# -*- coding:utf-8 -*-import osimport jsonimport argparsedef _argparse():    parser = argparse.Argu">
+<meta name="keywords" content="linux,python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ansible playbook基本结构及示例">
-<meta property="og:url" content="http://yoursite.com/2019/08/20/Playbook解析/index.html">
+<meta property="og:title" content="python 命令行脚本实战">
+<meta property="og:url" content="http://yoursite.com/2019/08/24/python脚本--命令行参数解析及format格式化输出/index.html">
 <meta property="og:site_name" content="一亩三分地">
-<meta property="og:description" content="playbook 构成  一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务  最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users…   执行的任务是都有什么 tasks   善后的任务都有什么 handlers    详见：Playbook基本语法 一个例子123456789101112131415161718">
+<meta property="og:description" content="脚本功能 – post请求内容，写文件12345678910111213141516171819202122232425262728293031323334353637#!/usr/bin/python# -*- coding:utf-8 -*-import osimport jsonimport argparsedef _argparse():    parser = argparse.Argu">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/11/10cb08ee900d361e87778e6cff744625.jpg">
-<meta property="og:updated_time" content="2019-08-20T10:23:26.124Z">
+<meta property="og:updated_time" content="2019-08-24T10:07:37.917Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ansible playbook基本结构及示例">
-<meta name="twitter:description" content="playbook 构成  一个playbook可以包含多个paly 一个paly里包含tasks列表，一个或者多个任务  最基本的playbook脚本分为三个部分: 在什么机器上以什么身份执行 hosts users…   执行的任务是都有什么 tasks   善后的任务都有什么 handlers    详见：Playbook基本语法 一个例子123456789101112131415161718">
-<meta name="twitter:image" content="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/11/10cb08ee900d361e87778e6cff744625.jpg">
+<meta name="twitter:title" content="python 命令行脚本实战">
+<meta name="twitter:description" content="脚本功能 – post请求内容，写文件12345678910111213141516171819202122232425262728293031323334353637#!/usr/bin/python# -*- coding:utf-8 -*-import osimport jsonimport argparsedef _argparse():    parser = argparse.Argu">
   
     <link rel="alternative" href="/atom.xml" title="一亩三分地" type="application/atom+xml">
   
@@ -143,50 +141,53 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Playbook解析" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-python脚本--命令行参数解析及format格式化输出" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Ansible playbook基本结构及示例
+      python 命令行脚本实战
     </h1>
   
 
         
-        <a href="/2019/08/20/Playbook解析/" class="archive-article-date">
-  	<time datetime="2019-08-20T10:04:09.738Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-20</time>
+        <a href="/2019/08/24/python脚本--命令行参数解析及format格式化输出/" class="archive-article-date">
+  	<time datetime="2019-08-24T10:07:30.412Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="playbook-构成"><a href="#playbook-构成" class="headerlink" title="playbook 构成"></a>playbook 构成</h4><p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/7/11/10cb08ee900d361e87778e6cff744625.jpg" alt="image"></p>
+        <h4 id="脚本功能-–-post请求内容，写文件"><a href="#脚本功能-–-post请求内容，写文件" class="headerlink" title="脚本功能 – post请求内容，写文件"></a>脚本功能 – post请求内容，写文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_argparse</span><span class="params">()</span>:</span></span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">"This is get platform info."</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'--host'</span>, action=<span class="string">'store'</span>, dest=<span class="string">'server'</span>,default=<span class="string">'localhost'</span>, help=<span class="string">'Deploy tool server ip'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'--port'</span>, action=<span class="string">'store'</span>, dest=<span class="string">'port'</span>,default=<span class="string">'5000'</span>, help=<span class="string">'Deploy tool service port'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-platform_id'</span>, action=<span class="string">'store'</span>, dest=<span class="string">'group_platform_id'</span>,required=<span class="keyword">True</span>, help=<span class="string">'Group platform id'</span>)</span><br><span class="line">    <span class="keyword">return</span> parser.parse_args()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_inventory</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 命令行参数解析</span></span><br><span class="line">    parser = _argparse()</span><br><span class="line">    args = dict(server=parser.server, port=parser.port, group_platform_id=parser.group_platform_id)</span><br><span class="line">    <span class="comment"># format &#123;&#125; 大括号转义大括号&#123;&#123;&#125;&#125;</span></span><br><span class="line">    cmd = <span class="string">"curl -X POST -d '&#123;&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br><span class="line">    print(cmd)</span><br><span class="line">    output = os.popen(cmd)</span><br><span class="line">    content = output.read()</span><br><span class="line">    indata_cluster_extend = json.loads(content).get(<span class="string">"indata_cluster_extend"</span>)</span><br><span class="line">    inventory = indata_cluster_extend[<span class="number">0</span>].get(<span class="string">"inventory"</span>)</span><br><span class="line">    cluster_extend_id = indata_cluster_extend[<span class="number">0</span>].get(<span class="string">"group_platform_id"</span>)</span><br><span class="line">    cluster_extend_file = <span class="string">"/opt/jenkins/inventory_&#123;&#125;.py"</span>.format(cluster_extend_id)</span><br><span class="line">    <span class="keyword">with</span> open(cluster_extend_file, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="comment"># 存储中文需要编码--inventory中有中文</span></span><br><span class="line">        f.write(inventory.encode(<span class="string">"utf-8"</span>))</span><br><span class="line">    os.chmod(cluster_extend_file, <span class="number">0o755</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    get_inventory()</span><br></pre></td></tr></table></figure>
+<h4 id="argparse命令行参数解析，自动生成usage"><a href="#argparse命令行参数解析，自动生成usage" class="headerlink" title="argparse命令行参数解析，自动生成usage"></a>argparse命令行参数解析，自动生成usage</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">python get_extend_inventory.py --<span class="built_in">help</span></span><br><span class="line">usage: get_extend_inventory.py [-h] [--host SERVER] [--port PORT] -platform_id</span><br><span class="line">                               GROUP_PLATFORM_ID</span><br><span class="line"></span><br><span class="line">This is get platform info.</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --<span class="built_in">help</span>            show this <span class="built_in">help</span> message and <span class="built_in">exit</span></span><br><span class="line">  --host SERVER         Deploy tool server ip</span><br><span class="line">  --port PORT           Deploy tool service port</span><br><span class="line">  -platform_id GROUP_PLATFORM_ID</span><br><span class="line">                        Group platform id</span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">python get_extend_inventory.py -platform_id=8975cf33-2917-433d-af6f-8002cbc6d871</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">curl -X POST -d <span class="string">'&#123;'</span>group_platform_id<span class="string">': ['</span>8975cf33-2917-433d-af6f-8002cbc6d871<span class="string">']&#125;'</span> http://localhost:5000/indataconfig/platform_host_info</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  354k  100  354k  100    59  1612k    268 --:--:-- --:--:-- --:--:-- 1613k</span><br></pre></td></tr></table></figure>
+<h4 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h4><ol>
+<li>os 模块获取命令执行结果的输出<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">output = os.popen(cmd)</span><br><span class="line">content = output.read()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><a href="https://my.oschina.net/renwofei423/blog/17403" target="_blank" rel="noopener">参考：Python执行系统命令</a></p>
+<ol>
+<li>format格式化输出复杂字符串<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始字符串</span></span><br><span class="line">cmd = <span class="string">"curl -X POST -d '&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br><span class="line"><span class="comment"># 错误输出</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"get_inventory.py"</span>, line 36, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    get_inventory()</span><br><span class="line">  File <span class="string">"get_inventory.py"</span>, line 22, <span class="keyword">in</span> get_inventory</span><br><span class="line">    cmd = <span class="string">"curl -X POST -d '&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br><span class="line">KeyError: <span class="string">"'group_platform_id'"</span></span><br><span class="line"><span class="comment"># 改进后的，大括号转义&#123;&#125;</span></span><br><span class="line">cmd = <span class="string">"curl -X POST -d '&#123;'group_platform_id': ['&#123;group_platform_id&#125;']&#125;' http://&#123;server&#125;:&#123;port&#125;/indataconfig/platform_host_info"</span>.format(**args)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <ul>
-<li>一个playbook可以包含多个paly</li>
-<li>一个paly里包含tasks列表，一个或者多个任务</li>
-</ul>
-<h5 id="最基本的playbook脚本分为三个部分"><a href="#最基本的playbook脚本分为三个部分" class="headerlink" title="最基本的playbook脚本分为三个部分:"></a>最基本的playbook脚本分为三个部分:</h5><ol>
-<li>在什么机器上以什么身份执行<ul>
-<li>hosts</li>
-<li>users<br>…</li>
-</ul>
+<li>我们可以使用大括号 {} 来转义大括号<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> (<span class="string">"&#123;&#125; 对应的位置是 &#123;&#123;0&#125;&#125;"</span>.format(<span class="string">"runoob"</span>))</span><br><span class="line"><span class="comment">## 结果</span></span><br><span class="line">runoob 对应的位置是 &#123;<span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li>执行的任务是都有什么<ul>
-<li>tasks</li>
 </ul>
+<p><a href="https://www.runoob.com/python/att-string-format.html" target="_blank" rel="noopener">参考：Python format 格式化函数</a></p>
+<ol>
+<li>编码问题<ul>
+<li>错误信息<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"get_inventory.py"</span>, <span class="literal">line</span> <span class="number">22</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    get_inventory()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"get_inventory.py"</span>, <span class="literal">line</span> <span class="number">16</span>, <span class="keyword">in</span> get_inventory</span><br><span class="line">    f.write(inventory)</span><br><span class="line">UnicodeEncodeError: <span class="symbol">'ascii</span>' codec can<span class="symbol">'t</span> encode characters <span class="keyword">in</span> position <span class="number">239</span>-<span class="number">258</span>: ordinal <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">128</span>)</span><br></pre></td></tr></table></figure>
 </li>
-<li>善后的任务都有什么<ul>
-<li>handlers</li>
 </ul>
 </li>
 </ol>
-<p><a href="https://getansible.com/playbookji_ben_yu_fa" target="_blank" rel="noopener">详见：Playbook基本语法</a></p>
-<h4 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># play名称</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">unarchive</span> <span class="string">a</span> <span class="string">tar</span> <span class="string">file</span> <span class="string">from</span> <span class="string">ansible</span> <span class="string">controller</span> <span class="string">to</span> <span class="string">a</span> <span class="string">targer</span> <span class="string">server</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">elasticsearch</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  tasks:</span></span><br><span class="line">  <span class="comment"># 任务名称</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">mkdir</span> <span class="string">for</span> <span class="string">es</span></span><br><span class="line"><span class="attr">    file:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/root/es</span></span><br><span class="line"><span class="attr">      state:</span> <span class="string">directory</span></span><br><span class="line"><span class="attr">      owner:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      group:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      mode:</span> <span class="number">0755</span></span><br><span class="line">    <span class="comment"># 使用root权限，执行相关操作</span></span><br><span class="line"><span class="attr">    become:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    become_method:</span> <span class="string">sudo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">unarchive</span> <span class="string">a</span> <span class="string">tar</span> <span class="string">file</span> <span class="string">with</span> <span class="string">absolute</span> <span class="string">path</span></span><br><span class="line"><span class="attr">    unarchive:</span></span><br><span class="line">      <span class="comment"># src 从ansible控制主机，copy至目标主机</span></span><br><span class="line"><span class="attr">      src:</span> <span class="string">/opt/httpfiles/elasticsearch/elasticsearch.tar.gz</span></span><br><span class="line"><span class="attr">      dest:</span> <span class="string">/root/es</span></span><br><span class="line"><span class="attr">    become:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    become_method:</span> <span class="string">sudo</span></span><br></pre></td></tr></table></figure>
-<h5 id="运行指命令"><a href="#运行指命令" class="headerlink" title="运行指命令"></a>运行指命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以通过设置系统环境变量来禁止,检查 keys 的提示</span></span><br><span class="line"><span class="built_in">export</span> ANSIBLE_HOST_KEY_CHECKING=False;</span><br><span class="line">ansible-playbook --user=deploymgr --private-key=/var/lib/jenkins/.keys/devops_admin.pem -i /opt/jenkins/inventory_7d461c80-9eca-11e9-9a1f-81ee33792afc.py test_unarchive.yml</span><br></pre></td></tr></table></figure>
-<p><a href="http://www.178linux.com/6014" target="_blank" rel="noopener">Ansible应用介绍：配置免密钥登陆</a></p>
+<ul>
+<li>解决办法<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(cluster_extend_file, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="comment"># 存储中文需要编码--inventory中有中文</span></span><br><span class="line">        f.write(inventory.encode(<span class="string">"utf-8"</span>))</span><br><span class="line"><span class="comment"># python2 中使用codes模块</span></span><br><span class="line"><span class="keyword">import</span> codes</span><br><span class="line"><span class="keyword">with</span> codes.open(cluster_extend_file, <span class="string">"w"</span>, encoding=<span class="string">"urf-8"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(invtory)</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
 
@@ -231,7 +232,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Ansible</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -287,7 +292,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/20/Playbook解析/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/24/python脚本--命令行参数解析及format格式化输出/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +306,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/08/24/python脚本--命令行参数解析及format格式化输出/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          python 命令行脚本实战
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/16/pyhton多线程之threading/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python多线程--threading</div>
+    <a href="/2019/08/20/Playbook解析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Ansible playbook基本结构及示例</div>
       <i class="icon-circle-right"></i>
     </a>
   
