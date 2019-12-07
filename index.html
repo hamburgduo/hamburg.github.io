@@ -138,6 +138,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-一个例子看nginx location优先级" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/07/一个例子看nginx location优先级/">一个例子看nginx location优先级</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/07/一个例子看nginx location优先级/" class="archive-article-date">
+  	<time datetime="2019-12-07T04:21:18.454Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-先看location-优先级规则"><a href="#1-先看location-优先级规则" class="headerlink" title="1. 先看location 优先级规则"></a>1. 先看location 优先级规则</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="keyword">location</span> <span class="title">= ] &gt; [location</span> 完整路径 ] &gt; [ <span class="keyword">location</span> <span class="title">^~ 路径 ] &gt; [ location</span> ~ 或 ~* 正则 ] &gt; [ <span class="keyword">location</span> <span class="title">部分起始路径 ] &gt; [ location</span> / ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>=  : 字面精确匹配</li>
+<li>^~ : 最大前缀匹配</li>
+<li>/  ：不带任何前缀</li>
+<li>~  ：大小写相关的正则匹配</li>
+<li>~* ：大小写无关的正则匹配</li>
+</ul>
+<blockquote>
+<p>location 在匹配路径时，nginx优先搜索优先级高的路径，搜索到相关匹配时，nginx停止继续搜索。</p>
+</blockquote>
+<h3 id="2-看一个配置实例"><a href="#2-看一个配置实例" class="headerlink" title="2. 看一个配置实例"></a>2. 看一个配置实例</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#user  nobody;</span></span><br><span class="line"><span class="attribute">worker_processes</span>  <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">upstream</span> demo-news &#123;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">10.111.24.74:6011</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>      <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span>  localhost;</span><br><span class="line">        <span class="attribute">charset</span> utf-<span class="number">8</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="attribute">location</span> / &#123;</span><br><span class="line">            <span class="attribute">root</span>   html;</span><br><span class="line">            <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="attribute">location</span> ~.*\.(js|css|htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$ &#123;</span><br><span class="line">            <span class="attribute">root</span> /data/staticfiles/demo-news;</span><br><span class="line">            <span class="attribute">expires</span> <span class="number">10d</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> /demo-news &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span>   http://demo-news;</span><br><span class="line">            <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>; <span class="comment"># this is essential for chunked responses to work</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">            <span class="attribute">root</span>   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-nginx默认首页"><a href="#2-1-nginx默认首页" class="headerlink" title="2.1 nginx默认首页"></a>2.1 nginx默认首页</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    root   html; <span class="comment"># nginx 安装路径下的html目录,相对路径</span></span><br><span class="line">    index  index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-动静分离静态文件，正则匹配以-js-css-htm-html等-结尾的文件"><a href="#2-2-动静分离静态文件，正则匹配以-js-css-htm-html等-结尾的文件" class="headerlink" title="2.2 动静分离静态文件，正则匹配以(js|css|htm|html等)结尾的文件"></a>2.2 动静分离静态文件，正则匹配以(js|css|htm|html等)结尾的文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location ~.*\.(js|css|htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$ &#123;</span><br><span class="line">    root /data/staticfiles/demo-news; <span class="comment"># 静态文件存放的路径，绝对路径</span></span><br><span class="line">    expires 10d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>nginx 优先去 /data/staticfiels/demo-news 目录下去搜索，静态文件</p>
+</blockquote>
+<ul>
+<li>此时，location / 优先级最低，无法显示nginx默认首页</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/12/7/3fcecd0cc37439aa22d40cfa2fafcca2.jpg" alt="image"></p>
+<h4 id="2-3-调整后，分别显示nginx-首页，与demo-news路径首页"><a href="#2-3-调整后，分别显示nginx-首页，与demo-news路径首页" class="headerlink" title="2.3 调整后，分别显示nginx 首页，与demo-news路径首页"></a>2.3 调整后，分别显示nginx 首页，与demo-news路径首页</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    root   html; <span class="comment"># nginx 安装路径下的html目录,相对路径</span></span><br><span class="line">    index  index.html index.htm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置以demo-news开头，以js/css/jpg等结尾的静态文件</span></span><br><span class="line">location ~^/demo-news/.*\.(js|css|gif|html|htm|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$ &#123;</span><br><span class="line">    root /data/staticfiles; <span class="comment"># 注意此处目录少一级(demo-news)</span></span><br><span class="line">    expires 10d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>/  <blockquote>
+<p>nginx 默认首页</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/12/7/912f10dbc0559d3a874541c862971c4a.jpg" alt="image"></p>
+<ul>
+<li>/demo-news <blockquote>
+<p>demo-news 首页</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://rawcdn.githack.com/hamburgduo/blogPicture/master/jpg/2019/12/7/6827faa537fe91bd7d3c3efdda31d08f.jpg" alt="image"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nginx</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/web-服务器//" class="article-tag-list-link color3">web 服务器</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/07/一个例子看nginx location优先级/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-python脚本--命令行参数解析及format格式化输出" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1071,97 +1191,9 @@
 
 
   
-    <article id="post-Centos 设定网络参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/18/Centos 设定网络参数/">Centos 设定网络参数</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/18/Centos 设定网络参数/" class="archive-article-date">
-  	<time datetime="2018-10-18T11:42:55.701Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑ifcfg-eth0配置文件</span></span><br><span class="line">vi <span class="regexp">/etc/</span>sysconfig<span class="regexp">/network-scripts/i</span>fcfg-eth0</span><br></pre></td></tr></table></figure>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">TYPE=<span class="string">"Ethernet"</span></span><br><span class="line">BOOTPROTO=<span class="string">"none"</span>  <span class="comment"># 取得IP的方式，dhcp动态获取，手动可输入none或static静态</span></span><br><span class="line">DEFROUTE=<span class="string">"yes"</span></span><br><span class="line">IPV4_FAILURE_FATAL=<span class="string">"no"</span></span><br><span class="line">IPV6INIT=<span class="string">"yes"</span></span><br><span class="line">IPV6_AUTOCONF=<span class="string">"yes"</span></span><br><span class="line">IPV6_DEFROUTE=<span class="string">"yes"</span></span><br><span class="line">IPV6_FAILURE_FATAL=<span class="string">"no"</span></span><br><span class="line">NAME=<span class="string">"eth0"</span></span><br><span class="line">DEVICE=<span class="string">"eth0"</span> <span class="comment"># 网卡名称</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span>  <span class="comment"># 系统启动时是否激活网卡，只有在激活状态(yes)的网卡才能去连接网络，进行网络通讯</span></span><br><span class="line">PREFIX=24</span><br><span class="line">IPV6_PEERDNS=yes</span><br><span class="line">IPV6_PEERROUTES=yes</span><br><span class="line"></span><br><span class="line">IPADDR=10.110.13.33  <span class="comment"># 静态IP</span></span><br><span class="line">GATEWAY=10.110.13.254 <span class="comment"># 网关</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重启网络</span></span><br><span class="line">service<span class="built_in"> network </span>restart</span><br><span class="line"><span class="comment"># 检查ip </span></span><br><span class="line">ifconfg </span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
-<p><a href="http://cn.linux.vbird.org/linux_server/0130internet_connect_2.php#connect_fix_IP" target="_blank" rel="noopener">参考资料：鸟哥，设置固定ip地址</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络//" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/18/Centos 设定网络参数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1286,6 +1318,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Ansible</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">javaScript</a>
               </li>
              
@@ -1302,6 +1338,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ambari</a>
               </li>
              
@@ -1311,14 +1355,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">常见面试题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Ansible</a>
               </li>
             
             <div class="clearfix"></div>
